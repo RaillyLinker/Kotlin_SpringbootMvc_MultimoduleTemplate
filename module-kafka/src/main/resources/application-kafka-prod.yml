@@ -1,0 +1,27 @@
+# (실행 환경 prod 설정)
+# : 배포 환경 엄중한 환경 설정
+
+spring:
+  config:
+    activate: # 프로필명 설정
+      on-profile: kafka-prod
+
+# Kafka Cluster 설정
+kafka-cluster:
+  # Kafka 추가
+  # 작명법은, 앞에 kafka{index}-{제목} 형식으로 하여, 충돌을 피하기
+
+  # (주 사용 Kafka)
+  kafka1-main:
+    # Kafka 브로커에 연결하기 위한 주소를 설정합니다. 여러 개의 브로커가 있을 경우, 콤마로 구분하여 나열합니다.
+    uri: localhost:9092,localhost:9093,localhost:9094
+
+    # Consumer용 인증 정보
+    consumer:
+      username: admin
+      password: admin-secret
+
+    # Producer용 인증 정보
+    producer:
+      username: admin
+      password: admin-secret
