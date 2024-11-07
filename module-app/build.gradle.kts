@@ -13,6 +13,7 @@ dependencies {
     implementation(project(":module-retrofit2"))
     implementation(project(":module-kafka"))
     implementation(project(":module-mongodb"))
+    implementation(project(":module-jpa"))
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발

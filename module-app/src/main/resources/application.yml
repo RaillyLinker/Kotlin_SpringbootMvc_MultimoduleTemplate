@@ -40,6 +40,8 @@ spring:
         - kafka-local
         - mongodb
         - mongodb-local
+        - jpa
+        - jpa-local
       dev8080:
         - dev
         - port8080
@@ -49,6 +51,8 @@ spring:
         - kafka-dev
         - mongodb
         - mongodb-dev
+        - jpa
+        - jpa-dev
       prod80:
         - prod
         - port80
@@ -58,6 +62,8 @@ spring:
         - kafka-prod
         - mongodb
         - mongodb-prod
+        - jpa
+        - jpa-prod
     default: local8080 # jar 실행시 프로필 설정이 없을 때 적용할 프로필
     # IDE 실행 프로필 설정은, 실행 - 구성편집에서 VM 옵션 안에 -Dspring.profiles.active=dev8080 이렇게 설정 가능
     # prod 실행 포트를 나눠둔 이유는 배포 서버의 무중단 배포시 스위칭을 위한 것

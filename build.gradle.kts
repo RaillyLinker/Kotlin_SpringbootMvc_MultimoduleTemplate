@@ -3,6 +3,13 @@ plugins {
     kotlin("plugin.spring") version "1.9.25"
     id("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.6"
+
+    // JPA 추가
+    kotlin("plugin.allopen") version "2.0.21" apply false // allOpen 에 지정한 어노테이션으로 만든 클래스에 open 키워드를 적용
+    kotlin("plugin.noarg") version "2.0.21" apply false // noArg 에 지정한 어노테이션으로 만든 클래스에 자동으로 no-arg 생성자를 생성
+
+    // QueryDSL Kapt
+    kotlin("kapt") version "2.0.21" apply false
 }
 
 version = "0.0.1-SNAPSHOT"

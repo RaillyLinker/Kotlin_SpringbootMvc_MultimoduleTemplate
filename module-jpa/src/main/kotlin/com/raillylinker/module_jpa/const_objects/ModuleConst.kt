@@ -1,4 +1,4 @@
-package com.raillylinker.module_mongodb.const_objects
+package com.raillylinker.module_jpa.const_objects
 
 // [모듈 전역 상수 모음]
 // 아래 변수들은 절대 런타임에 변경되어서는 안됩니다.
@@ -7,5 +7,5 @@ package com.raillylinker.module_mongodb.const_objects
 object ModuleConst {
     // (DatabaseConfig)
     // !!!모듈 패키지명 작성!!!
-    const val PACKAGE_NAME = "com.raillylinker.module_mongodb"
+    const val PACKAGE_NAME = "com.raillylinker.module_jpa"
 }

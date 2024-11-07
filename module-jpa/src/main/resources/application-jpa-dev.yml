@@ -1,0 +1,28 @@
+# (실행 환경 dev 설정)
+# : 개발 환경 개발자들을 위한 환경 설정
+
+spring:
+  config:
+    activate: # 프로필명 설정
+      on-profile: jpa-dev
+
+# JPA DataSource 설정
+datasource-jpa:
+  # Database 추가
+  # 작명법은, 앞에 db{index}-{제목} 형식으로 하여, datasource 별 충돌을 피하기
+
+  # (서비스 데이터베이스)
+  db1-main: # DB 추가
+    # 데이터베이스 접속 경로
+    # !!!serverTimezone 설정을 데이터베이스의 타임존 설정과 일치시켜주세요.!!!
+    # 로컬 DB 접속은 localhost 를 사용하고, 도커에서 로컬 DB 접속시엔 host.docker.internal 를 사용하세요.
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/first_schema?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+    # 데이터베이스의 사용자명
+    username: root
+    # 데이터베이스의 패스워드
+    password: todo1234!
+    # 데이터베이스 접속시 사용하는 드라이버
+    driverClassName: com.mysql.cj.jdbc.Driver
+    data: classpath:sql/data-h2.sql
+    initialization-mode: always
+    database-platform: org.hibernate.dialect.MySQLDialect
