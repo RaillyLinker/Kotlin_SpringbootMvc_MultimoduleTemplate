@@ -1,0 +1,7 @@
+# (실행 환경 공통 설정)
+# : 개발 환경에 상관 없이 공통으로 적용되는 설정
+
+spring:
+  config:
+    activate: # 프로필명 설정
+      on-profile: mongodb

@@ -1,0 +1,22 @@
+# (실행 환경 prod 설정)
+# : 배포 환경 엄중한 환경 설정
+
+spring:
+  config:
+    activate: # 프로필명 설정
+      on-profile: mongodb-prod
+
+# MongoDB DataSource 설정
+datasource-mongodb:
+  # MongoDB 추가
+  # 작명법은, 앞에 md{index}-{제목} 형식으로 하여, datasource 별 충돌을 피하기
+
+  # (주 사용 MongoDB)
+  # mongodb:// 뒤에 인증 아이디 : 인증 비밀번호를 넣어주고, @ 뒤에는 레플리카 접속 주소를 모두 넣어주며,
+  # ? 뒤의 replicaSet 은 레플리카 셋 이름을, authSource 는 사용자 정보가 저장된 데이터베이스를 설정하면 됩니다.
+  mdb1-main:
+    uri: mongodb://root:todo1234!@127.0.0.1:27017,127.0.0.1:27018,127.0.0.1:27019/db?replicaSet=rs0&authSource=admin
+
+logging:
+  level:
+    org.springframework.data.mongodb: INFO # mongoDB 로깅 설정
