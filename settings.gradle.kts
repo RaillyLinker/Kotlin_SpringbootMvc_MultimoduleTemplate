@@ -8,3 +8,4 @@ rootProject.name = "kotlin_springboot_mvc_multimodule_template"
 include("module-app")
 include("module-redis")
 include("module-api-project")
+include("module-scheduler")
