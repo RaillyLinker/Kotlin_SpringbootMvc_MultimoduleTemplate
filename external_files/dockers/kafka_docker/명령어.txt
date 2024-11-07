@@ -1,0 +1,2 @@
+- 도커 컨테이너 실행 명령어 (커맨드창에서 본 디렉토리 경로로 이동하여 입력하세요.)
+>> docker-compose -f kafka-compose.yml up -d

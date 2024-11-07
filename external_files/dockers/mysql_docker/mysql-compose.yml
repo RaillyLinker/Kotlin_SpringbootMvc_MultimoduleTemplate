@@ -1,0 +1,18 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      # 초기 생성 데이터베이스
+      MYSQL_DATABASE: first_schema
+      # root 계정 초기 비밀번호
+      MYSQL_ROOT_PASSWORD: todo1234!
+      # 타임존 설정
+      TZ: Asia/Seoul
+    volumes:
+      - C:/Users/raill/Downloads/tmp/mysql/var/lib/mysql:/var/lib/mysql
+      - C:/Users/raill/Downloads/tmp/mysql/etc/mysql/conf.d:/etc/mysql/conf.d
+      - ./conf/init:/docker-entrypoint-initdb.d

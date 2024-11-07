@@ -1,0 +1,5 @@
+1. javac Counter.java
+
+2. jar cfe Counter.jar Counter Counter.class
+
+3. java -jar Counter.jar

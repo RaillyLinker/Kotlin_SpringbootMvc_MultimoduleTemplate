@@ -1,0 +1,49 @@
+services:
+  mongodb1:
+    # 컨테이너 이름 설정
+    container_name: mongodb1
+    # docker 이미지
+    image: mongo
+    # 컨테이너 중지시 자동 재시작
+    restart: always
+    environment:
+      # MongoDB Root 아이디/비밀번호 설정 (레플리카 셋 환경에선 mongo-keyfile 이 필요합니다.)
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "todo1234!"
+      # 포트 번호 연결
+    ports:
+      - 27017:27017
+    # 호스트와 컨테이너 간에 공유할 파일/폴더 설정
+    volumes:
+      - C:/Users/raill/Downloads/tmp/mongodb/mongodb1/data/db:/data/db
+      - ./conf/mongo-keyfile:/etc/mongo-keyfile
+    # 컨테이너 생성시 명령어 (mongo-keyfile 권한 변경 후 mongodb 실행)
+    command: /bin/bash -c "chmod 400 /etc/mongo-keyfile && chown 0:0 /etc/mongo-keyfile && mongod --replSet rs0 --auth --bind_ip_all --keyFile /etc/mongo-keyfile --port 27017"
+
+  mongodb2:
+    container_name: mongodb2
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "todo1234!"
+    ports:
+      - 27018:27018
+    volumes:
+      - C:/Users/raill/Downloads/tmp/mongodb/mongodb2/data/db:/data/db
+      - ./conf/mongo-keyfile:/etc/mongo-keyfile
+    command: /bin/bash -c "chmod 400 /etc/mongo-keyfile && chown 0:0 /etc/mongo-keyfile && mongod --replSet rs0 --auth --bind_ip_all --keyFile /etc/mongo-keyfile --port 27018"
+
+  mongodb3:
+    container_name: mongodb3
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "todo1234!"
+    ports:
+      - 27019:27019
+    volumes:
+      - C:/Users/raill/Downloads/tmp/mongodb/mongodb3/data/db:/data/db
+      - ./conf/mongo-keyfile:/etc/mongo-keyfile
+    command: /bin/bash -c "chmod 400 /etc/mongo-keyfile && chown 0:0 /etc/mongo-keyfile && mongod --replSet rs0 --auth --bind_ip_all --keyFile /etc/mongo-keyfile --port 27019"

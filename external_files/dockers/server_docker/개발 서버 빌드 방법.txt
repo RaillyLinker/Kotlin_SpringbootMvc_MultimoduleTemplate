@@ -1,0 +1,62 @@
+[개발 서버 빌드 방법]
+
+(0. 프로젝트 빌드)
+- 커맨드를 열고, cd 명령어를 이용하여 본 프로젝트의 루트 경로로 이동합니다.
+> cd "/Users/.../SpringBoot_MvcTemplate"
+
+- Gradle 빌드를 수행합니다.
+> chmod +x ./gradlew
+> ./gradlew build -x test
+
+- 여기까지 실행되면 build/libs 디렉토리 안에, springboot_mvc_template-0.0.1-SNAPSHOT.jar 파일이 생성됩니다.
+
+(1. 이미지 빌드)
+- Dockerfile-Server-Dev 파일을 기반으로 raillylinker/server_dev:latest 이름의 이미지를 만듭니다.
+> docker image build --pull=true -f "./external_files/dockers/server_docker/Dockerfile-Server-Dev" -t raillylinker/server_dev:latest .
+
+(2. 이미지 파일 저장)
+- 명령어 위치에 server_dev.tar 라는 이름의 이미지 파일을 생성합니다.
+> docker save -o "./by_product_files/server_dev.tar" raillylinker/server_dev:latest
+
+(3. 사용하지 않는 모든 이미지 삭제)
+- 테스트를 위해 기존 이미지는 일단 제거해둡니다.
+> docker image prune -af
+
+(4. 이미지 파일에서 이미지 불러오기)
+- 앞서 저장한 이미지 파일에서 이미지를 불러올 수 있는지 테스트 합니다.
+> docker load -i "./by_product_files/server_dev.tar"
+
+(5. 컨테이너 생성 및 실행)
+- 불러온 raillylinker/server_dev:latest 이미지를 실행하여 서버로서 정상 동작하는지 확인
+- -v 옵션의 ${PWD}/by_product_files 부분은 도커 컨테이너 바깥의 로컬 저장소에, 로그 파일 및 그외 서비스 생성 파일들을 저장하길 원하는 위치를 지정하세요.
+> docker container run -v ${PWD}/by_product_files:/app/by_product_files -d -e TZ=Asia/Seoul --rm -p8080:8080 --name server_dev raillylinker/server_dev:latest
+
+(6. 컨테이너 명령창 띄우기)
+> docker container exec -it server_dev sh
+
+(7. 컨테이너 명령창에서 나가기)
+> exit
+
+(8. 컨테이너 중단)
+- 테스트를 완료한 컨테이너를 중단합니다.
+> docker container stop server_dev
+
+(9. 컨테이너 파기)
+- 테스트를 완료한 컨테이너를 파기합니다.
+> docker container rm server_dev
+
+(10. 사용하지 않는 모든 이미지 삭제)
+- 테스트를 완료한 이미지를 삭제합니다.
+> docker image prune -af
+
+(배포하기)
+- 도커 테스트가 완료되었습니다.
+    이제 server_prod.tar 파일을 원하는 컴퓨터의 원하는 위치에 복사하여,
+
+    8. 기존 컨테이너 중단 ->
+    9. 기존 컨테이너 파기 ->
+    10. 사용하지 않는 모든 이미지 삭제 ->
+    4. 이미지 파일에서 이미지 불러오기 ->
+    5. 컨테이너 생성 및 실행
+
+    위 순서대로 실행시키면 배포 완료입니다.

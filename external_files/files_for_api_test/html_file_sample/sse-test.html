@@ -1,0 +1,159 @@
+ <!DOCTYPE html>
+ <html xmlns="http://www.w3.org/1999/xhtml">
+
+ <head>
+     <title>ProwdTemplate</title>
+     <meta charset="UTF-8"/>
+     <title>Sample</title>
+     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"/>
+     <style>
+         /* [Tag] */
+         body {
+             padding: 10px 20px;
+             box-sizing: border-box;
+             height: 100%;
+             min-height: 100vh;
+             font-family: 'Open Sans', sans-serif;
+             font-size: 14px;
+             font-weight: 400;
+             line-height: 1.5;
+             margin: 0;
+             display: flex;
+             flex-direction: column;
+         }
+
+         input {
+             background-image: none;
+             border: 0;
+             color: inherit;
+             font: inherit;
+             margin: 0;
+             outline: 0;
+             padding: 0;
+             transition: background-color 0.3s;
+         }
+         input[type='submit'] {
+             cursor: pointer;
+         }
+         button {
+             cursor: pointer;
+         }
+
+         h3{
+           margin-top: 5px;
+           margin-bottom: 5px;
+         }
+
+         hr{
+             width: 100%;
+         }
+
+
+         /* [Class] */
+         .main_btn{
+             width: 200px;
+             height: 30px;
+             background-color: #277cea;
+             color: #eee;
+             border-radius: 0.25rem;
+             margin-bottom: 10px;
+         }
+
+         .user_btn{
+             padding:5px 10px;
+             width: auto;
+             height: 30px;
+             background-color: #277cea;
+             color: #eee;
+             border-radius: 0.25rem;
+             margin-bottom: 10px;
+             float: right;
+         }
+
+         .title{
+             display: inline;
+             margin-left: 30px;
+         }
+
+         .title_icon{
+             width : 30px;
+             height : 30px;
+         }
+
+         /* [Id] */
+
+         /* [Name] */
+
+     </style>
+
+     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+     <script type="text/javascript">
+         $(document).ready(function(){ // 화면 객체 준비 완료까지 지연
+             // (sse 생성 함수)
+             var sse = null;
+             function sseSubscribe() {
+                 sse = new EventSource("http://localhost:8080/service1/tk/v1/request-test/sse-test/subscribe");
+
+                 sse.addEventListener('system', (e) => {
+                     const { data: receivedData } = e;
+                     console.log('connect event data: ',receivedData);
+                 });
+
+                 sse.addEventListener('triggerTest', (e) => {
+                     const { data: receivedData } = e;
+
+                     const p = document.createElement("p")
+                     p.innerText = receivedData
+
+                     $("#trigger_test").prepend(p)
+                 });
+             }
+
+
+             // (sse 초기 생성)
+             sseSubscribe();
+
+
+             // (클릭 리스너)
+             $("#trigger_btn").click(function javascript_onclick(){
+                 $.ajax({
+                        type: 'post',
+                        url: 'http://127.0.0.1:8080/service1/tk/v1/request-test/sse-test/event-trigger'
+                 });
+             });
+
+
+             $("#sse_toggle_btn").click(function javascript_onclick(){
+                 var btnValue = $("#sse_toggle_btn").text();
+
+                 if(btnValue == "SSE Close From Client"){
+                     sse.close();
+                     sse = null
+                     $("#sse_toggle_btn").text('SSE Subscribe');
+                 }else{
+                     sseSubscribe();
+                     $("#sse_toggle_btn").text('SSE Close From Client');
+                 }
+
+             });
+
+         });
+
+     </script>
+ </head>
+
+ <body>
+
+ <h3>SSE 동작 버튼</h3>
+
+ <button class="main_btn" id="trigger_btn" type="button">SSE Event Trigger</button>
+ <button class="main_btn" id="sse_toggle_btn" type="button">SSE Close From Client</button>
+ <br>
+ <br>
+ <h3>SSE 트리거 수신</h3>
+ <div id="trigger_test" style="overflow-y:scroll; width:300px; height:150px; padding:4px; border:1 solid #000000;">
+
+ </div>
+
+ </body>
+ </html>

@@ -1,0 +1,23 @@
+- 도커 컨테이너 실행 명령어 (커맨드창에서 본 디렉토리 경로로 이동하여 입력하세요.)
+>> docker-compose -f redis-compose.yml up -d
+
+- 완료 후 클러스터 설정
+redis-master-1 의 커맨드창에서 master 설정
+>> yes yes | redis-cli --cluster create 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 -a todoPw
+
+slave 추가
+>> redis-cli --cluster add-node 127.0.0.1:7101 127.0.0.1:7001 --cluster-slave -a todoPw
+>> redis-cli --cluster add-node 127.0.0.1:7102 127.0.0.1:7002 --cluster-slave -a todoPw
+>> redis-cli --cluster add-node 127.0.0.1:7103 127.0.0.1:7003 --cluster-slave -a todoPw
+
+- 테스트
+>> redis-cli -c -p 7001 -a todoPw
+>> cluster info
+>> cluster nodes
+
+>> set a "testa"
+>> get a
+>> set b "testb"
+>> get b
+>> set d "testd"
+>> get d

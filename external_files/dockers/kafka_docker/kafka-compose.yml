@@ -1,0 +1,102 @@
+services:
+  zookeeper:
+    container_name: zookeeper
+    image: wurstmeister/zookeeper:latest
+    # 종료시 재시작
+    restart: always
+    ports:
+      - "2181:2181"
+    environment:
+      # Zookeeper 클라이언트가 사용할 포트
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka1:
+    container_name: kafka1
+    image: wurstmeister/kafka:latest
+    # 종료시 재시작
+    restart: always
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    volumes:
+      - C:/Users/raill/Downloads/tmp/kafka/kafka1:/kafka
+      - ./conf/kafka_server_jaas.conf:/etc/kafka/kafka_server_jaas.conf
+      - ./conf/producer_jaas.conf:/etc/kafka/producer_jaas.conf
+      - ./conf/consumer_jaas.conf:/etc/kafka/consumer_jaas.conf
+    environment:
+      # Kafka 브로커의 고유 ID를 설정합니다. 이 값은 클러스터 내에서 유일해야 합니다.
+      KAFKA_BROKER_ID: 1
+      # Kafka 브로커가 Zookeeper에 연결하는 데 사용할 주소를 설정합니다.(동일 주 키퍼를 바라보는 모든 브로커를 하나의 클러스터라고 합니다.)
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      # 브로커가 수신할 수 있는 주소와 포트를 설정합니다. PLAINTEXT://0.0.0.0:9092는 모든 네트워크 인터페이스에서 9092 포트로 수신하겠다는 의미입니다.
+      KAFKA_LISTENERS: SASL_PLAINTEXT://0.0.0.0:9092
+      # 클라이언트가 이 브로커에 연결할 때 사용할 주소입니다.
+      KAFKA_ADVERTISED_LISTENERS: SASL_PLAINTEXT://host.docker.internal:9092
+      # 리스너와 보안 프로토콜의 매핑을 설정합니다. 여기서는 PLAINTEXT 리스너에 대해 PLAINTEXT 보안 프로토콜을 사용한다고 지정합니다.
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: SASL_PLAINTEXT:SASL_PLAINTEXT
+      # Kafka 로그 파일이 저장될 디렉토리 경로를 지정합니다. 일반적으로 /kafka/kafka-logs로 설정합니다.
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
+      # 오프셋 저장을 위한 토픽의 복제 인자입니다. 이 값은 클러스터의 안정성을 위해 설정됩니다.
+      # 값이 2로 설정되어 있으면, 오프셋 저장 토픽이 2개의 브로커에 복제됩니다.
+      # 이 설정은 클러스터가 최소 2개의 브로커를 가지고 있어야 효과적입니다.
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+      # SASL 보안 설정
+      KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/kafka_server_jaas.conf"
+      KAFKA_INTER_BROKER_LISTENER_NAME: SASL_PLAINTEXT
+      KAFKA_SASL_ENABLED_MECHANISMS: PLAIN
+      KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL: PLAIN
+
+  kafka2:
+    container_name: kafka2
+    image: wurstmeister/kafka:latest
+    restart: always
+    ports:
+      - "9093:9093"
+    depends_on:
+      - zookeeper
+    volumes:
+      - C:/Users/raill/Downloads/tmp/kafka/kafka2:/kafka
+      - ./conf/kafka_server_jaas.conf:/etc/kafka/kafka_server_jaas.conf
+      - ./conf/producer_jaas.conf:/etc/kafka/producer_jaas.conf
+      - ./conf/consumer_jaas.conf:/etc/kafka/consumer_jaas.conf
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: SASL_PLAINTEXT://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: SASL_PLAINTEXT://host.docker.internal:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: SASL_PLAINTEXT:SASL_PLAINTEXT
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+
+      KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/kafka_server_jaas.conf"
+      KAFKA_INTER_BROKER_LISTENER_NAME: SASL_PLAINTEXT
+      KAFKA_SASL_ENABLED_MECHANISMS: PLAIN
+      KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL: PLAIN
+
+  kafka3:
+    container_name: kafka3
+    image: wurstmeister/kafka:latest
+    restart: always
+    ports:
+      - "9094:9094"
+    depends_on:
+      - zookeeper
+    volumes:
+      - C:/Users/raill/Downloads/tmp/kafka/kafka3:/kafka
+      - ./conf/kafka_server_jaas.conf:/etc/kafka/kafka_server_jaas.conf
+      - ./conf/producer_jaas.conf:/etc/kafka/producer_jaas.conf
+      - ./conf/consumer_jaas.conf:/etc/kafka/consumer_jaas.conf
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: SASL_PLAINTEXT://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: SASL_PLAINTEXT://host.docker.internal:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: SASL_PLAINTEXT:SASL_PLAINTEXT
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+
+      KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/kafka_server_jaas.conf"
+      KAFKA_INTER_BROKER_LISTENER_NAME: SASL_PLAINTEXT
+      KAFKA_SASL_ENABLED_MECHANISMS: PLAIN
+      KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL: PLAIN

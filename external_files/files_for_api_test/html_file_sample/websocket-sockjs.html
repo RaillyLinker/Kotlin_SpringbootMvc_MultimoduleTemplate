@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>1on1 Test</title>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script th:inline="javascript">
+$(document).ready(function(){
+    var websocket = new SockJS('http://localhost:8080/ws/test');
+
+    websocket.onopen = onOpen;
+    websocket.onclose = onClose;
+    websocket.onmessage = onMessage;
+
+    // 채팅창에 들어왔을 때
+    function onOpen(evt) {
+        var str = "<div class='col-6'>";
+        str += "<div class='alert alert-warning'>";
+        str += "<b>" + "System" + " : " + "서버와 연결되었습니다." + "</b>";
+        str += "</div></div>";
+        $("#msgArea").append(str);
+    }
+
+    // 채팅창에서 나갔을 때
+    function onClose(evt) {
+        var str = "<div class='col-6'>";
+        str += "<div class='alert alert-warning'>";
+        str += "<b>" + "System" + " : " + "서버와의 연결이 해제되었습니다." + "</b>";
+        str += "</div></div>";
+        $("#msgArea").append(str);
+    }
+
+    // 메세지 받았을 때
+    function onMessage(msg) {
+        var data = JSON.parse(msg.data);
+
+        var sender = data.sender;
+        var message = data.message;
+
+        var str = "<div class='col-6'>";
+        str += "<div class='alert alert-warning'>";
+        str += "<b>" + sender + " : " + message + "</b>";
+        str += "</div></div>";
+        $("#msgArea").append(str);
+    }
+
+    $("#button-send").on("click", (e) => {
+        let msg = document.getElementById("msg");
+        if(msg.value != null && msg.value != ""){
+            websocket.send(JSON.stringify({"sender" : "Client", "message" : msg.value}));
+
+            var str = "<div class='col-6'>";
+            str += "<div class='alert alert-warning'>";
+            str += "<b>" + "Client" + " : " + msg.value + "</b>";
+            str += "</div></div>";
+            $("#msgArea").append(str);
+
+            msg.value = '';
+        }
+    });
+})
+</script>
+</head>
+//
+<body>
+<th:block th:fragment="content">
+<div class="container">
+<div>
+<div class="col-6">
+<div class="input-group mb-3">
+<input type="text" id="msg" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+<button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+</div>
+</div>
+<div id="msgArea" class="col"></div>
+</div>
+</div>
+</th:block>
+</body>
+</html>

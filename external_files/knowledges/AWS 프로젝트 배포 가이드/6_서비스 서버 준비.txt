@@ -1,0 +1,273 @@
+[서비스 서버 준비]
+- 실질적으로 오픈할 서비스 서버를 만들어보겠습니다.
+    방법론은 동일하므로, 앞으로 새로운 서비스를 만들 때는 이것을 참고하여 배포하면 됩니다.
+
+- 본 설명글에서는 일단 수동 배포 방식을 알려드리는데,
+    서버 접속 테스트 이후에는 앞으로 CI/CD 를 사용하여 배포를 자동화 할 것입니다.
+    배포 자동화 설명은 다음 설명글에 젠킨스 설치를 방식과 함께 정리합니다.
+
+- AWS EC2 에 배포하기
+    1. AWS 콘솔에서 EC2 항목으로 이동한 후,
+        인스턴스를 하나 만들어줄 것입니다.(서비스 이름은 스스로 결정하세요.)
+        이 인스턴스 하나에 배포 서비스, 개발 서비스로, 서비스 2개를 올릴 것입니다.
+
+        인스턴스 시작 버튼을 누르고,
+        이미지는 ubuntu Ubuntu Server 24.04 LTS (HVM), SSD Volume Type,
+        인스턴스 유형은 t2.small, 키페어는 가이드 3번 글에서 만든 키페어를 선택하고,
+        보안그룹 생성, 스토리지 구성은 30GiB 범용 SSD gp3
+
+        위와 같이 생성합니다.
+
+    2. 네트워크 및 보안 탭에 탄력적 IP 를 누릅니다.
+        탄력적 IP 주소 할당을 누르고,
+        태그에 Name 키에 인스턴스 이름과 동일한 값으로 하여 탄력적 IP 를 할당합니다.
+        생성된 IP 를 선택하고, 작업 - 탄력적 IP 주소 연결 을 누르고, 앞서 생성한 인스턴스와 연결해줍니다.
+        이 작업을 해주는 이유는, EC2 인스턴스의 경우는 중단되었다가 다시 실행되면 그때마다 IP 가 새로 할당됩니다.
+        이렇게 IP 가 변경되는 것을 막기 위하여 탄력적 IP 로 미리 IP 를 할당받았다가,
+        인스턴스에 연결하는 방식으로 IP 변동을 막는 것입니다.
+        즉, 탄력적 IP 의 IP 주소가 앞으로 해당 인스턴스의 IP 가 되는 것입니다.
+        주의할 점으로는, 탄력적 IP 는 생성할 수 있는 개수가 한정되어 있습니다.
+        한정 수량을 넘어가면 검색해서 AWS 에 요청하는 방법을 찾아보면 되고,
+        탄력적 IP 는 만약 현재 실행중인 인스턴스에 할당되지 않은 상태로 존재한다면,
+        그 자체로 유지비용의 요금이 발생합니다.
+
+    3. 접속 보안 설정
+        SSH 포트인 22 번 포트는 보안을 위하여 개발자 위치에만 공개해 두어야 합니다.
+
+        보안 그룹 - 인바운드 규칙 - 인바운드 규칙 편집
+
+        으로 이동하고,
+
+        앞서 가이드 5번 글에서 했던대로, 허용할 포트와 ip 를 설정할 때,
+        SSH 의 22 번 포트를 현재 내 ip 에만 설정하세요.
+
+        개발 서버의 8080, 배포 서버의 80 포트는 적절하게 개방하면 되는데,
+        개발 서버는 스웨거 문서를 오픈할 것이므로, 개발자들의 접근 ip 에만 개방하고,
+        배포 서버는 전체 개방을 하면 됩니다.
+
+    4. OpenSSH 접속 및 기본 설정
+        커맨드창을 열고,
+
+        >> chmod 400 **(EC2 SSH 키페어 이름)**.pem
+
+        를 입력해주고,
+
+        >> ssh -i "**(EC2 SSH 키페어 이름)**.pem" ubuntu@1.1.1.1
+        위와 같이 명령어를 입력합니다.
+
+        접속 명령어 뒤의 ubuntu@1.1.1.1 부분은 연결할 유저명과 접속하려는 ip 주소를 입력하면 됩니다.
+        ip주소는 앞서 각 인스턴스와 연결한 탄력적 ip를 사용하면 됩니다.
+        유저명은 OS 별로 다른데,
+        https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesConnecting.html#TroubleshootingInstancesConnectingPuTTY
+        에서 참고하면 됩니다.
+
+        먼저, 커맨드창 이름을 보기 쉽게 만들기 위해
+        >> sudo hostnamectl set-hostname {인스턴스명}
+        를 입력합니다.
+        커맨드라인 별명을 적용을 시키려면 sudo reboot 를 사용해서 재부팅을 시키고 다시 접속하면 됩니다.
+
+        그리고 EC2 시간을 기본인 UTC 에서 한국시간 KST로 바꿉니다.
+
+        >> sudo rm /etc/localtime
+        >> sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+
+        >> date
+        를 입력해서 KST 시간이 나온되면 된 것입니다.
+
+        >> sudo apt-get update
+        >> sudo apt-get upgrade
+
+        서버 가상 Ram 증가 :
+        AWS 프리티어 인스턴스의 경우는 Ram 이 작아서 하드디스크 영역을 가상램으로 할당해서 임시로 램을 늘립니다.
+        상대적으로 부족한 램 크기를 상대적으로 풍족한 롬 크기로 보완하는 것입니다.
+
+        >> df -h
+        로 하드디스크 용량 확인
+
+        >> free
+        로 메모리 swap 메모리 용량 확인
+
+        >> sudo fallocate -l 8G /swapfile
+        스왑 메모리 설정
+
+        >> sudo chmod 600 /swapfile
+        >> sudo mkswap /swapfile
+        >> sudo swapon /swapfile
+
+        재부팅시에도 유지하기 위해,
+        >> sudo nano /etc/fstab
+        를 열고,
+
+        /swapfile swap swap defaults 0 0
+
+        를 추가
+
+        성공여부 확인
+        >> free
+        로 swap 영역확인
+
+        >> sudo reboot
+        재부팅 후 다시 접속하여
+
+        >> free
+        로 swap 영역확인
+
+        도커 설치에 필요한 패키지 설치
+        >> sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+        도커 공식 GPG 키 추가
+        >> curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+        도커 공식 apt 저장소 추가
+        >> sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+        시스템 패키지 업데이트
+        >> sudo apt-get update
+
+        도커 설치
+        >> sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+        도커 실행 상태 확인
+        >> sudo systemctl status docker
+
+        이제 도커를 이용한 서비스 실행 환경이 준비된 것입니다.
+
+        CI/CD 배포 자동화를 바로 적용하려면
+
+        >> cd ~
+        >> mkdir dev
+        >> mkdir prod
+
+        위 명령어로 디렉토리를 두개 만든 후에 다음 설명글로 넘어가면 되고,
+        수동 배포, 혹은 테스트를 해보고 싶으시다면 아래 절차를 따라하시면 됩니다.
+
+    5. 스프링 프로젝트 도커 이미지 파일 생성
+        원하는 스프링 부트 프로젝트는 본 프로젝트를 기반으로 만들어졌다고 가정하겠습니다.
+
+        가이드 설명글 2번을 참고하여 도커 이미지 .tar 파일을 생성합니다.
+        개발 이미지, 배포 이미지 두개 전부 준비해주세요.
+
+        tar 파일을 만들기 전에 주의할 점은,
+        Springboot application.yml 설정 안에,
+
+        spring.boot.admin 부분,
+        datasource 부분,
+        custom-config.actuatorAllowIpList 부분,
+        custom-config.loggingDenyIpList 부분
+
+        위 부분을 앞서 준비된 정보로 갱신하고 빌드를 해야합니다.
+
+        데이터베이스 설정에, 앞서 생성한 AWS RDS 주소를 사용한다면,
+        본 서버의 요청을 RDS 가 허용해야 하기에,
+        AWS 보안 설정으로 가서 데이터베이스의 인바운드 설정에 서버의 IP 를 허용하도록 설정하세요.
+
+        동일 VPN 내의 데이터베이스인 경우에는,
+        외부에서 접근하기 위한 퍼블릭 IP 를 허용하는 것이 아니라,
+        내부의 프라이빗 IP 를 허용해야 하는 것을 주의합시다.
+
+    6. 도커 이미지 파일 전달
+        앞서 생성했던 .tar 파일 2개를 EC2 에 전달해줍니다.
+
+        >> scp -i "{pem 키 파일}" "{전송할 파일}" {아이디@전송할 서버주소}:{저장될 서버의 디렉토리}
+
+        위와 같은 형태의 명령어를 실행시키면 됩니다.
+
+        ubuntu 에는, /home/ubuntu/dev 디렉토리에 server_dev.tar 파일을,
+        /home/ubuntu/prod 디렉토리에 server_prod.tar 파일을 저장하도록 하였습니다.
+
+        전달이 완료되어 EC2 인스턴스 SSH 에서 해당 파일을 확인했다면,
+
+    7. 개발 서버 실행
+        cd 명령어로 /home/ubuntu/dev 위치로 이동하고,
+
+        >> mkdir by_product_files
+        위 명령어로 로그파일처럼 서버 프로그램에서 생성되는 파일들을 저장할 위치를 만들어주고,
+
+        >> sudo docker container stop server_dev
+        >> sudo docker container rm server_dev
+        >> sudo docker image prune -af
+
+        위 명령어로 기존에 진행중일 수도 있는 도커 컨테이너 및 이미지를 제거하고,
+
+        >> sudo docker load -i server_dev.tar
+        >> sudo docker container run -v /home/ubuntu/dev/by_product_files:/app/by_product_files -d -e TZ=Asia/Seoul --rm -p8080:8080 --name server_dev raillylinker/server_dev:latest
+
+        위 명령어로 이미지 컨테이너를 실행시키면 됩니다.
+
+        이제 해당 서버의 8080 서버로 접속하여 Dev 서비스가 잘 동작하는지를 확인만 하면 완성입니다.
+
+    8. 배포 서버 실행
+        cd 명령어로 /home/ubuntu/prod 위치로 이동하고,
+
+        >> mkdir by_product_files
+        위 명령어로 로그파일처럼 서버 프로그램에서 생성되는 파일들을 저장할 위치를 만들어주고,
+
+        >> sudo docker container stop server_prod
+        >> sudo docker container rm server_prod
+        >> sudo docker image prune -af
+
+        위 명령어로 기존에 진행중일 수도 있는 도커 컨테이너 및 이미지를 제거하고,
+
+        >> sudo docker load -i server_prod.tar
+        >> sudo docker container run -v /home/ubuntu/prod/by_product_files:/app/by_product_files -d -e TZ=Asia/Seoul --rm -p80:80 --name server_prod raillylinker/server_prod:latest
+
+        위 명령어로 이미지 컨테이너를 실행시키면 됩니다.
+
+        이제 해당 서버의 80 서버로 접속하여 Prod 서비스가 잘 동작하는지를 확인만 하면 완성입니다.
+
+- 본 프로젝트는 actuator 를 사용하여 logback 의 로그 파일에 접근이 가능합니다.
+    다만, 본 프로젝트에서는 actuator 에 대한 접근을 함부로 할 수 없도록 접근을 막아둔 상태입니다.
+    actuator 로그를 확인하기 위해선 ApplicationRuntimeConfigs 안의 내용을 파악하여,
+    런타임 설정용 데이터베이스 테이블에 접근하고 actuator 허용 아이피 설정 값에 IP 를 입력한 후,
+    C1-N2 API 를 실행시켜주면 접근 허용이 반영됩니다.
+
+    /actuator/logfile
+
+    위 경로로 요청을 보내면 현재 로그 파일을 확인 가능합니다.
+
+- 추후 정보 전달을 위한 문서화를 합시다.
+    가이드 3번 글에서 만든 ServerInfo 폴더 안에,
+    "AWS EC2 server.txt" 파일을 만들고,
+    이 안에,
+
+
+    [server]
+    - 이 EC2 서버는 server 서비스를 위한 서버입니다.
+
+    키페어 파일 : developer.pem
+    OS : Ubuntu Server 24.04 LTS (HVM) - (t2.small)
+    접속 ip :
+    Vpc :
+    프라이빗 IP :
+    OpenSSH 접속 명령어 : ssh -i "petlogon-developer.pem" ubuntu@
+    Git Project :
+    도메인 주소 :
+
+    (Service Dev)
+    포트 : 8080
+    로그 파일 위치 : /home/ubuntu/dev/by_product_files/logs
+        http://127.0.0.1:8080/actuator/logfile
+
+    (Service Prod)
+    포트 : 80
+    로그 파일 위치 : /home/ubuntu/prod/by_product_files/logs
+        http://127.0.0.1:80/actuator/logfile
+
+
+    위와 같은 형식으로 문서를 작성하면 됩니다.
+
+    위에서 프라이빗 IP는, EC2 정보를 보거나,
+    SSH 접속해서
+    >> ifconfig | grep 'inet ' | grep -v '127.0.0.1'
+
+    위와 같이 입력했을 때,
+
+    inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+    inet 172.22.22.22  netmask 255.255.240.0  broadcast 172.33.33.33
+
+    이렇게 나왔다고 하면,
+    172.22.22.22 이렇게 나오는 주소로,
+
+    동일 VPC 내에서 사용하는 IP 입니다.
+
+    보안 설정에서 인바운드 설정시에, 동일 VPC 를 사용하는 경우에는 외부 IP 가 아니라 프라이빗 IP 를 설정해야 하는 것을 주의하세요.

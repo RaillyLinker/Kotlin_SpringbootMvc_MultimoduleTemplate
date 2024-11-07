@@ -1,0 +1,61 @@
+services:
+  redis-master-1:
+    container_name: redis-master-1
+    image: redis
+    command: redis-server /etc/redis.conf
+    volumes:
+      - ./conf/redis-master-1.conf:/etc/redis.conf
+    restart: always
+    ports:
+      - "7001:7001"
+      - "7002:7002"
+      - "7003:7003"
+      - "7101:7101"
+      - "7102:7102"
+      - "7103:7103"
+
+  redis-master-2:
+    container_name: redis-master-2
+    image: redis
+    command: redis-server /etc/redis.conf
+    # springboot 테스트를 위해선 각 노드별 서로의 위치를 127.0.0.1 로 접근해야 하므로 같은 네트워크 공유
+    network_mode: "service:redis-master-1"
+    volumes:
+      - ./conf/redis-master-2.conf:/etc/redis.conf
+    restart: always
+
+  redis-master-3:
+    container_name: redis-master-3
+    image: redis
+    command: redis-server /etc/redis.conf
+    network_mode: "service:redis-master-1"
+    volumes:
+      - ./conf/redis-master-3.conf:/etc/redis.conf
+    restart: always
+
+  redis-slave-1:
+    container_name: redis-slave-1
+    image: redis
+    command: redis-server /etc/redis.conf
+    network_mode: "service:redis-master-1"
+    volumes:
+      - ./conf/redis-slave-1.conf:/etc/redis.conf
+    restart: always
+
+  redis-slave-2:
+    container_name: redis-slave-2
+    image: redis
+    command: redis-server /etc/redis.conf
+    network_mode: "service:redis-master-1"
+    volumes:
+      - ./conf/redis-slave-2.conf:/etc/redis.conf
+    restart: always
+
+  redis-slave-3:
+    container_name: redis-slave-3
+    image: redis
+    command: redis-server /etc/redis.conf
+    network_mode: "service:redis-master-1"
+    volumes:
+      - ./conf/redis-slave-3.conf:/etc/redis.conf
+    restart: always

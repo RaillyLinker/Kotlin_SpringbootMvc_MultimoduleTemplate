@@ -1,0 +1,52 @@
+- 도커 컨테이너 실행 명령어 (커맨드창에서 본 디렉토리 경로로 이동하여 입력하세요.)
+>> docker-compose -f elk-compose.yml up -d
+
+- ELK 스택 구조는, Springboot 와 같은 서비스에서 로그 정보를 특정 LogStash 로 보내면,
+    해당 Logstash 의 index 를 구분으로 하여 Elastic Search 로 전달되고,
+    Elastic Search 에 저장된 데이터를 Kibana 에서 읽어와 화면에 보여주는 구조입니다.
+    즉, ElasticSearch 가 중심이 되며, 그것을 보여주는 역할인 Kibana 가 유저에게 가장 가깝게 있고,
+    여러개의 LogStash 가 서비스로부터 로그를 수집하여 Elastic Search 로 전달하는 구조를 지닙니다.
+
+- 위 도커 컨테이너 실행 후 LogStash 에 Springboot 로그를 전달할 것입니다.
+    build.gradle.kts 안에,
+
+
+    // (LogStash)
+    implementation("net.logstash.logback:logstash-logback-encoder:7.4")
+
+
+    위 라이브러리를 추가하고,
+
+    logback-spring.xml 파일 안에,
+
+
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <!-- 로그 스태시 주소 -->
+        <destination>localhost:5000</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        </encoder>
+    </appender>
+
+    <logger name="INFO_LOG" level="DEBUG">
+        <appender-ref ref="LOGSTASH"/>
+    </logger>
+
+
+    위와 같은 LogStash appender 를 추가해주면 됩니다.
+
+    이제 Springboot 에서 로그가 발생하면 이것은 모두 localhost:5000 의 logstash 로 전달되며, 이는 logstash 설정에서
+    index => "logstash-%{+YYYY.MM.dd}"
+    위와 같은 형태로 저장되어 조회가 가능하게 됩니다.
+
+    kibana 에서 이를 확인하려면,
+    http://localhost:5601
+    에 접속하여,
+
+    Analitics -> Discover 를 클릭한 후,
+
+    Create index pattern 버튼을 누르고,
+
+    Name 에는 앞서 설정한 index 이름과 같이 logstash-* 이렇게 설정하고,
+    Timestamp field 에는 @timestamp 를 선택하면 됩니다.
+
+    이렇게 Create index pattern 을 설정하면, logstash-* 형태로 저장된 로그를 확인 가능합니다.
