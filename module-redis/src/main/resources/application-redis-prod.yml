@@ -1,0 +1,16 @@
+# (실행 환경 prod 설정)
+# : 배포 환경 엄중한 환경 설정
+
+spring:
+  config:
+    activate: # 프로필명 설정
+      on-profile: redis-prod
+
+# Redis DataSource 설정
+datasource-redis:
+  # Redis 추가
+  # 작명법은, 앞에 redis{index}-{제목} 형식으로 하기(다른 datasource 설정과의 통일성을 위해)
+
+  # (주 사용 Redis)
+  redis1-main:
+    node-list: 127.0.0.1:7001, 127.0.0.1:7002, 127.0.0.1:7003, 127.0.0.1:7101, 127.0.0.1:7102, 127.0.0.1:7103
