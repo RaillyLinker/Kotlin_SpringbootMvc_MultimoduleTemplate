@@ -23,7 +23,7 @@ custom-config: # 프로젝트 내에서 사용하는 커스텀 설정
   swagger: # Swagger 문서 설정
     document-version: 1.0.0
     # !!!Swagger 문서 타이틀!!!
-    document-title: Java SpringBoot MVC MultiModule Template APIs (Local)
+    document-title: Kotlin SpringBoot MVC MultiModule Template APIs (Local)
     document-description:
       |
       **[읽어주세요]**
