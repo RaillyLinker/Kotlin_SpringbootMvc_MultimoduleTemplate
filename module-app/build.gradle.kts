@@ -9,6 +9,7 @@ dependencies {
     implementation(project(":module-redis"))
     implementation(project(":module-api-project"))
     implementation(project(":module-scheduler"))
+    implementation(project(":module-socket"))
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발
