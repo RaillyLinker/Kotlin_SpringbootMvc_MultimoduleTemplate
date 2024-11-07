@@ -1,0 +1,32 @@
+# (실행 환경 prod 설정)
+# : 배포 환경 엄중한 환경 설정
+
+spring:
+  config:
+    activate: # 프로필명 설정
+      on-profile: common-prod
+
+cloud:
+  aws:
+    credentials:
+      access-key: InputYourAccessKey
+      secret-key: InputYourSecretKey
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+custom-config: # 프로젝트 내에서 사용하는 커스텀 설정
+  naverSms: # Naver SMS 설정
+    access-key: InputYourAccessKey
+    secret-key: InputYourSecretKey
+    service-id: ncp:sms:kr:test:test
+    phone-number: test
+    alim-talk-service-id: ncp:kkobizmsg:kr:test:test
+
+  smtp: # SMTP 설정
+    host: smtp.gmail.com # SMTP 호스트
+    port: 587 # SMTP 포트
+    sender-name: InputYourEmailId@test.com # SMTP 계정 아이디
+    sender-password: InputYourSenderPassword # SMTP 계정 비밀번호
+    time-out-millis: 10000 # 타임아웃 밀리초

@@ -14,6 +14,7 @@ dependencies {
     implementation(project(":module-kafka"))
     implementation(project(":module-mongodb"))
     implementation(project(":module-jpa"))
+    implementation(project(":module-common"))
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발

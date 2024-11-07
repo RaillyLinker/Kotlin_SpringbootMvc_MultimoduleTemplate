@@ -7,7 +7,7 @@ dependencies {
     // (모듈)
 
     // (retrofit2 네트워크 요청)
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    api("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
 
