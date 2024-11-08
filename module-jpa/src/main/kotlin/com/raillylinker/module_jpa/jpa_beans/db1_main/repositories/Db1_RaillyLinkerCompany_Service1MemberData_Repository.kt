@@ -14,6 +14,11 @@ interface Db1_RaillyLinkerCompany_Service1MemberData_Repository :
         rowDeleteDateStr: String
     ): Boolean
 
+    fun findByUidAndRowDeleteDateStr(
+        uid: Long,
+        rowDeleteDateStr: String
+    ): Db1_RaillyLinkerCompany_Service1MemberData?
+
     fun findByAccountIdAndRowDeleteDateStr(
         accountId: String,
         rowDeleteDateStr: String

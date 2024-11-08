@@ -9,4 +9,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface Db1_RaillyLinkerCompany_Service1AddEmailVerificationData_Repository :
     JpaRepository<Db1_RaillyLinkerCompany_Service1AddEmailVerificationData, Long> {
+    fun findByUidAndRowDeleteDateStr(
+        uid: Long,
+        rowDeleteDateStr: String
+    ): Db1_RaillyLinkerCompany_Service1AddEmailVerificationData?
 }
