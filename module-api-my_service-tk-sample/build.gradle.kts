@@ -7,6 +7,7 @@ dependencies {
     // (모듈)
     implementation(project(":module-common"))
     implementation(project(":module-retrofit2"))
+    implementation(project(":module-kafka"))
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발
@@ -27,4 +28,10 @@ dependencies {
 
     // (OkHttp3)
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+    // (폰트 파일 내부 이름 가져오기용)
+    implementation("org.apache.pdfbox:pdfbox:3.0.3")
+
+    // (JSOUP - HTML 태그 조작)
+    implementation("org.jsoup:jsoup:1.18.1")
 }

@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta charset='UTF-8'/>
+    <title>HTML 2 PDF</title>
+
+    <style>
+        @font-face {
+             font-family: NanumGothic;
+             src: "NanumGothicFile.ttf";
+             -fs-pdf-font-embed: embed;
+             -fs-pdf-font-encoding: Identity-H;
+         }
+
+        @font-face {
+             font-family: NanumMyeongjo;
+             src: "NanumMyeongjo.ttf";
+             -fs-pdf-font-embed: embed;
+             -fs-pdf-font-encoding: Identity-H;
+         }
+
+        /* [Tag] */
+        body {
+             padding: 10px 20px;
+             box-sizing: border-box;
+             height: 100%;
+             min-height: 100vh;
+             font-family: 'NanumGothic';
+             font-size: 14px;
+             font-weight: 400;
+             line-height: 1.5;
+             margin: 0;
+             display: flex;
+             flex-direction: column;
+        }
+
+        hr{
+             width: 100%;
+        }
+
+        img{
+             width: 50%;
+             height: auto;
+        }
+
+        /* [Class] */
+        .other_font{
+             font-family: 'NanumMyeongjo';
+        }
+
+        /* [Id] */
+
+        /* [Name] */
+    </style>
+</head>
+<body>
+<div>
+    <div>
+        <h2>제목</h2>
+        <p th:text="${title}">타이틀</p>
+    </div>
+
+    <div>
+        <h2>Static 이미지 예시</h2>
+        <img src="html_to_pdf_sample.jpg"/>
+    </div>
+
+    <div>
+        <h2>네트워크 이미지 예시</h2>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Le_penseur_de_la_Porte_de_lEnfer_%28mus%C3%A9e_Rodin%29_%284528252054%29.jpg/1280px-Le_penseur_de_la_Porte_de_lEnfer_%28mus%C3%A9e_Rodin%29_%284528252054%29.jpg"/>
+    </div>
+
+    <div>
+        <h2>영문 예시</h2>
+        <div>
+            The standard Lorem Ipsum passage, used since the 1500s
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum."
+
+            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+            aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
+            dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
+            sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore
+            magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
+            suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in
+            ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas
+            nulla pariatur?"
+
+            1914 translation by H. Rackham
+            "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and
+            I will give you a complete account of the system, and expound the actual teachings of the great explorer of
+            the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself,
+            because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter
+            consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain
+            pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can
+            procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical
+            exercise, except to obtain some advantage from it? But who has any right to find fault with a man who
+            chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no
+            resultant pleasure?"
+
+            1914 translation by H. Rackham
+        </div>
+    </div>
+
+    <div>
+        <h2 class="other_font">다른 폰트 영문 예시</h2>
+        <div class="other_font">
+            The standard Lorem Ipsum passage, used since the 1500s
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum."
+
+            Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+            aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
+            dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
+            sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore
+            magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
+            suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in
+            ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas
+            nulla pariatur?"
+
+            1914 translation by H. Rackham
+            "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and
+            I will give you a complete account of the system, and expound the actual teachings of the great explorer of
+            the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself,
+            because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter
+            consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain
+            pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can
+            procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical
+            exercise, except to obtain some advantage from it? But who has any right to find fault with a man who
+            chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no
+            resultant pleasure?"
+
+            1914 translation by H. Rackham
+        </div>
+    </div>
+
+    <div>
+        <h2>한글 예시</h2>
+        <div>
+            대통령이 궐위되거나 사고로 인하여 직무를 수행할 수 없을 때에는 국무총리, 법률이 정한 국무위원의 순서로 그 권한을 대행한다. 이 헌법시행 당시의 대법원장과 대법원판사가 아닌 법관은 제1항
+            단서의 규정에 불구하고 이 헌법에 의하여 임명된 것으로 본다. 국무위원은 국정에 관하여 대통령을 보좌하며, 국무회의의 구성원으로서 국정을 심의한다. 형사피고인은 유죄의 판결이 확정될 때까지는
+            무죄로 추정된다. 법률은 특별한 규정이 없는 한 공포한 날로부터 20일을 경과함으로써 효력을 발생한다. 국가는 여자의 복지와 권익의 향상을 위하여 노력하여야 한다. 대통령은
+            국무총리·국무위원·행정각부의 장 기타 법률이 정하는 공사의 직을 겸할 수 없다.
+
+            정당의 설립은 자유이며, 복수정당제는 보장된다. 대법원에 대법관을 둔다. 다만, 법률이 정하는 바에 의하여 대법관이 아닌 법관을 둘 수 있다. 대통령은 취임에 즈음하여 다음의 선서를 한다.
+            언론·출판에 대한 허가나 검열과 집회·결사에 대한 허가는 인정되지 아니한다. 이 헌법중 공무원의 임기 또는 중임제한에 관한 규정은 이 헌법에 의하여 그 공무원이 최초로 선출 또는 임명된 때로부터
+            적용한다. 법률안에 이의가 있을 때에는 대통령은 제1항의 기간내에 이의서를 붙여 국회로 환부하고, 그 재의를 요구할 수 있다. 국회의 폐회중에도 또한 같다. 나는 헌법을 준수하고 국가를 보위하며
+            조국의 평화적 통일과 국민의 자유와 복리의 증진 및 민족문화의 창달에 노력하여 대통령으로서의 직책을 성실히 수행할 것을 국민 앞에 엄숙히 선서합니다.
+
+            행정권은 대통령을 수반으로 하는 정부에 속한다. 대통령이 제1항의 기간내에 공포나 재의의 요구를 하지 아니한 때에도 그 법률안은 법률로서 확정된다. 대통령·국무총리·국무위원·행정각부의
+            장·헌법재판소 재판관·법관·중앙선거관리위원회 위원·감사원장·감사위원 기타 법률이 정한 공무원이 그 직무집행에 있어서 헌법이나 법률을 위배한 때에는 국회는 탄핵의 소추를 의결할 수 있다.
+            헌법재판소의 장은 국회의 동의를 얻어 재판관중에서 대통령이 임명한다. 국가는 사회보장·사회복지의 증진에 노력할 의무를 진다. 국가는 모성의 보호를 위하여 노력하여야 한다. 국회의원은 그 지위를
+            남용하여 국가·공공단체 또는 기업체와의 계약이나 그 처분에 의하여 재산상의 권리·이익 또는 직위를 취득하거나 타인을 위하여 그 취득을 알선할 수 없다.
+        </div>
+    </div>
+
+    <div>
+        <h2 class="other_font">다른 폰트 한글 예시</h2>
+        <div class="other_font">
+            대통령이 궐위되거나 사고로 인하여 직무를 수행할 수 없을 때에는 국무총리, 법률이 정한 국무위원의 순서로 그 권한을 대행한다. 이 헌법시행 당시의 대법원장과 대법원판사가 아닌 법관은 제1항
+            단서의 규정에 불구하고 이 헌법에 의하여 임명된 것으로 본다. 국무위원은 국정에 관하여 대통령을 보좌하며, 국무회의의 구성원으로서 국정을 심의한다. 형사피고인은 유죄의 판결이 확정될 때까지는
+            무죄로 추정된다. 법률은 특별한 규정이 없는 한 공포한 날로부터 20일을 경과함으로써 효력을 발생한다. 국가는 여자의 복지와 권익의 향상을 위하여 노력하여야 한다. 대통령은
+            국무총리·국무위원·행정각부의 장 기타 법률이 정하는 공사의 직을 겸할 수 없다.
+
+            정당의 설립은 자유이며, 복수정당제는 보장된다. 대법원에 대법관을 둔다. 다만, 법률이 정하는 바에 의하여 대법관이 아닌 법관을 둘 수 있다. 대통령은 취임에 즈음하여 다음의 선서를 한다.
+            언론·출판에 대한 허가나 검열과 집회·결사에 대한 허가는 인정되지 아니한다. 이 헌법중 공무원의 임기 또는 중임제한에 관한 규정은 이 헌법에 의하여 그 공무원이 최초로 선출 또는 임명된 때로부터
+            적용한다. 법률안에 이의가 있을 때에는 대통령은 제1항의 기간내에 이의서를 붙여 국회로 환부하고, 그 재의를 요구할 수 있다. 국회의 폐회중에도 또한 같다. 나는 헌법을 준수하고 국가를 보위하며
+            조국의 평화적 통일과 국민의 자유와 복리의 증진 및 민족문화의 창달에 노력하여 대통령으로서의 직책을 성실히 수행할 것을 국민 앞에 엄숙히 선서합니다.
+
+            행정권은 대통령을 수반으로 하는 정부에 속한다. 대통령이 제1항의 기간내에 공포나 재의의 요구를 하지 아니한 때에도 그 법률안은 법률로서 확정된다. 대통령·국무총리·국무위원·행정각부의
+            장·헌법재판소 재판관·법관·중앙선거관리위원회 위원·감사원장·감사위원 기타 법률이 정한 공무원이 그 직무집행에 있어서 헌법이나 법률을 위배한 때에는 국회는 탄핵의 소추를 의결할 수 있다.
+            헌법재판소의 장은 국회의 동의를 얻어 재판관중에서 대통령이 임명한다. 국가는 사회보장·사회복지의 증진에 노력할 의무를 진다. 국가는 모성의 보호를 위하여 노력하여야 한다. 국회의원은 그 지위를
+            남용하여 국가·공공단체 또는 기업체와의 계약이나 그 처분에 의하여 재산상의 권리·이익 또는 직위를 취득하거나 타인을 위하여 그 취득을 알선할 수 없다.
+        </div>
+    </div>
+
+    <div>
+        <h2>테이블 예시</h2>
+        <table border="1">
+            <th>테이블</th>
+            <th>만들기</th>
+            <tr>
+                <td>첫번째 칸</td>
+                <td>두번째 칸</td>
+            </tr>
+            <tr>
+                <td>첫번째 칸</td>
+                <td>두번째 칸</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
