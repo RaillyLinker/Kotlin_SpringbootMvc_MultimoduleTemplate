@@ -8,6 +8,9 @@ dependencies {
     implementation(project(":module-common"))
     implementation(project(":module-retrofit2"))
     implementation(project(":module-kafka"))
+    implementation(project(":module-jpa"))
+    implementation(project(":module-redis"))
+    implementation(project(":module-mongodb"))
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발

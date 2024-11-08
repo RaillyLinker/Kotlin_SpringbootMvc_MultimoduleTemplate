@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 // [MongoDB 설정]
 @Configuration
 @EnableMongoRepositories(
-    basePackages = ["${ModuleConst.PACKAGE_NAME}.mongo_db_beans.${Mdb1MainConfig.MONGO_DB_DIRECTORY_NAME}.repositories"],
+    basePackages = ["${ModuleConst.PACKAGE_NAME}.mongodb_beans.${Mdb1MainConfig.MONGO_DB_DIRECTORY_NAME}.repositories"],
     mongoTemplateRef = Mdb1MainConfig.MONGO_DB_DIRECTORY_NAME
 )
 class Mdb1MainConfig {
