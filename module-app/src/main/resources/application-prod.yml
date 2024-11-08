@@ -39,7 +39,6 @@ custom-config: # 프로젝트 내에서 사용하는 커스텀 설정
         만약 데이터를 반환하기 위해 필요한 데이터가 반환 불가능한 상태(데이터베이스 조회시 원하는 데이터가 없는 상태 등)라면 Response Body 는 Null 이 될 것입니다.
 
       **(인증/인가 관련 규칙)**
-      - API path tk/** 는 Token 인증/인가 방식을 사용하는 API 를 뜻하며, 나머지(특히 sc/**)는 세션-쿠키 인증/인가 방식을 사용합니다.
       - API 항목의 제목 문장의 마지막에 붙는 "<>" 는 해당 API 사용을 위한 권한을 의미합니다.
 
         예를들어 권한이 필요 없으면 표시 하지 않고, 로그인이 필요한 경우 <>, 
@@ -47,7 +46,7 @@ custom-config: # 프로젝트 내에서 사용하는 커스텀 설정
         특정 권한이 필요한 경우 <'ADMIN' or ('DEVELOPER' and 'MANAGER')> 와 같은 형식으로 표시됩니다.
       
         참고로 위의 예시의 경우는 ADMIN 권한이 있거나, 혹은 DEVELOPER 와 MANAGER 권한을 같이 가지고 있는 경우에만 동작할 것이라는 의미입니다.
-      - tk/** 에서 로그인이 필요한 API 요청시엔 네트워크 요청 Header 에 "Authorization" 이란 키로 
+      - 토큰 인증 방식을 사용하는 api 에서 로그인이 필요한 API 요청시엔 네트워크 요청 Header 에 "Authorization" 이란 키로 
 
         로그인 API 에서 반환된 토큰 타입과 토큰 String 을 붙여서 보내주면 됩니다.
 
@@ -61,12 +60,12 @@ custom-config: # 프로젝트 내에서 사용하는 커스텀 설정
         로그인 제한이 붙지 않은 API 에서 인증/인가 코드를 입력한 경우, 
 
         액세스 토큰 형식이 잘못 되었건, 만료되었건 상관없이 API 로직이 정상 실행됩니다.
-      - tk/** 에서 사용하는 RefreshToken 은 AccessToken 발급(Login, Reissue api 사용)시마다 재발행됩니다.
+      - 토큰 인증 api 에서 사용하는 RefreshToken 은 AccessToken 발급(Login, Reissue api 사용)시마다 재발행됩니다.
 
         AccessToken 보다 더 길게 설정된 RefreshToken 의 만료시간 동안 토큰 재발급을 전혀 하지 않아 RefreshToken 마저 만료된 경우, 
 
         만료된 RefreshToken 으로 토큰 재발급 API 를 사용시 만료 에러가 떨어지는데, 이때는 클라이언트 측에서 멤버에게 재로그인을 요청해야합니다.
-      - 클라이언트 사이드에서 JWT 를 처리할 때는, 
+      - 클라이언트 사이드에서 JWT 인증을 처리할 때는, 
       
         1. 로그인으로 JWT 정보를 로컬에 저장
       
