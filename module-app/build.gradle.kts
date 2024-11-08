@@ -7,7 +7,6 @@ dependencies {
     // (모듈)
     // app 모듈은 하위 모듈 및 하위모듈에서 사용하는 하위모듈들을 모두 추가합니다.
     implementation(project(":module-redis"))
-    implementation(project(":module-api-root"))
     implementation(project(":module-scheduler"))
     implementation(project(":module-socket"))
     implementation(project(":module-retrofit2"))
@@ -15,6 +14,9 @@ dependencies {
     implementation(project(":module-mongodb"))
     implementation(project(":module-jpa"))
     implementation(project(":module-common"))
+    implementation(project(":module-security"))
+
+    implementation(project(":module-api-root"))
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발

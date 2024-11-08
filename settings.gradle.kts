@@ -14,5 +14,6 @@ include("module-kafka")
 include("module-mongodb")
 include("module-jpa")
 include("module-common")
+include("module-security")
 
 include("module-api-root")
