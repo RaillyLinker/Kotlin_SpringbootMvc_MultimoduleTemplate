@@ -1515,7 +1515,7 @@ class MyServiceTkAuthServiceImpl(
                 saveDirectoryPath.resolve(savedFileName).normalize()
             )
 
-            savedProfileImageUrl = "${externalAccessAddress}/service1/tk/v1/auth/member-profile/$savedFileName"
+            savedProfileImageUrl = "${externalAccessAddress}/my-service/tk/auth/member-profile/$savedFileName"
             //----------------------------------------------------------------------------------------------------------
 
             val memberProfileData =
@@ -1795,7 +1795,7 @@ class MyServiceTkAuthServiceImpl(
                     saveDirectoryPath.resolve(savedFileName).normalize()
                 )
 
-                savedProfileImageUrl = "${externalAccessAddress}/service1/tk/v1/auth/member-profile/$savedFileName"
+                savedProfileImageUrl = "${externalAccessAddress}/my-service/tk/auth/member-profile/$savedFileName"
                 //----------------------------------------------------------------------------------------------------------
 
                 val memberProfileData =
@@ -2067,7 +2067,7 @@ class MyServiceTkAuthServiceImpl(
                     saveDirectoryPath.resolve(savedFileName).normalize()
                 )
 
-                savedProfileImageUrl = "${externalAccessAddress}/service1/tk/v1/auth/member-profile/$savedFileName"
+                savedProfileImageUrl = "${externalAccessAddress}/my-service/tk/auth/member-profile/$savedFileName"
                 //----------------------------------------------------------------------------------------------------------
 
                 val memberProfileData = db1RaillyLinkerCompanyService1MemberProfileDataRepository.save(
@@ -2508,7 +2508,7 @@ class MyServiceTkAuthServiceImpl(
                     saveDirectoryPath.resolve(savedFileName).normalize()
                 )
 
-                savedProfileImageUrl = "${externalAccessAddress}/service1/tk/v1/auth/member-profile/$savedFileName"
+                savedProfileImageUrl = "${externalAccessAddress}/my-service/tk/auth/member-profile/$savedFileName"
                 //----------------------------------------------------------------------------------------------------------
 
                 val memberProfileData = db1RaillyLinkerCompanyService1MemberProfileDataRepository.save(
@@ -4407,7 +4407,7 @@ class MyServiceTkAuthServiceImpl(
             saveDirectoryPath.resolve(savedFileName).normalize()
         )
 
-        savedProfileImageUrl = "${externalAccessAddress}/service1/tk/v1/auth/member-profile/$savedFileName"
+        savedProfileImageUrl = "${externalAccessAddress}/my-service/tk/auth/member-profile/$savedFileName"
         //----------------------------------------------------------------------------------------------------------
 
         val profileData = db1RaillyLinkerCompanyService1MemberProfileDataRepository.save(
