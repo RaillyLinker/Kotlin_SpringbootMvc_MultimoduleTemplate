@@ -13,6 +13,7 @@ dependencies {
     implementation(project(":module-security"))
 
     implementation(project(":module-api-root"))
+    implementation(project(":module-api-my_service-sc"))
     implementation(project(":module-api-my_service-tk-auth"))
     implementation(project(":module-api-my_service-tk-sample"))
 

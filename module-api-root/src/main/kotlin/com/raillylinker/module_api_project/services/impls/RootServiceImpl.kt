@@ -31,23 +31,10 @@ class RootServiceImpl(
         httpServletResponse: HttpServletResponse
     ): ModelAndView? {
         val mv = ModelAndView()
-        mv.viewName = "root_home_page/home_page"
-
-        mv.addObject(
-            "viewModel",
-            GetRootHomePageViewModel(
-                activeProfile,
-                swaggerEnabled
-            )
-        )
+        mv.viewName = "forward:/my-service/sc/home"
 
         return mv
     }
-
-    data class GetRootHomePageViewModel(
-        val env: String,
-        val showApiDocumentBtn: Boolean
-    )
 
 
     ////
