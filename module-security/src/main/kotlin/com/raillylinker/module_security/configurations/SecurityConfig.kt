@@ -126,8 +126,7 @@ class SecurityConfig {
         // !!!시큐리티 필터 추가시 수정!!!
         // 본 시큐리티 필터가 관리할 주소 체계
         val securityUrlList = listOf(
-            "/service1/tk/**",
-            "/service1-admin/tk/**" // 보통 Admin 관리 서비스는 동일 인증 체계에서 Role 로 구분하기에 예시에 추가했습니다.
+            "/my-service/tk/**"
         ) // 위 모든 경로에 적용
 
         val securityMatcher = http.securityMatcher(*securityUrlList.toTypedArray())
@@ -233,7 +232,7 @@ class SecurityConfig {
             const val AUTH_JWT_CLAIMS_AES256_ENCRYPTION_KEY: String = "8fu3jd0ciiu3384hfucy36dye9sjv7b3"
 
             // 계정 설정 - JWT 발행자
-            const val AUTH_JWT_ISSUER: String = "com.raillylinker.springboot_mvc_template.service1"
+            const val AUTH_JWT_ISSUER: String = "com.raillylinker.my-service"
         }
 
         // ---------------------------------------------------------------------------------------------

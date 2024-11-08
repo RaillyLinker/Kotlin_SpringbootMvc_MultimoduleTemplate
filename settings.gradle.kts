@@ -17,3 +17,4 @@ include("module-common")
 include("module-security")
 
 include("module-api-root")
+include("module-api-my_service-tk-auth")
