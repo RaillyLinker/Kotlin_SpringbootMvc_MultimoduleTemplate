@@ -2,8 +2,8 @@ package com.raillylinker.module_api_my_service_tk_sample.services.impls
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.raillylinker.module_api_my_service_tk_sample.controllers.Service1TkV1RequestTestController
-import com.raillylinker.module_api_my_service_tk_sample.services.Service1TkV1RequestTestService
+import com.raillylinker.module_api_my_service_tk_sample.controllers.MyServiceTkSampleRequestTestController
+import com.raillylinker.module_api_my_service_tk_sample.services.MyServiceTkSampleRequestTestService
 import com.raillylinker.module_common.classes.SseEmitterWrapper
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.Logger
@@ -30,10 +30,10 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 @Service
-class Service1TkV1RequestTestServiceImpl(
+class MyServiceTkSampleRequestTestServiceImpl(
     // (프로젝트 실행시 사용 설정한 프로필명 (ex : dev8080, prod80, local8080, 설정 안하면 default 반환))
     @Value("\${spring.profiles.active:default}") private var activeProfile: String
-) : Service1TkV1RequestTestService {
+) : MyServiceTkSampleRequestTestService {
     // <멤버 변수 공간>
     private val classLogger: Logger = LoggerFactory.getLogger(this::class.java)
 
@@ -80,9 +80,9 @@ class Service1TkV1RequestTestServiceImpl(
         queryParamBooleanNullable: Boolean?,
         queryParamStringList: List<String>,
         queryParamStringListNullable: List<String>?
-    ): Service1TkV1RequestTestController.GetRequestTestOutputVo? {
+    ): MyServiceTkSampleRequestTestController.GetRequestTestOutputVo? {
         httpServletResponse.status = HttpStatus.OK.value()
-        return Service1TkV1RequestTestController.GetRequestTestOutputVo(
+        return MyServiceTkSampleRequestTestController.GetRequestTestOutputVo(
             queryParamString,
             queryParamStringNullable,
             queryParamInt,
@@ -101,19 +101,19 @@ class Service1TkV1RequestTestServiceImpl(
     override fun getRequestTestWithPathParam(
         httpServletResponse: HttpServletResponse,
         pathParamInt: Int
-    ): Service1TkV1RequestTestController.GetRequestTestWithPathParamOutputVo? {
+    ): MyServiceTkSampleRequestTestController.GetRequestTestWithPathParamOutputVo? {
         httpServletResponse.status = HttpStatus.OK.value()
-        return Service1TkV1RequestTestController.GetRequestTestWithPathParamOutputVo(pathParamInt)
+        return MyServiceTkSampleRequestTestController.GetRequestTestWithPathParamOutputVo(pathParamInt)
     }
 
 
     ////
     override fun postRequestTestWithApplicationJsonTypeRequestBody(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBodyInputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBodyOutputVo? {
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBodyInputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBodyOutputVo? {
         httpServletResponse.status = HttpStatus.OK.value()
-        return Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBodyOutputVo(
+        return MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBodyOutputVo(
             inputVo.requestBodyString,
             inputVo.requestBodyStringNullable,
             inputVo.requestBodyInt,
@@ -131,17 +131,17 @@ class Service1TkV1RequestTestServiceImpl(
     ////
     override fun postRequestTestWithApplicationJsonTypeRequestBody2(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2InputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo? {
-        val objectList: MutableList<Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo> =
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2InputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo? {
+        val objectList: MutableList<MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo> =
             mutableListOf()
 
         for (objectVo in inputVo.objectVoList) {
-            val subObjectVoList: MutableList<Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo> =
+            val subObjectVoList: MutableList<MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo> =
                 mutableListOf()
             for (subObject in objectVo.subObjectVoList) {
                 subObjectVoList.add(
-                    Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo(
+                    MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo(
                         subObject.requestBodyString,
                         subObject.requestBodyStringList
                     )
@@ -149,10 +149,10 @@ class Service1TkV1RequestTestServiceImpl(
             }
 
             objectList.add(
-                Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo(
+                MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo(
                     objectVo.requestBodyString,
                     objectVo.requestBodyStringList,
-                    Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo(
+                    MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo(
                         objectVo.subObjectVo.requestBodyString,
                         objectVo.subObjectVo.requestBodyStringList
                     ),
@@ -161,11 +161,11 @@ class Service1TkV1RequestTestServiceImpl(
             )
         }
 
-        val subObjectVoList: MutableList<Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo> =
+        val subObjectVoList: MutableList<MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo> =
             mutableListOf()
         for (subObject in inputVo.objectVo.subObjectVoList) {
             subObjectVoList.add(
-                Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo(
+                MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo(
                     subObject.requestBodyString,
                     subObject.requestBodyStringList
                 )
@@ -173,11 +173,11 @@ class Service1TkV1RequestTestServiceImpl(
         }
 
         val outputVo =
-            Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo(
-                Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo(
+            MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo(
+                MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo(
                     inputVo.objectVo.requestBodyString,
                     inputVo.objectVo.requestBodyStringList,
-                    Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo(
+                    MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo.ObjectVo.SubObjectVo(
                         inputVo.objectVo.subObjectVo.requestBodyString,
                         inputVo.objectVo.subObjectVo.requestBodyStringList
                     ),
@@ -202,10 +202,10 @@ class Service1TkV1RequestTestServiceImpl(
     ////
     override fun postRequestTestWithFormTypeRequestBody(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithFormTypeRequestBodyInputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithFormTypeRequestBodyOutputVo? {
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithFormTypeRequestBodyInputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithFormTypeRequestBodyOutputVo? {
         httpServletResponse.status = HttpStatus.OK.value()
-        return Service1TkV1RequestTestController.PostRequestTestWithFormTypeRequestBodyOutputVo(
+        return MyServiceTkSampleRequestTestController.PostRequestTestWithFormTypeRequestBodyOutputVo(
             inputVo.requestFormString,
             inputVo.requestFormStringNullable,
             inputVo.requestFormInt,
@@ -223,8 +223,8 @@ class Service1TkV1RequestTestServiceImpl(
     ////
     override fun postRequestTestWithMultipartFormTypeRequestBody(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBodyInputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBodyOutputVo? {
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBodyInputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBodyOutputVo? {
         // 파일 저장 기본 디렉토리 경로
         val saveDirectoryPath: Path = Paths.get("./by_product_files/test").toAbsolutePath().normalize()
 
@@ -301,7 +301,7 @@ class Service1TkV1RequestTestServiceImpl(
         }
 
         httpServletResponse.status = HttpStatus.OK.value()
-        return Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBodyOutputVo(
+        return MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBodyOutputVo(
             inputVo.requestFormString,
             inputVo.requestFormStringNullable,
             inputVo.requestFormInt,
@@ -319,8 +319,8 @@ class Service1TkV1RequestTestServiceImpl(
     ////
     override fun postRequestTestWithMultipartFormTypeRequestBody2(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody2InputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody2OutputVo? {
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody2InputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody2OutputVo? {
         // 파일 저장 기본 디렉토리 경로
         val saveDirectoryPath: Path = Paths.get("./by_product_files/test").toAbsolutePath().normalize()
 
@@ -401,7 +401,7 @@ class Service1TkV1RequestTestServiceImpl(
         }
 
         httpServletResponse.status = HttpStatus.OK.value()
-        return Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody2OutputVo(
+        return MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody2OutputVo(
             inputVo.requestFormString,
             inputVo.requestFormStringNullable,
             inputVo.requestFormInt,
@@ -419,14 +419,14 @@ class Service1TkV1RequestTestServiceImpl(
     ////
     override fun postRequestTestWithMultipartFormTypeRequestBody3(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3InputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3OutputVo? {
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3InputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3OutputVo? {
         // input Json String to Object
         val inputJsonObject =
-            Gson().fromJson<Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3InputVo.InputJsonObject>(
+            Gson().fromJson<MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3InputVo.InputJsonObject>(
                 inputVo.jsonString, // 해석하려는 json 형식의 String
                 object :
-                    TypeToken<Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3InputVo.InputJsonObject>() {}.type // 파싱할 데이터 객체 타입
+                    TypeToken<MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3InputVo.InputJsonObject>() {}.type // 파싱할 데이터 객체 타입
             )
 
         // 파일 저장 기본 디렉토리 경로
@@ -506,7 +506,7 @@ class Service1TkV1RequestTestServiceImpl(
         }
 
         httpServletResponse.status = HttpStatus.OK.value()
-        return Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3OutputVo(
+        return MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3OutputVo(
             inputJsonObject.requestFormString,
             inputJsonObject.requestFormStringNullable,
             inputJsonObject.requestFormInt,
@@ -530,23 +530,23 @@ class Service1TkV1RequestTestServiceImpl(
     ////
     override fun returnResultCodeThroughHeaders(
         httpServletResponse: HttpServletResponse,
-        errorType: Service1TkV1RequestTestController.ReturnResultCodeThroughHeadersErrorTypeEnum?
+        errorType: MyServiceTkSampleRequestTestController.ReturnResultCodeThroughHeadersErrorTypeEnum?
     ) {
         if (errorType == null) {
             httpServletResponse.status = HttpStatus.OK.value()
         } else {
             when (errorType) {
-                Service1TkV1RequestTestController.ReturnResultCodeThroughHeadersErrorTypeEnum.A -> {
+                MyServiceTkSampleRequestTestController.ReturnResultCodeThroughHeadersErrorTypeEnum.A -> {
                     httpServletResponse.status = HttpStatus.NO_CONTENT.value()
                     httpServletResponse.setHeader("api-result-code", "1")
                 }
 
-                Service1TkV1RequestTestController.ReturnResultCodeThroughHeadersErrorTypeEnum.B -> {
+                MyServiceTkSampleRequestTestController.ReturnResultCodeThroughHeadersErrorTypeEnum.B -> {
                     httpServletResponse.status = HttpStatus.NO_CONTENT.value()
                     httpServletResponse.setHeader("api-result-code", "2")
                 }
 
-                Service1TkV1RequestTestController.ReturnResultCodeThroughHeadersErrorTypeEnum.C -> {
+                MyServiceTkSampleRequestTestController.ReturnResultCodeThroughHeadersErrorTypeEnum.C -> {
                     httpServletResponse.status = HttpStatus.NO_CONTENT.value()
                     httpServletResponse.setHeader("api-result-code", "3")
                 }
@@ -603,7 +603,7 @@ class Service1TkV1RequestTestServiceImpl(
 
     ////
     override fun videoStreamingTest(
-        videoHeight: Service1TkV1RequestTestController.VideoStreamingTestVideoHeight,
+        videoHeight: MyServiceTkSampleRequestTestController.VideoStreamingTestVideoHeight,
         httpServletResponse: HttpServletResponse
     ): Resource? {
         // 프로젝트 루트 경로 (프로젝트 settings.gradle 이 있는 경로)
@@ -616,19 +616,19 @@ class Service1TkV1RequestTestServiceImpl(
         // 멤버십 등의 정보로 해상도 제한을 걸 수도 있음
         val serverFileNameString =
             when (videoHeight) {
-                Service1TkV1RequestTestController.VideoStreamingTestVideoHeight.H240 -> {
+                MyServiceTkSampleRequestTestController.VideoStreamingTestVideoHeight.H240 -> {
                     "test_240p.mp4"
                 }
 
-                Service1TkV1RequestTestController.VideoStreamingTestVideoHeight.H360 -> {
+                MyServiceTkSampleRequestTestController.VideoStreamingTestVideoHeight.H360 -> {
                     "test_360p.mp4"
                 }
 
-                Service1TkV1RequestTestController.VideoStreamingTestVideoHeight.H480 -> {
+                MyServiceTkSampleRequestTestController.VideoStreamingTestVideoHeight.H480 -> {
                     "test_480p.mp4"
                 }
 
-                Service1TkV1RequestTestController.VideoStreamingTestVideoHeight.H720 -> {
+                MyServiceTkSampleRequestTestController.VideoStreamingTestVideoHeight.H720 -> {
                     "test_720p.mp4"
                 }
             }
@@ -666,10 +666,10 @@ class Service1TkV1RequestTestServiceImpl(
 
 
     ////
-    override fun asynchronousResponseTest(httpServletResponse: HttpServletResponse): DeferredResult<Service1TkV1RequestTestController.AsynchronousResponseTestOutputVo>? {
+    override fun asynchronousResponseTest(httpServletResponse: HttpServletResponse): DeferredResult<MyServiceTkSampleRequestTestController.AsynchronousResponseTestOutputVo>? {
         // 연결 타임아웃 밀리초
         val deferredResultTimeoutMs = 1000L * 60
-        val deferredResult = DeferredResult<Service1TkV1RequestTestController.AsynchronousResponseTestOutputVo>(
+        val deferredResult = DeferredResult<MyServiceTkSampleRequestTestController.AsynchronousResponseTestOutputVo>(
             deferredResultTimeoutMs
         )
 
@@ -680,7 +680,7 @@ class Service1TkV1RequestTestServiceImpl(
             Thread.sleep(delayMs)
 
             // 결과 반환
-            deferredResult.setResult(Service1TkV1RequestTestController.AsynchronousResponseTestOutputVo("${delayMs / 1000} 초 경과 후 반환했습니다."))
+            deferredResult.setResult(MyServiceTkSampleRequestTestController.AsynchronousResponseTestOutputVo("${delayMs / 1000} 초 경과 후 반환했습니다."))
         }
 
         // 결과 대기 객체를 먼저 반환
@@ -720,10 +720,10 @@ class Service1TkV1RequestTestServiceImpl(
     override fun emptyListRequestTest(
         httpServletResponse: HttpServletResponse,
         stringList: List<String>,
-        inputVo: Service1TkV1RequestTestController.EmptyListRequestTestInputVo
-    ): Service1TkV1RequestTestController.EmptyListRequestTestOutputVo? {
+        inputVo: MyServiceTkSampleRequestTestController.EmptyListRequestTestInputVo
+    ): MyServiceTkSampleRequestTestController.EmptyListRequestTestOutputVo? {
         httpServletResponse.status = HttpStatus.OK.value()
-        return Service1TkV1RequestTestController.EmptyListRequestTestOutputVo(
+        return MyServiceTkSampleRequestTestController.EmptyListRequestTestOutputVo(
             stringList,
             inputVo.requestBodyStringList
         )

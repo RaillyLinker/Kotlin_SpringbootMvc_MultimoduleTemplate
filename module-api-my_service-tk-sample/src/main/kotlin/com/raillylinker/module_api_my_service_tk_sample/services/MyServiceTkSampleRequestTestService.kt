@@ -1,13 +1,13 @@
 package com.raillylinker.module_api_my_service_tk_sample.services
 
-import com.raillylinker.module_api_my_service_tk_sample.controllers.Service1TkV1RequestTestController
+import com.raillylinker.module_api_my_service_tk_sample.controllers.MyServiceTkSampleRequestTestController
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.core.io.Resource
 import org.springframework.web.context.request.async.DeferredResult
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 
-interface Service1TkV1RequestTestService {
+interface MyServiceTkSampleRequestTestService {
     // (기본 요청 테스트 API)
     fun basicRequestTest(httpServletResponse: HttpServletResponse): String?
 
@@ -36,7 +36,7 @@ interface Service1TkV1RequestTestService {
         queryParamBooleanNullable: Boolean?,
         queryParamStringList: List<String>,
         queryParamStringListNullable: List<String>?
-    ): Service1TkV1RequestTestController.GetRequestTestOutputVo?
+    ): MyServiceTkSampleRequestTestController.GetRequestTestOutputVo?
 
 
     ////
@@ -44,23 +44,23 @@ interface Service1TkV1RequestTestService {
     fun getRequestTestWithPathParam(
         httpServletResponse: HttpServletResponse,
         pathParamInt: Int
-    ): Service1TkV1RequestTestController.GetRequestTestWithPathParamOutputVo?
+    ): MyServiceTkSampleRequestTestController.GetRequestTestWithPathParamOutputVo?
 
 
     ////
     // (Post 요청 테스트 (application-json))
     fun postRequestTestWithApplicationJsonTypeRequestBody(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBodyInputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBodyOutputVo?
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBodyInputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBodyOutputVo?
 
 
     ////
     // (Post 요청 테스트 (application-json, 객체 파라미터 포함))
     fun postRequestTestWithApplicationJsonTypeRequestBody2(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2InputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo?
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2InputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithApplicationJsonTypeRequestBody2OutputVo?
 
 
     ////
@@ -74,32 +74,32 @@ interface Service1TkV1RequestTestService {
     // (Post 요청 테스트 (x-www-form-urlencoded))
     fun postRequestTestWithFormTypeRequestBody(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithFormTypeRequestBodyInputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithFormTypeRequestBodyOutputVo?
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithFormTypeRequestBodyInputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithFormTypeRequestBodyOutputVo?
 
 
     ////
     // (Post 요청 테스트 (multipart/form-data))
     fun postRequestTestWithMultipartFormTypeRequestBody(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBodyInputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBodyOutputVo?
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBodyInputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBodyOutputVo?
 
 
     ////
     // (Post 요청 테스트2 (multipart/form-data))
     fun postRequestTestWithMultipartFormTypeRequestBody2(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody2InputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody2OutputVo?
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody2InputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody2OutputVo?
 
 
     ////
     // (Post 요청 테스트 (multipart/form-data - JsonString))
     fun postRequestTestWithMultipartFormTypeRequestBody3(
         httpServletResponse: HttpServletResponse,
-        inputVo: Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3InputVo
-    ): Service1TkV1RequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3OutputVo?
+        inputVo: MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3InputVo
+    ): MyServiceTkSampleRequestTestController.PostRequestTestWithMultipartFormTypeRequestBody3OutputVo?
 
 
     ////
@@ -110,7 +110,7 @@ interface Service1TkV1RequestTestService {
     // (결과 코드 발생 테스트)
     fun returnResultCodeThroughHeaders(
         httpServletResponse: HttpServletResponse,
-        errorType: Service1TkV1RequestTestController.ReturnResultCodeThroughHeadersErrorTypeEnum?
+        errorType: MyServiceTkSampleRequestTestController.ReturnResultCodeThroughHeadersErrorTypeEnum?
     )
 
 
@@ -137,7 +137,7 @@ interface Service1TkV1RequestTestService {
     ////
     // (비디오 스트리밍 샘플)
     fun videoStreamingTest(
-        videoHeight: Service1TkV1RequestTestController.VideoStreamingTestVideoHeight,
+        videoHeight: MyServiceTkSampleRequestTestController.VideoStreamingTestVideoHeight,
         httpServletResponse: HttpServletResponse
     ): Resource?
 
@@ -149,7 +149,7 @@ interface Service1TkV1RequestTestService {
 
     ////
     // (비동기 처리 결과 반환 샘플)
-    fun asynchronousResponseTest(httpServletResponse: HttpServletResponse): DeferredResult<Service1TkV1RequestTestController.AsynchronousResponseTestOutputVo>?
+    fun asynchronousResponseTest(httpServletResponse: HttpServletResponse): DeferredResult<MyServiceTkSampleRequestTestController.AsynchronousResponseTestOutputVo>?
 
 
     ////
@@ -167,6 +167,6 @@ interface Service1TkV1RequestTestService {
     fun emptyListRequestTest(
         httpServletResponse: HttpServletResponse,
         stringList: List<String>,
-        inputVo: Service1TkV1RequestTestController.EmptyListRequestTestInputVo
-    ): Service1TkV1RequestTestController.EmptyListRequestTestOutputVo?
+        inputVo: MyServiceTkSampleRequestTestController.EmptyListRequestTestInputVo
+    ): MyServiceTkSampleRequestTestController.EmptyListRequestTestOutputVo?
 }

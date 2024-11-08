@@ -1,7 +1,7 @@
 package com.raillylinker.module_api_my_service_tk_sample.controllers
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.raillylinker.module_api_my_service_tk_sample.services.Service1TkV1RequestTestService
+import com.raillylinker.module_api_my_service_tk_sample.services.MyServiceTkSampleRequestTestService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.headers.Header
@@ -23,8 +23,8 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 @Tag(name = "/my-service/tk/sample/request-test APIs", description = "요청 / 응답에 대한 테스트 API 컨트롤러")
 @Controller
 @RequestMapping("/my-service/tk/sample/request-test")
-class Service1TkV1RequestTestController(
-    private val service: Service1TkV1RequestTestService
+class MyServiceTkSampleRequestTestController(
+    private val service: MyServiceTkSampleRequestTestService
 ) {
     // <멤버 변수 공간>
 
