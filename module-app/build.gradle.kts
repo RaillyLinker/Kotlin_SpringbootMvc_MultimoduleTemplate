@@ -18,6 +18,7 @@ dependencies {
 
     implementation(project(":module-api-root"))
     implementation(project(":module-api-my_service-tk-auth"))
+    implementation(project(":module-api-my_service-tk-sample"))
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발

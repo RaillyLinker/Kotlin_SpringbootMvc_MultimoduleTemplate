@@ -18,3 +18,4 @@ include("module-security")
 
 include("module-api-root")
 include("module-api-my_service-tk-auth")
+include("module-api-my_service-tk-sample")

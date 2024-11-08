@@ -92,7 +92,7 @@
              // (sse 생성 함수)
              var sse = null;
              function sseSubscribe() {
-                 sse = new EventSource("http://localhost:8080/service1/tk/v1/request-test/sse-test/subscribe");
+                 sse = new EventSource("http://localhost:8080/my-service/tk/sample/request-test/sse-test/subscribe");
 
                  sse.addEventListener('system', (e) => {
                      const { data: receivedData } = e;
@@ -118,7 +118,7 @@
              $("#trigger_btn").click(function javascript_onclick(){
                  $.ajax({
                         type: 'post',
-                        url: 'http://127.0.0.1:8080/service1/tk/v1/request-test/sse-test/event-trigger'
+                        url: 'http://127.0.0.1:8080/my-service/tk/sample/request-test/sse-test/event-trigger'
                  });
              });
 

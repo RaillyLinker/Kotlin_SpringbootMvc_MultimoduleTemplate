@@ -50,7 +50,7 @@
             $("#h240").on("click", function () {
                 var ct = $("#video")[0].currentTime;
                 var paused = $("#video")[0].paused;
-                $("#movie_src").attr("src", 'http://127.0.0.1:8080/service1/tk/v1/request-test/video-streaming?videoHeight=H240');
+                $("#movie_src").attr("src", 'http://127.0.0.1:8080/my-service/tk/sample/request-test/video-streaming?videoHeight=H240');
                 $("#video")[0].load();
                 $("#video")[0].currentTime = ct;
                 if (!paused) {
@@ -62,7 +62,7 @@
             $("#h360").on("click", function () {
                 var ct = $("#video")[0].currentTime;
                 var paused = $("#video")[0].paused;
-                $("#movie_src").attr("src", 'http://127.0.0.1:8080/service1/tk/v1/request-test/video-streaming?videoHeight=H360');
+                $("#movie_src").attr("src", 'http://127.0.0.1:8080/my-service/tk/sample/request-test/video-streaming?videoHeight=H360');
                 $("#video")[0].load();
                 $("#video")[0].currentTime = ct;
                 if (!paused) {
@@ -74,7 +74,7 @@
             $("#h480").on("click", function () {
                 var ct = $("#video")[0].currentTime;
                 var paused = $("#video")[0].paused;
-                $("#movie_src").attr("src", 'http://127.0.0.1:8080/service1/tk/v1/request-test/video-streaming?videoHeight=H480');
+                $("#movie_src").attr("src", 'http://127.0.0.1:8080/my-service/tk/sample/request-test/video-streaming?videoHeight=H480');
                 $("#video")[0].load();
                 $("#video")[0].currentTime = ct;
                 if (!paused) {
@@ -86,7 +86,7 @@
             $("#h720").on("click", function () {
                 var ct = $("#video")[0].currentTime;
                 var paused = $("#video")[0].paused;
-                $("#movie_src").attr("src", 'http://127.0.0.1:8080/service1/tk/v1/request-test/video-streaming?videoHeight=H720');
+                $("#movie_src").attr("src", 'http://127.0.0.1:8080/my-service/tk/sample/request-test/video-streaming?videoHeight=H720');
                 $("#video")[0].load();
                 $("#video")[0].currentTime = ct;
                 if (!paused) {
@@ -112,7 +112,7 @@
 
 <video width="60%" height="auto" id="video" preload="auto" controls>
     <source id="movie_src" type="video/mp4"
-            src="http://127.0.0.1:8080/service1/tk/v1/request-test/video-streaming?videoHeight=H720"/>
+            src="http://127.0.0.1:8080/my-service/tk/sample/request-test/video-streaming?videoHeight=H720"/>
 </video>
 
 </body>
