@@ -6,6 +6,7 @@ version = "0.0.1-SNAPSHOT"
 dependencies {
     // (모듈)
     implementation(project(":module-common"))
+    implementation(project(":module-retrofit2"))
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발
@@ -23,4 +24,7 @@ dependencies {
     // (GSON)
     // : Json - Object 라이브러리
     implementation("com.google.code.gson:gson:2.11.0")
+
+    // (OkHttp3)
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }
