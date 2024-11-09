@@ -19,7 +19,7 @@ dependencies {
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발
-    implementation("org.springframework.boot:spring-boot-starter-web:3.3.4")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.3.5")
 
     // (Swagger)
     // : API 자동 문서화
@@ -27,9 +27,9 @@ dependencies {
 
     // (Spring Actuator)
     // : 서버 모니터링 정보
-    implementation("org.springframework.boot:spring-boot-starter-actuator:3.3.4")
+    implementation("org.springframework.boot:spring-boot-starter-actuator:3.3.5")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus:1.13.6")
 
     // (MongoDB)
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb:3.3.4")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb:3.3.5")
 }

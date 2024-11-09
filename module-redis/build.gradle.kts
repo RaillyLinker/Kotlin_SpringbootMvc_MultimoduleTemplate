@@ -8,7 +8,7 @@ dependencies {
 
     // (Redis)
     // : 메모리 키 값 데이터 구조 스토어
-    implementation("org.springframework.boot:spring-boot-starter-data-redis:3.3.4")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis:3.3.5")
 
     // (GSON)
     // : Json - Object 라이브러리

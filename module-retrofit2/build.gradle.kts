@@ -16,5 +16,5 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // (Jackson Core)
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.18.0")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.18.1")
 }

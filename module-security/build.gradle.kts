@@ -11,12 +11,12 @@ dependencies {
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발
-    implementation("org.springframework.boot:spring-boot-starter-web:3.3.4")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.3.5")
 
     // (Spring Security)
     // : 스프링 부트 보안
-    implementation("org.springframework.boot:spring-boot-starter-security:3.3.4")
-    testImplementation("org.springframework.security:spring-security-test:6.3.3")
+    implementation("org.springframework.boot:spring-boot-starter-security:3.3.5")
+    testImplementation("org.springframework.security:spring-security-test:6.3.4")
 
     // (JWT)
     // : JWT 인증 토큰 라이브러리

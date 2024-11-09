@@ -9,18 +9,18 @@ dependencies {
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발
-    implementation("org.springframework.boot:spring-boot-starter-web:3.3.4")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.3.5")
 
     // (ThymeLeaf)
     // : 웹 뷰 라이브러리
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:3.3.4")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:3.3.5")
 
     // (AWS)
     implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
 
     // (Spring email)
     // : 스프링 이메일 발송
-    implementation("org.springframework.boot:spring-boot-starter-mail:3.3.4")
+    implementation("org.springframework.boot:spring-boot-starter-mail:3.3.5")
 
     // (Excel File Read Write)
     // : 액셀 파일 입출력 라이브러리
@@ -33,5 +33,5 @@ dependencies {
 
     // (HTML 2 PDF)
     // : HTML -> PDF 변환 라이브러리
-    implementation("org.xhtmlrenderer:flying-saucer-pdf:9.9.5")
+    implementation("org.xhtmlrenderer:flying-saucer-pdf:9.10.2")
 }

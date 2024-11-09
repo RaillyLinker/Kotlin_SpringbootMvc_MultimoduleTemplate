@@ -1,7 +1,7 @@
 plugins {
-    kotlin("jvm") version "1.9.25"
-    kotlin("plugin.spring") version "1.9.25"
-    id("org.springframework.boot") version "3.3.4"
+    kotlin("jvm") version "2.0.21"
+    kotlin("plugin.spring") version "2.0.21"
+    id("org.springframework.boot") version "3.3.5"
     id("io.spring.dependency-management") version "1.1.6"
 
     // JPA 추가
@@ -39,11 +39,11 @@ subprojects {
 
     dependencies {
         // (기본)
-        implementation("org.springframework.boot:spring-boot-starter:3.3.4")
+        implementation("org.springframework.boot:spring-boot-starter:3.3.5")
         implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.21")
-        testImplementation("org.springframework.boot:spring-boot-starter-test:3.3.4")
+        testImplementation("org.springframework.boot:spring-boot-starter-test:3.3.5")
         testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.0.21")
-        testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.11.2")
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.11.3")
     }
 
     tasks.withType<Test> {

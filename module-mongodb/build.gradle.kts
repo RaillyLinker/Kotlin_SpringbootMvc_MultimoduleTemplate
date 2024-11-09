@@ -10,10 +10,10 @@ dependencies {
     // (모듈)
 
     // (MongoDB)
-    api("org.springframework.boot:spring-boot-starter-data-mongodb:3.3.4")
+    api("org.springframework.boot:spring-boot-starter-data-mongodb:3.3.5")
 
     // (AOP)
-    implementation("org.springframework.boot:spring-boot-starter-aop:3.3.4")
+    implementation("org.springframework.boot:spring-boot-starter-aop:3.3.5")
 }
 
 // kotlin MongoDB : 아래의 어노테이션 클래스에 no-arg 생성자를 생성

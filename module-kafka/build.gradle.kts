@@ -10,5 +10,5 @@ dependencies {
     implementation("org.springframework.kafka:spring-kafka:3.2.4")
 
     // (jackson)
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.1")
 }
