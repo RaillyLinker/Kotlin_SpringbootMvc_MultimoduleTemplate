@@ -1,7 +1,7 @@
 package com.raillylinker.module_api_my_service_tk_sample.services.impls
 
-import com.raillylinker.module_api_my_service_tk_sample.controllers.C9Service1TkV1MapCoordinateCalculationController
-import com.raillylinker.module_api_my_service_tk_sample.services.C9Service1TkV1MapCoordinateCalculationService
+import com.raillylinker.module_api_my_service_tk_sample.controllers.MyServiceTkSampleMapCoordinateCalculationController
+import com.raillylinker.module_api_my_service_tk_sample.services.MyServiceTkSampleMapCoordinateCalculationService
 import com.raillylinker.module_common.util_components.MapCoordinateUtil
 import com.raillylinker.module_jpa.annotations.CustomTransactional
 import com.raillylinker.module_jpa.configurations.jpa_configs.Db1MainConfig
@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
 @Service
-class C9Service1TkV1MapCoordinateCalculationServiceImpl(
+class MyServiceTkSampleMapCoordinateCalculationServiceImpl(
     // (프로젝트 실행시 사용 설정한 프로필명 (ex : dev8080, prod80, local8080, 설정 안하면 default 반환))
     @Value("\${spring.profiles.active:default}") private var activeProfile: String,
 
@@ -25,7 +25,7 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
     // (Database Repository)
     private val db1TemplateTestMapRepository: Db1_Template_TestMap_Repository,
     private val db1NativeRepository: Db1_Native_Repository
-) : C9Service1TkV1MapCoordinateCalculationService {
+) : MyServiceTkSampleMapCoordinateCalculationService {
     // <멤버 변수 공간>
     private val classLogger: Logger = LoggerFactory.getLogger(this::class.java)
 
@@ -33,7 +33,7 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
     // ---------------------------------------------------------------------------------------------
     // <공개 메소드 공간>
     @CustomTransactional([Db1MainConfig.TRANSACTION_NAME])
-    override fun api0InsertDefaultCoordinateDataToDatabase(httpServletResponse: HttpServletResponse) {
+    override fun insertDefaultCoordinateDataToDatabase(httpServletResponse: HttpServletResponse) {
         db1TemplateTestMapRepository.deleteAll()
 
         val latLngList: List<Pair<Double, Double>> = listOf(
@@ -73,15 +73,15 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
 
 
     ////
-    override fun api1GetDistanceMeterBetweenTwoCoordinate(
+    override fun getDistanceMeterBetweenTwoCoordinate(
         httpServletResponse: HttpServletResponse,
         latitude1: Double,
         longitude1: Double,
         latitude2: Double,
         longitude2: Double
-    ): C9Service1TkV1MapCoordinateCalculationController.Api1GetDistanceMeterBetweenTwoCoordinateOutputVo? {
+    ): MyServiceTkSampleMapCoordinateCalculationController.GetDistanceMeterBetweenTwoCoordinateOutputVo? {
         httpServletResponse.status = HttpStatus.OK.value()
-        return C9Service1TkV1MapCoordinateCalculationController.Api1GetDistanceMeterBetweenTwoCoordinateOutputVo(
+        return MyServiceTkSampleMapCoordinateCalculationController.GetDistanceMeterBetweenTwoCoordinateOutputVo(
             mapCoordinateUtil.getDistanceMeterBetweenTwoLatLngCoordinateHarversine(
                 Pair(latitude1, longitude1),
                 Pair(latitude2, longitude2)
@@ -91,15 +91,15 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
 
 
     ////
-    override fun api1Dot1GetDistanceMeterBetweenTwoCoordinateVincenty(
+    override fun getDistanceMeterBetweenTwoCoordinateVincenty(
         httpServletResponse: HttpServletResponse,
         latitude1: Double,
         longitude1: Double,
         latitude2: Double,
         longitude2: Double
-    ): C9Service1TkV1MapCoordinateCalculationController.Api1Dot1GetDistanceMeterBetweenTwoCoordinateVincentyOutputVo? {
+    ): MyServiceTkSampleMapCoordinateCalculationController.GetDistanceMeterBetweenTwoCoordinateVincentyOutputVo? {
         httpServletResponse.status = HttpStatus.OK.value()
-        return C9Service1TkV1MapCoordinateCalculationController.Api1Dot1GetDistanceMeterBetweenTwoCoordinateVincentyOutputVo(
+        return MyServiceTkSampleMapCoordinateCalculationController.GetDistanceMeterBetweenTwoCoordinateVincentyOutputVo(
             mapCoordinateUtil.getDistanceMeterBetweenTwoLatLngCoordinateVincenty(
                 Pair(latitude1, longitude1),
                 Pair(latitude2, longitude2)
@@ -109,10 +109,10 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
 
 
     ////
-    override fun api2ReturnCenterCoordinate(
+    override fun returnCenterCoordinate(
         httpServletResponse: HttpServletResponse,
-        inputVo: C9Service1TkV1MapCoordinateCalculationController.Api2ReturnCenterCoordinateInputVo
-    ): C9Service1TkV1MapCoordinateCalculationController.Api2ReturnCenterCoordinateOutputVo? {
+        inputVo: MyServiceTkSampleMapCoordinateCalculationController.ReturnCenterCoordinateInputVo
+    ): MyServiceTkSampleMapCoordinateCalculationController.ReturnCenterCoordinateOutputVo? {
         val latLngCoordinate = ArrayList<Pair<Double, Double>>()
 
         for (coordinate in inputVo.coordinateList) {
@@ -126,7 +126,7 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
         )
 
         httpServletResponse.status = HttpStatus.OK.value()
-        return C9Service1TkV1MapCoordinateCalculationController.Api2ReturnCenterCoordinateOutputVo(
+        return MyServiceTkSampleMapCoordinateCalculationController.ReturnCenterCoordinateOutputVo(
             centerCoordinate.first,
             centerCoordinate.second
         )
@@ -135,10 +135,10 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
 
     ////
     @CustomTransactional([Db1MainConfig.TRANSACTION_NAME])
-    override fun api3InsertCoordinateDataToDatabase(
+    override fun insertCoordinateDataToDatabase(
         httpServletResponse: HttpServletResponse,
-        inputVo: C9Service1TkV1MapCoordinateCalculationController.Api3InsertCoordinateDataToDatabaseInputVo
-    ): C9Service1TkV1MapCoordinateCalculationController.Api3InsertCoordinateDataToDatabaseOutputVo? {
+        inputVo: MyServiceTkSampleMapCoordinateCalculationController.InsertCoordinateDataToDatabaseInputVo
+    ): MyServiceTkSampleMapCoordinateCalculationController.InsertCoordinateDataToDatabaseOutputVo? {
         db1TemplateTestMapRepository.save(
             Db1_Template_TestMap(
                 inputVo.latitude,
@@ -147,12 +147,12 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
         )
 
         val coordinateList =
-            ArrayList<C9Service1TkV1MapCoordinateCalculationController.Api3InsertCoordinateDataToDatabaseOutputVo.Coordinate>()
+            ArrayList<MyServiceTkSampleMapCoordinateCalculationController.InsertCoordinateDataToDatabaseOutputVo.Coordinate>()
         val latLngCoordinate = ArrayList<Pair<Double, Double>>()
 
         for (testMap in db1TemplateTestMapRepository.findAll()) {
             coordinateList.add(
-                C9Service1TkV1MapCoordinateCalculationController.Api3InsertCoordinateDataToDatabaseOutputVo.Coordinate(
+                MyServiceTkSampleMapCoordinateCalculationController.InsertCoordinateDataToDatabaseOutputVo.Coordinate(
                     testMap.latitude,
                     testMap.longitude
                 )
@@ -168,9 +168,9 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
         )
 
         httpServletResponse.status = HttpStatus.OK.value()
-        return C9Service1TkV1MapCoordinateCalculationController.Api3InsertCoordinateDataToDatabaseOutputVo(
+        return MyServiceTkSampleMapCoordinateCalculationController.InsertCoordinateDataToDatabaseOutputVo(
             coordinateList,
-            C9Service1TkV1MapCoordinateCalculationController.Api3InsertCoordinateDataToDatabaseOutputVo.Coordinate(
+            MyServiceTkSampleMapCoordinateCalculationController.InsertCoordinateDataToDatabaseOutputVo.Coordinate(
                 centerCoordinate.first,
                 centerCoordinate.second
             )
@@ -180,7 +180,7 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
 
     ////
     @CustomTransactional([Db1MainConfig.TRANSACTION_NAME])
-    override fun api4DeleteAllCoordinateDataFromDatabase(httpServletResponse: HttpServletResponse) {
+    override fun deleteAllCoordinateDataFromDatabase(httpServletResponse: HttpServletResponse) {
         db1TemplateTestMapRepository.deleteAll()
 
         httpServletResponse.status = HttpStatus.OK.value()
@@ -188,12 +188,12 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
 
 
     ////
-    override fun api5SelectCoordinateDataRowsInRadiusKiloMeterSample(
+    override fun selectCoordinateDataRowsInRadiusKiloMeterSample(
         httpServletResponse: HttpServletResponse,
         anchorLatitude: Double,
         anchorLongitude: Double,
         radiusKiloMeter: Double
-    ): C9Service1TkV1MapCoordinateCalculationController.Api5SelectCoordinateDataRowsInRadiusKiloMeterSampleOutputVo? {
+    ): MyServiceTkSampleMapCoordinateCalculationController.SelectCoordinateDataRowsInRadiusKiloMeterSampleOutputVo? {
         val entityList =
             db1NativeRepository.forC9N5(
                 anchorLatitude,
@@ -202,10 +202,10 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
             )
 
         val coordinateCalcResultList =
-            ArrayList<C9Service1TkV1MapCoordinateCalculationController.Api5SelectCoordinateDataRowsInRadiusKiloMeterSampleOutputVo.CoordinateCalcResult>()
+            ArrayList<MyServiceTkSampleMapCoordinateCalculationController.SelectCoordinateDataRowsInRadiusKiloMeterSampleOutputVo.CoordinateCalcResult>()
         for (entity in entityList) {
             coordinateCalcResultList.add(
-                C9Service1TkV1MapCoordinateCalculationController.Api5SelectCoordinateDataRowsInRadiusKiloMeterSampleOutputVo.CoordinateCalcResult(
+                MyServiceTkSampleMapCoordinateCalculationController.SelectCoordinateDataRowsInRadiusKiloMeterSampleOutputVo.CoordinateCalcResult(
                     entity.uid,
                     entity.latitude,
                     entity.longitude,
@@ -215,20 +215,20 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
         }
 
         httpServletResponse.status = HttpStatus.OK.value()
-        return C9Service1TkV1MapCoordinateCalculationController.Api5SelectCoordinateDataRowsInRadiusKiloMeterSampleOutputVo(
+        return MyServiceTkSampleMapCoordinateCalculationController.SelectCoordinateDataRowsInRadiusKiloMeterSampleOutputVo(
             coordinateCalcResultList
         )
     }
 
 
     ////
-    override fun api6SelectCoordinateDataRowsInCoordinateBoxSample(
+    override fun selectCoordinateDataRowsInCoordinateBoxSample(
         httpServletResponse: HttpServletResponse,
         northLatitude: Double, // 북위도 (ex : 37.771848)
         eastLongitude: Double, // 동경도 (ex : 127.433549)
         southLatitude: Double, // 남위도 (ex : 37.245683)
         westLongitude: Double // 남경도 (ex : 126.587602)
-    ): C9Service1TkV1MapCoordinateCalculationController.Api6SelectCoordinateDataRowsInCoordinateBoxSampleOutputVo? {
+    ): MyServiceTkSampleMapCoordinateCalculationController.SelectCoordinateDataRowsInCoordinateBoxSampleOutputVo? {
         val entityList =
             db1NativeRepository.forC9N6(
                 northLatitude,
@@ -238,10 +238,10 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
             )
 
         val coordinateCalcResultList =
-            ArrayList<C9Service1TkV1MapCoordinateCalculationController.Api6SelectCoordinateDataRowsInCoordinateBoxSampleOutputVo.CoordinateCalcResult>()
+            ArrayList<MyServiceTkSampleMapCoordinateCalculationController.SelectCoordinateDataRowsInCoordinateBoxSampleOutputVo.CoordinateCalcResult>()
         for (entity in entityList) {
             coordinateCalcResultList.add(
-                C9Service1TkV1MapCoordinateCalculationController.Api6SelectCoordinateDataRowsInCoordinateBoxSampleOutputVo.CoordinateCalcResult(
+                MyServiceTkSampleMapCoordinateCalculationController.SelectCoordinateDataRowsInCoordinateBoxSampleOutputVo.CoordinateCalcResult(
                     entity.uid,
                     entity.latitude,
                     entity.longitude
@@ -250,7 +250,7 @@ class C9Service1TkV1MapCoordinateCalculationServiceImpl(
         }
 
         httpServletResponse.status = HttpStatus.OK.value()
-        return C9Service1TkV1MapCoordinateCalculationController.Api6SelectCoordinateDataRowsInCoordinateBoxSampleOutputVo(
+        return MyServiceTkSampleMapCoordinateCalculationController.SelectCoordinateDataRowsInCoordinateBoxSampleOutputVo(
             coordinateCalcResultList
         )
     }
