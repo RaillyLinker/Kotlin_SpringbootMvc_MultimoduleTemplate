@@ -1,7 +1,7 @@
 package com.raillylinker.module_api_my_service_tk_sample.controllers
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.raillylinker.module_api_my_service_tk_sample.services.C7Service1TkV1DatabaseTestService
+import com.raillylinker.module_api_my_service_tk_sample.services.MyServiceTkSampleDatabaseTestService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.headers.Header
@@ -15,11 +15,11 @@ import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
-@Tag(name = "/service1/tk/v1/database-test APIs", description = "C7 : Database 에 대한 테스트 API 컨트롤러")
+@Tag(name = "/my-service/tk/sample/database-test APIs", description = "Database 에 대한 테스트 API 컨트롤러")
 @Controller
-@RequestMapping("/service1/tk/v1/database-test")
-class C7Service1TkV1DatabaseTestController(
-    private val service: C7Service1TkV1DatabaseTestService
+@RequestMapping("/my-service/tk/sample/database-test")
+class MyServiceTkSampleDatabaseTestController(
+    private val service: MyServiceTkSampleDatabaseTestService
 ) {
     // <멤버 변수 공간>
 
@@ -27,7 +27,7 @@ class C7Service1TkV1DatabaseTestController(
     // ---------------------------------------------------------------------------------------------
     // <매핑 함수 공간>
     @Operation(
-        summary = "N1 : DB Row 입력 테스트 API",
+        summary = "DB Row 입력 테스트 API",
         description = "테스트 테이블에 Row 를 입력합니다.\n\n"
     )
     @ApiResponses(
@@ -44,16 +44,16 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api1InsertDataSample(
+    fun insertDataSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @RequestBody
-        inputVo: Api1InsertDataSampleInputVo
-    ): Api1InsertDataSampleOutputVo? {
-        return service.api1InsertDataSample(httpServletResponse, inputVo)
+        inputVo: InsertDataSampleInputVo
+    ): InsertDataSampleOutputVo? {
+        return service.insertDataSample(httpServletResponse, inputVo)
     }
 
-    data class Api1InsertDataSampleInputVo(
+    data class InsertDataSampleInputVo(
         @Schema(description = "글 본문", required = true, example = "테스트 텍스트입니다.")
         @JsonProperty("content")
         val content: String,
@@ -66,7 +66,7 @@ class C7Service1TkV1DatabaseTestController(
         val dateString: String
     )
 
-    data class Api1InsertDataSampleOutputVo(
+    data class InsertDataSampleOutputVo(
         @Schema(description = "글 고유번호", required = true, example = "1234")
         @JsonProperty("uid")
         val uid: Long,
@@ -105,7 +105,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N2 : DB Rows 삭제 테스트 API",
+        summary = "DB Rows 삭제 테스트 API",
         description = "테스트 테이블의 모든 Row 를 모두 삭제합니다.\n\n"
     )
     @ApiResponses(
@@ -122,20 +122,20 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api2DeleteRowsSample(
+    fun deleteRowsSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "deleteLogically", description = "논리적 삭제 여부", example = "true")
         @RequestParam("deleteLogically")
         deleteLogically: Boolean
     ) {
-        service.api2DeleteRowsSample(httpServletResponse, deleteLogically)
+        service.deleteRowsSample(httpServletResponse, deleteLogically)
     }
 
 
     ////
     @Operation(
-        summary = "N3 : DB Row 삭제 테스트",
+        summary = "DB Row 삭제 테스트",
         description = "테스트 테이블의 Row 하나를 삭제합니다.\n\n"
     )
     @ApiResponses(
@@ -166,7 +166,7 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api3DeleteRowSample(
+    fun deleteRowSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "index", description = "글 인덱스", example = "1")
@@ -176,13 +176,13 @@ class C7Service1TkV1DatabaseTestController(
         @RequestParam("deleteLogically")
         deleteLogically: Boolean
     ) {
-        service.api3DeleteRowSample(httpServletResponse, index, deleteLogically)
+        service.deleteRowSample(httpServletResponse, index, deleteLogically)
     }
 
 
     ////
     @Operation(
-        summary = "N4 : DB Rows 조회 테스트",
+        summary = "DB Rows 조회 테스트",
         description = "테스트 테이블의 모든 Rows 를 반환합니다.\n\n"
     )
     @ApiResponses(
@@ -199,14 +199,14 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api4SelectRowsSample(
+    fun selectRowsSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
-    ): Api4SelectRowsSampleOutputVo? {
-        return service.api4SelectRowsSample(httpServletResponse)
+    ): SelectRowsSampleOutputVo? {
+        return service.selectRowsSample(httpServletResponse)
     }
 
-    data class Api4SelectRowsSampleOutputVo(
+    data class SelectRowsSampleOutputVo(
         @Schema(description = "아이템 리스트", required = true)
         @JsonProperty("testEntityVoList")
         val testEntityVoList: List<TestEntityVo>,
@@ -256,7 +256,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N5 : DB 테이블의 random_num 컬럼 근사치 기준으로 정렬한 리스트 조회 API",
+        summary = "DB 테이블의 random_num 컬럼 근사치 기준으로 정렬한 리스트 조회 API",
         description = "테이블의 row 중 random_num 컬럼과 num 파라미터의 값의 근사치로 정렬한 리스트 반환\n\n"
     )
     @ApiResponses(
@@ -273,17 +273,17 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api5SelectRowsOrderByRandomNumSample(
+    fun selectRowsOrderByRandomNumSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "num", description = "근사값 정렬의 기준", example = "1")
         @RequestParam("num")
         num: Int
-    ): Api5SelectRowsOrderByRandomNumSampleOutputVo? {
-        return service.api5SelectRowsOrderByRandomNumSample(httpServletResponse, num)
+    ): SelectRowsOrderByRandomNumSampleOutputVo? {
+        return service.selectRowsOrderByRandomNumSample(httpServletResponse, num)
     }
 
-    data class Api5SelectRowsOrderByRandomNumSampleOutputVo(
+    data class SelectRowsOrderByRandomNumSampleOutputVo(
         @Schema(description = "아이템 리스트", required = true)
         @JsonProperty("testEntityVoList")
         val testEntityVoList: List<TestEntityVo>
@@ -329,7 +329,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N6 : DB 테이블의 row_create_date 컬럼 근사치 기준으로 정렬한 리스트 조회 API",
+        summary = "DB 테이블의 row_create_date 컬럼 근사치 기준으로 정렬한 리스트 조회 API",
         description = "테이블의 row 중 row_create_date 컬럼과 dateString 파라미터의 값의 근사치로 정렬한 리스트 반환\n\n"
     )
     @ApiResponses(
@@ -346,7 +346,7 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api6SelectRowsOrderByRowCreateDateSample(
+    fun selectRowsOrderByRowCreateDateSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(
@@ -356,11 +356,11 @@ class C7Service1TkV1DatabaseTestController(
         )
         @RequestParam("dateString")
         dateString: String
-    ): Api6SelectRowsOrderByRowCreateDateSampleOutputVo? {
-        return service.api6SelectRowsOrderByRowCreateDateSample(httpServletResponse, dateString)
+    ): SelectRowsOrderByRowCreateDateSampleOutputVo? {
+        return service.selectRowsOrderByRowCreateDateSample(httpServletResponse, dateString)
     }
 
-    data class Api6SelectRowsOrderByRowCreateDateSampleOutputVo(
+    data class SelectRowsOrderByRowCreateDateSampleOutputVo(
         @Schema(description = "아이템 리스트", required = true)
         @JsonProperty("testEntityVoList")
         val testEntityVoList: List<TestEntityVo>
@@ -406,7 +406,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N7 : DB Rows 조회 테스트 (페이징)",
+        summary = "DB Rows 조회 테스트 (페이징)",
         description = "테스트 테이블의 Rows 를 페이징하여 반환합니다.\n\n"
     )
     @ApiResponses(
@@ -423,7 +423,7 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api7SelectRowsPageSample(
+    fun selectRowsPageSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "page", description = "원하는 페이지(1 부터 시작)", example = "1")
@@ -432,11 +432,11 @@ class C7Service1TkV1DatabaseTestController(
         @Parameter(name = "pageElementsCount", description = "페이지 아이템 개수", example = "10")
         @RequestParam("pageElementsCount")
         pageElementsCount: Int
-    ): Api7SelectRowsPageSampleOutputVo? {
-        return service.api7SelectRowsPageSample(httpServletResponse, page, pageElementsCount)
+    ): SelectRowsPageSampleOutputVo? {
+        return service.selectRowsPageSample(httpServletResponse, page, pageElementsCount)
     }
 
-    data class Api7SelectRowsPageSampleOutputVo(
+    data class SelectRowsPageSampleOutputVo(
         @Schema(description = "아이템 전체 개수", required = true, example = "100")
         @JsonProperty("totalElements")
         val totalElements: Long,
@@ -482,7 +482,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N8 : DB Rows 조회 테스트 (네이티브 쿼리 페이징)",
+        summary = "DB Rows 조회 테스트 (네이티브 쿼리 페이징)",
         description = "테스트 테이블의 Rows 를 네이티브 쿼리로 페이징하여 반환합니다.\n\n" +
                 "num 을 기준으로 근사치 정렬도 수행합니다.\n\n"
     )
@@ -500,7 +500,7 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api8SelectRowsNativeQueryPageSample(
+    fun selectRowsNativeQueryPageSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "page", description = "원하는 페이지(1 부터 시작)", example = "1")
@@ -512,11 +512,11 @@ class C7Service1TkV1DatabaseTestController(
         @Parameter(name = "num", description = "근사값의 기준", example = "1")
         @RequestParam("num")
         num: Int
-    ): Api8SelectRowsNativeQueryPageSampleOutputVo? {
-        return service.api8SelectRowsNativeQueryPageSample(httpServletResponse, page, pageElementsCount, num)
+    ): SelectRowsNativeQueryPageSampleOutputVo? {
+        return service.selectRowsNativeQueryPageSample(httpServletResponse, page, pageElementsCount, num)
     }
 
-    data class Api8SelectRowsNativeQueryPageSampleOutputVo(
+    data class SelectRowsNativeQueryPageSampleOutputVo(
         @Schema(description = "아이템 전체 개수", required = true, example = "100")
         @JsonProperty("totalElements")
         val totalElements: Long,
@@ -565,7 +565,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N9 : DB Row 수정 테스트",
+        summary = "DB Row 수정 테스트",
         description = "테스트 테이블의 Row 하나를 수정합니다.\n\n"
     )
     @ApiResponses(
@@ -596,19 +596,19 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api9UpdateRowSample(
+    fun updateRowSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "testTableUid", description = "test 테이블의 uid", example = "1")
         @PathVariable("testTableUid")
         testTableUid: Long,
         @RequestBody
-        inputVo: Api9UpdateRowSampleInputVo
-    ): Api9UpdateRowSampleOutputVo? {
-        return service.api9UpdateRowSample(httpServletResponse, testTableUid, inputVo)
+        inputVo: UpdateRowSampleInputVo
+    ): UpdateRowSampleOutputVo? {
+        return service.updateRowSample(httpServletResponse, testTableUid, inputVo)
     }
 
-    data class Api9UpdateRowSampleInputVo(
+    data class UpdateRowSampleInputVo(
         @Schema(description = "글 본문", required = true, example = "테스트 텍스트 수정글입니다.")
         @JsonProperty("content")
         val content: String,
@@ -621,7 +621,7 @@ class C7Service1TkV1DatabaseTestController(
         val dateString: String
     )
 
-    data class Api9UpdateRowSampleOutputVo(
+    data class UpdateRowSampleOutputVo(
         @Schema(description = "글 고유번호", required = true, example = "1234")
         @JsonProperty("uid")
         val uid: Long,
@@ -657,7 +657,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N10 : DB Row 수정 테스트 (네이티브 쿼리)",
+        summary = "DB Row 수정 테스트 (네이티브 쿼리)",
         description = "테스트 테이블의 Row 하나를 네이티브 쿼리로 수정합니다.\n\n"
     )
     @ApiResponses(
@@ -688,19 +688,19 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api10UpdateRowNativeQuerySample(
+    fun updateRowNativeQuerySample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "testTableUid", description = "test 테이블의 uid", example = "1")
         @PathVariable("testTableUid")
         testTableUid: Long,
         @RequestBody
-        inputVo: Api10UpdateRowNativeQuerySampleInputVo
+        inputVo: UpdateRowNativeQuerySampleInputVo
     ) {
-        return service.api10UpdateRowNativeQuerySample(httpServletResponse, testTableUid, inputVo)
+        return service.updateRowNativeQuerySample(httpServletResponse, testTableUid, inputVo)
     }
 
-    data class Api10UpdateRowNativeQuerySampleInputVo(
+    data class UpdateRowNativeQuerySampleInputVo(
         @Schema(description = "글 본문", required = true, example = "테스트 텍스트 수정글입니다.")
         @JsonProperty("content")
         val content: String,
@@ -716,7 +716,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N11 : DB 정보 검색 테스트",
+        summary = "DB 정보 검색 테스트",
         description = "글 본문 내용중 searchKeyword 가 포함된 rows 를 검색하여 반환합니다.\n\n"
     )
     @ApiResponses(
@@ -733,7 +733,7 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api11SelectRowWhereSearchingKeywordSample(
+    fun selectRowWhereSearchingKeywordSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "page", description = "원하는 페이지(1 부터 시작)", example = "1")
@@ -745,8 +745,8 @@ class C7Service1TkV1DatabaseTestController(
         @Parameter(name = "searchKeyword", description = "검색어", example = "테스트")
         @RequestParam("searchKeyword")
         searchKeyword: String
-    ): Api11SelectRowWhereSearchingKeywordSampleOutputVo? {
-        return service.api11SelectRowWhereSearchingKeywordSample(
+    ): SelectRowWhereSearchingKeywordSampleOutputVo? {
+        return service.selectRowWhereSearchingKeywordSample(
             httpServletResponse,
             page,
             pageElementsCount,
@@ -754,7 +754,7 @@ class C7Service1TkV1DatabaseTestController(
         )
     }
 
-    data class Api11SelectRowWhereSearchingKeywordSampleOutputVo(
+    data class SelectRowWhereSearchingKeywordSampleOutputVo(
         @Schema(description = "아이템 전체 개수", required = true, example = "100")
         @JsonProperty("totalElements")
         val totalElements: Long,
@@ -800,7 +800,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N12 : 트랜젝션 동작 테스트",
+        summary = "트랜젝션 동작 테스트",
         description = "정보 입력 후 Exception 이 발생했을 때 롤백되어 데이터가 저장되지 않는지를 테스트하는 API\n\n"
     )
     @ApiResponses(
@@ -817,17 +817,17 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api12TransactionTest(
+    fun transactionTest(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
     ) {
-        service.api12TransactionTest(httpServletResponse)
+        service.transactionTest(httpServletResponse)
     }
 
 
     ////
     @Operation(
-        summary = "N13 : 트랜젝션 비동작 테스트",
+        summary = "트랜젝션 비동작 테스트",
         description = "트랜젝션 처리를 하지 않았을 때, DB 정보 입력 후 Exception 이 발생 했을 때 의 테스트 API\n\n"
     )
     @ApiResponses(
@@ -844,17 +844,17 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api13NonTransactionTest(
+    fun nonTransactionTest(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
     ) {
-        service.api13NonTransactionTest(httpServletResponse)
+        service.nonTransactionTest(httpServletResponse)
     }
 
 
     ////
     @Operation(
-        summary = "N13.1 : 트랜젝션 비동작 테스트(try-catch)",
+        summary = "트랜젝션 비동작 테스트(try-catch)",
         description = "에러 발생문이 try-catch 문 안에 있을 때, DB 정보 입력 후 Exception 이 발생 해도 트랜젝션이 동작하지 않는지에 대한 테스트 API\n\n"
     )
     @ApiResponses(
@@ -871,17 +871,17 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api13Dot1TryCatchNonTransactionTest(
+    fun tryCatchNonTransactionTest(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
     ) {
-        service.api13Dot1TryCatchNonTransactionTest(httpServletResponse)
+        service.tryCatchNonTransactionTest(httpServletResponse)
     }
 
 
     ////
     @Operation(
-        summary = "N14 : DB Rows 조회 테스트 (중복 없는 네이티브 쿼리 페이징)",
+        summary = "DB Rows 조회 테스트 (중복 없는 네이티브 쿼리 페이징)",
         description = "테스트 테이블의 Rows 를 네이티브 쿼리로 중복없이 페이징하여 반환합니다.\n\n" +
                 "num 을 기준으로 근사치 정렬도 수행합니다.\n\n"
     )
@@ -899,7 +899,7 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api14SelectRowsNoDuplicatePagingSample(
+    fun selectRowsNoDuplicatePagingSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "lastItemUid", description = "이전 페이지에서 받은 마지막 아이템의 Uid (첫 요청이면 null)", example = "1")
@@ -908,11 +908,11 @@ class C7Service1TkV1DatabaseTestController(
         @Parameter(name = "pageElementsCount", description = "페이지 아이템 개수", example = "10")
         @RequestParam("pageElementsCount")
         pageElementsCount: Int
-    ): Api14SelectRowsNoDuplicatePagingSampleOutputVo? {
-        return service.api14SelectRowsNoDuplicatePagingSample(httpServletResponse, lastItemUid, pageElementsCount)
+    ): SelectRowsNoDuplicatePagingSampleOutputVo? {
+        return service.selectRowsNoDuplicatePagingSample(httpServletResponse, lastItemUid, pageElementsCount)
     }
 
-    data class Api14SelectRowsNoDuplicatePagingSampleOutputVo(
+    data class SelectRowsNoDuplicatePagingSampleOutputVo(
         @Schema(description = "아이템 전체 개수", required = true, example = "100")
         @JsonProperty("totalElements")
         val totalElements: Long,
@@ -958,7 +958,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N15 : DB Rows 조회 테스트 (카운팅)",
+        summary = "DB Rows 조회 테스트 (카운팅)",
         description = "테스트 테이블의 Rows 를 카운팅하여 반환합니다.\n\n"
     )
     @ApiResponses(
@@ -975,14 +975,14 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api15SelectRowsCountSample(
+    fun selectRowsCountSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
-    ): Api15SelectRowsCountSampleOutputVo? {
-        return service.api15SelectRowsCountSample(httpServletResponse)
+    ): SelectRowsCountSampleOutputVo? {
+        return service.selectRowsCountSample(httpServletResponse)
     }
 
-    data class Api15SelectRowsCountSampleOutputVo(
+    data class SelectRowsCountSampleOutputVo(
         @Schema(description = "아이템 전체 개수", required = true, example = "100")
         @JsonProperty("totalElements")
         val totalElements: Long
@@ -991,7 +991,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N16 : DB Rows 조회 테스트 (네이티브 카운팅)",
+        summary = "DB Rows 조회 테스트 (네이티브 카운팅)",
         description = "테스트 테이블의 Rows 를 네이티브 쿼리로 카운팅하여 반환합니다.\n\n"
     )
     @ApiResponses(
@@ -1008,14 +1008,14 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api16SelectRowsCountByNativeQuerySample(
+    fun selectRowsCountByNativeQuerySample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
-    ): Api16SelectRowsCountByNativeQuerySampleOutputVo? {
-        return service.api16SelectRowsCountByNativeQuerySample(httpServletResponse)
+    ): SelectRowsCountByNativeQuerySampleOutputVo? {
+        return service.selectRowsCountByNativeQuerySample(httpServletResponse)
     }
 
-    data class Api16SelectRowsCountByNativeQuerySampleOutputVo(
+    data class SelectRowsCountByNativeQuerySampleOutputVo(
         @Schema(description = "아이템 전체 개수", required = true, example = "100")
         @JsonProperty("totalElements")
         val totalElements: Long
@@ -1024,7 +1024,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N17 : DB Row 조회 테스트 (네이티브)",
+        summary = "DB Row 조회 테스트 (네이티브)",
         description = "테스트 테이블의 Row 하나를 네이티브 쿼리로 반환합니다.\n\n"
     )
     @ApiResponses(
@@ -1055,17 +1055,17 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api17SelectRowByNativeQuerySample(
+    fun selectRowByNativeQuerySample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "testTableUid", description = "test 테이블의 uid", example = "1")
         @PathVariable("testTableUid")
         testTableUid: Long
-    ): Api17SelectRowByNativeQuerySampleOutputVo? {
-        return service.api17SelectRowByNativeQuerySample(httpServletResponse, testTableUid)
+    ): SelectRowByNativeQuerySampleOutputVo? {
+        return service.selectRowByNativeQuerySample(httpServletResponse, testTableUid)
     }
 
-    data class Api17SelectRowByNativeQuerySampleOutputVo(
+    data class SelectRowByNativeQuerySampleOutputVo(
         @Schema(description = "글 고유번호", required = true, example = "1234")
         @JsonProperty("uid")
         val uid: Long,
@@ -1101,7 +1101,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N18 : 유니크 테스트 테이블 Row 입력 API",
+        summary = "유니크 테스트 테이블 Row 입력 API",
         description = "유니크 테스트 테이블에 Row 를 입력합니다.\n\n" +
                 "논리적 삭제를 적용한 본 테이블에서 유니크 값은, 유니크 값 컬럼과 행 삭제일 데이터와의 혼합입니다.\n\n"
     )
@@ -1119,22 +1119,22 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api18InsertUniqueTestTableRowSample(
+    fun insertUniqueTestTableRowSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @RequestBody
-        inputVo: Api18InsertUniqueTestTableRowSampleInputVo
-    ): Api18InsertUniqueTestTableRowSampleOutputVo? {
-        return service.api18InsertUniqueTestTableRowSample(httpServletResponse, inputVo)
+        inputVo: InsertUniqueTestTableRowSampleInputVo
+    ): InsertUniqueTestTableRowSampleOutputVo? {
+        return service.insertUniqueTestTableRowSample(httpServletResponse, inputVo)
     }
 
-    data class Api18InsertUniqueTestTableRowSampleInputVo(
+    data class InsertUniqueTestTableRowSampleInputVo(
         @Schema(description = "유니크 값", required = true, example = "1")
         @JsonProperty("uniqueValue")
         val uniqueValue: Int
     )
 
-    data class Api18InsertUniqueTestTableRowSampleOutputVo(
+    data class InsertUniqueTestTableRowSampleOutputVo(
         @Schema(description = "글 고유번호", required = true, example = "1234")
         @JsonProperty("uid")
         val uid: Long,
@@ -1163,7 +1163,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N19 : 유니크 테스트 테이블 Rows 조회 테스트",
+        summary = "유니크 테스트 테이블 Rows 조회 테스트",
         description = "유니크 테스트 테이블의 모든 Rows 를 반환합니다.\n\n"
     )
     @ApiResponses(
@@ -1180,14 +1180,14 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api19SelectUniqueTestTableRowsSample(
+    fun selectUniqueTestTableRowsSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
-    ): Api19SelectUniqueTestTableRowsSampleOutputVo? {
-        return service.api19SelectUniqueTestTableRowsSample(httpServletResponse)
+    ): SelectUniqueTestTableRowsSampleOutputVo? {
+        return service.selectUniqueTestTableRowsSample(httpServletResponse)
     }
 
-    data class Api19SelectUniqueTestTableRowsSampleOutputVo(
+    data class SelectUniqueTestTableRowsSampleOutputVo(
         @Schema(description = "아이템 리스트", required = true)
         @JsonProperty("testEntityVoList")
         val testEntityVoList: List<TestEntityVo>,
@@ -1227,7 +1227,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N20 : 유니크 테스트 테이블 Row 수정 테스트",
+        summary = "유니크 테스트 테이블 Row 수정 테스트",
         description = "유니크 테스트 테이블의 Row 하나를 수정합니다.\n\n"
     )
     @ApiResponses(
@@ -1259,25 +1259,25 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api20UpdateUniqueTestTableRowSample(
+    fun updateUniqueTestTableRowSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "uniqueTestTableUid", description = "unique test 테이블의 uid", example = "1")
         @PathVariable("uniqueTestTableUid")
         uniqueTestTableUid: Long,
         @RequestBody
-        inputVo: Api20UpdateUniqueTestTableRowSampleInputVo
-    ): Api20UpdateUniqueTestTableRowSampleOutputVo? {
-        return service.api20UpdateUniqueTestTableRowSample(httpServletResponse, uniqueTestTableUid, inputVo)
+        inputVo: UpdateUniqueTestTableRowSampleInputVo
+    ): UpdateUniqueTestTableRowSampleOutputVo? {
+        return service.updateUniqueTestTableRowSample(httpServletResponse, uniqueTestTableUid, inputVo)
     }
 
-    data class Api20UpdateUniqueTestTableRowSampleInputVo(
+    data class UpdateUniqueTestTableRowSampleInputVo(
         @Schema(description = "유니크 값", required = true, example = "1")
         @JsonProperty("uniqueValue")
         val uniqueValue: Int
     )
 
-    data class Api20UpdateUniqueTestTableRowSampleOutputVo(
+    data class UpdateUniqueTestTableRowSampleOutputVo(
         @Schema(description = "글 고유번호", required = true, example = "1234")
         @JsonProperty("uid")
         val uid: Long,
@@ -1303,7 +1303,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N21 : 유니크 테스트 테이블 Row 삭제 테스트",
+        summary = "유니크 테스트 테이블 Row 삭제 테스트",
         description = "유니크 테스트 테이블의 Row 하나를 삭제합니다.\n\n"
     )
     @ApiResponses(
@@ -1334,20 +1334,20 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api21DeleteUniqueTestTableRowSample(
+    fun deleteUniqueTestTableRowSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "index", description = "글 인덱스", example = "1")
         @PathVariable("index")
         index: Long
     ) {
-        service.api21DeleteUniqueTestTableRowSample(httpServletResponse, index)
+        service.deleteUniqueTestTableRowSample(httpServletResponse, index)
     }
 
 
     ////
     @Operation(
-        summary = "N22 : 외래키 부모 테이블 Row 입력 API",
+        summary = "외래키 부모 테이블 Row 입력 API",
         description = "외래키 부모 테이블에 Row 를 입력합니다.\n\n"
     )
     @ApiResponses(
@@ -1364,22 +1364,22 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api22InsertFkParentRowSample(
+    fun insertFkParentRowSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @RequestBody
-        inputVo: Api22InsertFkParentRowSampleInputVo
-    ): Api22InsertFkParentRowSampleOutputVo? {
-        return service.api22InsertFkParentRowSample(httpServletResponse, inputVo)
+        inputVo: InsertFkParentRowSampleInputVo
+    ): InsertFkParentRowSampleOutputVo? {
+        return service.insertFkParentRowSample(httpServletResponse, inputVo)
     }
 
-    data class Api22InsertFkParentRowSampleInputVo(
+    data class InsertFkParentRowSampleInputVo(
         @Schema(description = "외래키 테이블 부모 이름", required = true, example = "홍길동")
         @JsonProperty("fkParentName")
         val fkParentName: String
     )
 
-    data class Api22InsertFkParentRowSampleOutputVo(
+    data class InsertFkParentRowSampleOutputVo(
         @Schema(description = "글 고유번호", required = true, example = "1234")
         @JsonProperty("uid")
         val uid: Long,
@@ -1405,7 +1405,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N23 : 외래키 부모 테이블 아래에 자식 테이블의 Row 입력 API",
+        summary = "외래키 부모 테이블 아래에 자식 테이블의 Row 입력 API",
         description = "외래키 부모 테이블의 아래에 자식 테이블의 Row 를 입력합니다.\n\n"
     )
     @ApiResponses(
@@ -1436,25 +1436,25 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api23InsertFkChildRowSample(
+    fun insertFkChildRowSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "parentUid", description = "외래키 부모 테이블 고유번호", example = "1")
         @PathVariable("parentUid")
         parentUid: Long,
         @RequestBody
-        inputVo: Api23InsertFkChildRowSampleInputVo
-    ): Api23InsertFkChildRowSampleOutputVo? {
-        return service.api23InsertFkChildRowSample(httpServletResponse, parentUid, inputVo)
+        inputVo: InsertFkChildRowSampleInputVo
+    ): InsertFkChildRowSampleOutputVo? {
+        return service.insertFkChildRowSample(httpServletResponse, parentUid, inputVo)
     }
 
-    data class Api23InsertFkChildRowSampleInputVo(
+    data class InsertFkChildRowSampleInputVo(
         @Schema(description = "외래키 테이블 자식 이름", required = true, example = "홍길동")
         @JsonProperty("fkChildName")
         val fkChildName: String
     )
 
-    data class Api23InsertFkChildRowSampleOutputVo(
+    data class InsertFkChildRowSampleOutputVo(
         @Schema(description = "글 고유번호", required = true, example = "1234")
         @JsonProperty("uid")
         val uid: Long,
@@ -1483,7 +1483,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N24 : 외래키 관련 테이블 Rows 조회 테스트",
+        summary = "외래키 관련 테이블 Rows 조회 테스트",
         description = "외래키 관련 테이블의 모든 Rows 를 반환합니다.\n\n"
     )
     @ApiResponses(
@@ -1500,14 +1500,14 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api24SelectFkTestTableRowsSample(
+    fun selectFkTestTableRowsSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
-    ): Api24SelectFkTestTableRowsSampleOutputVo? {
-        return service.api24SelectFkTestTableRowsSample(httpServletResponse)
+    ): SelectFkTestTableRowsSampleOutputVo? {
+        return service.selectFkTestTableRowsSample(httpServletResponse)
     }
 
-    data class Api24SelectFkTestTableRowsSampleOutputVo(
+    data class SelectFkTestTableRowsSampleOutputVo(
         @Schema(description = "부모 아이템 리스트", required = true)
         @JsonProperty("parentEntityVoList")
         val parentEntityVoList: List<ParentEntityVo>
@@ -1567,7 +1567,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N24.1 : 외래키 관련 테이블 Rows 조회 테스트(Native Join)",
+        summary = "외래키 관련 테이블 Rows 조회 테스트(Native Join)",
         description = "외래키 관련 테이블의 모든 Rows 를 Native Query 로 Join 하여 반환합니다.\n\n"
     )
     @ApiResponses(
@@ -1584,14 +1584,14 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api24Dot1SelectFkTestTableRowsByNativeQuerySample(
+    fun selectFkTestTableRowsByNativeQuerySample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
-    ): Api24SelectFkTestTableRowsByNativeQuerySampleDot1OutputVo? {
-        return service.api24Dot1SelectFkTestTableRowsByNativeQuerySample(httpServletResponse)
+    ): SelectFkTestTableRowsByNativeQuerySampleDot1OutputVo? {
+        return service.selectFkTestTableRowsByNativeQuerySample(httpServletResponse)
     }
 
-    data class Api24SelectFkTestTableRowsByNativeQuerySampleDot1OutputVo(
+    data class SelectFkTestTableRowsByNativeQuerySampleDot1OutputVo(
         @Schema(description = "자식 아이템 리스트", required = true)
         @JsonProperty("childEntityVoList")
         val childEntityVoList: List<ChildEntityVo>
@@ -1630,7 +1630,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N25 : Native Query 반환값 테스트",
+        summary = "Native Query 반환값 테스트",
         description = "Native Query Select 문에서 IF, CASE 등의 문구에서 반환되는 값들을 받는 예시\n\n"
     )
     @ApiResponses(
@@ -1647,20 +1647,20 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api25GetNativeQueryReturnValueTest(
+    fun getNativeQueryReturnValueTest(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "inputVal", description = "Native Query 비교문에 사용되는 파라미터", example = "true")
         @RequestParam("inputVal")
         inputVal: Boolean
-    ): Api25GetNativeQueryReturnValueTestOutputVo? {
-        return service.api25GetNativeQueryReturnValueTest(
+    ): GetNativeQueryReturnValueTestOutputVo? {
+        return service.getNativeQueryReturnValueTest(
             httpServletResponse,
             inputVal
         )
     }
 
-    data class Api25GetNativeQueryReturnValueTestOutputVo(
+    data class GetNativeQueryReturnValueTestOutputVo(
         @Schema(description = "Select 문에서 직접적으로 true 를 반환한 예시", required = true, example = "true")
         @JsonProperty("normalBoolValue")
         val normalBoolValue: Boolean,
@@ -1681,7 +1681,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N26 : SQL Injection 테스트",
+        summary = "SQL Injection 테스트",
         description = "각 상황에서 SQL Injection 공격이 유효한지 확인하기 위한 테스트\n\n" +
                 "SELECT 문에서, WHERE 에, content = :searchKeyword 를 하여,\n\n" +
                 " 인젝션이 일어나는 키워드를 입력시 인젝션이 먹히는지를 확인할 것입니다.\n\n"
@@ -1700,20 +1700,20 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api26SqlInjectionTest(
+    fun sqlInjectionTest(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "searchKeyword", description = "Select 문 검색에 사용되는 키워드", example = "test OR 1 = 1")
         @RequestParam("searchKeyword")
         searchKeyword: String
-    ): Api26SqlInjectionTestOutputVo? {
-        return service.api26SqlInjectionTest(
+    ): SqlInjectionTestOutputVo? {
+        return service.sqlInjectionTest(
             httpServletResponse,
             searchKeyword
         )
     }
 
-    data class Api26SqlInjectionTestOutputVo(
+    data class SqlInjectionTestOutputVo(
         @Schema(description = "JpaRepository 로 조회했을 때의 아이템 리스트", required = true)
         @JsonProperty("jpaRepositoryResultList")
         val jpaRepositoryResultList: List<TestEntityVo>,
@@ -1762,7 +1762,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N27 : 외래키 관련 테이블 Rows 조회 (네이티브 쿼리, 부모 테이블을 자식 테이블의 가장 최근 데이터만 Join)",
+        summary = "외래키 관련 테이블 Rows 조회 (네이티브 쿼리, 부모 테이블을 자식 테이블의 가장 최근 데이터만 Join)",
         description = "외래키 관련 테이블의 모든 Rows 를 반환합니다.\n\n" +
                 "부모 테이블을 Native Query 로 조회할 때, 부모 테이블을 가리키는 자식 테이블들 중 가장 최신 데이터만 Join 하는 예시입니다.\n\n"
     )
@@ -1780,14 +1780,14 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api27SelectFkTableRowsWithLatestChildSample(
+    fun selectFkTableRowsWithLatestChildSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
-    ): Api27SelectFkTableRowsWithLatestChildSampleOutputVo? {
-        return service.api27SelectFkTableRowsWithLatestChildSample(httpServletResponse)
+    ): SelectFkTableRowsWithLatestChildSampleOutputVo? {
+        return service.selectFkTableRowsWithLatestChildSample(httpServletResponse)
     }
 
-    data class Api27SelectFkTableRowsWithLatestChildSampleOutputVo(
+    data class SelectFkTableRowsWithLatestChildSampleOutputVo(
         @Schema(description = "부모 아이템 리스트", required = true)
         @JsonProperty("parentEntityVoList")
         val parentEntityVoList: List<ParentEntityVo>
@@ -1847,7 +1847,7 @@ class C7Service1TkV1DatabaseTestController(
 
     ////
     @Operation(
-        summary = "N28 : 외래키 자식 테이블 Row 삭제 테스트",
+        summary = "외래키 자식 테이블 Row 삭제 테스트",
         description = "외래키 자식 테이블의 Row 하나를 삭제합니다.\n\n"
     )
     @ApiResponses(
@@ -1878,20 +1878,20 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api28DeleteFkChildRowSample(
+    fun deleteFkChildRowSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "index", description = "글 인덱스", example = "1")
         @PathVariable("index")
         index: Long
     ) {
-        service.api28DeleteFkChildRowSample(httpServletResponse, index)
+        service.deleteFkChildRowSample(httpServletResponse, index)
     }
 
 
     ////
     @Operation(
-        summary = "N29 : 외래키 부모 테이블 Row 삭제 테스트 (Cascade 기능 확인)",
+        summary = "외래키 부모 테이블 Row 삭제 테스트 (Cascade 기능 확인)",
         description = "외래키 부모 테이블의 Row 하나를 삭제합니다.\n\n" +
                 "Cascade 설정을 했으므로 부모 테이블이 삭제되면 해당 부모 테이블을 참조중인 다른 모든 자식 테이블들이 삭제되어야 합니다.\n\n"
     )
@@ -1923,20 +1923,20 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api29DeleteFkParentRowSample(
+    fun deleteFkParentRowSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "index", description = "글 인덱스", example = "1")
         @PathVariable("index")
         index: Long
     ) {
-        service.api29DeleteFkParentRowSample(httpServletResponse, index)
+        service.deleteFkParentRowSample(httpServletResponse, index)
     }
 
 
     ////
     @Operation(
-        summary = "N35 : 외래키 테이블 트랜젝션 동작 테스트",
+        summary = "외래키 테이블 트랜젝션 동작 테스트",
         description = "외래키 테이블에 정보 입력 후 Exception 이 발생했을 때 롤백되어 데이터가 저장되지 않는지를 테스트하는 API\n\n"
     )
     @ApiResponses(
@@ -1953,17 +1953,17 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api35FkTableTransactionTest(
+    fun fkTableTransactionTest(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
     ) {
-        service.api35FkTableTransactionTest(httpServletResponse)
+        service.fkTableTransactionTest(httpServletResponse)
     }
 
 
     ////
     @Operation(
-        summary = "N36 : 외래키 테이블 트랜젝션 비동작 테스트",
+        summary = "외래키 테이블 트랜젝션 비동작 테스트",
         description = "외래키 테이블의 트랜젝션 처리를 하지 않았을 때, DB 정보 입력 후 Exception 이 발생 했을 때 의 테스트 API\n\n"
     )
     @ApiResponses(
@@ -1980,10 +1980,10 @@ class C7Service1TkV1DatabaseTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api36FkTableNonTransactionTest(
+    fun fkTableNonTransactionTest(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
     ) {
-        service.api36FkTableNonTransactionTest(httpServletResponse)
+        service.fkTableNonTransactionTest(httpServletResponse)
     }
 }
