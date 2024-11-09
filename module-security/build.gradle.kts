@@ -8,6 +8,7 @@ dependencies {
     implementation(project(":module-common"))
     implementation(project(":module-redis"))
     implementation(project(":module-retrofit2"))
+    implementation(project(":module-jpa"))
 
     // (Spring Starter Web)
     // : 스프링 부트 웹 개발
