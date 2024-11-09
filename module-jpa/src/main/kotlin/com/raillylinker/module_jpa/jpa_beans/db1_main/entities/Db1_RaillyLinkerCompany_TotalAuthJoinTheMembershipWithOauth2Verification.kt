@@ -9,19 +9,26 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_member_profile_data",
+    name = "total_auth_join_the_membership_with_oauth2_verification",
     catalog = "railly_linker_company"
 )
-@Comment("Service1 계정 회원 프로필 정보 테이블")
-class Db1_RaillyLinkerCompany_Service1MemberProfileData(
-    @ManyToOne
-    @JoinColumn(name = "service1_member_uid", nullable = false)
-    @Comment("멤버 고유번호(railly_linker_company.service1_member_data.uid)")
-    var service1MemberData: Db1_RaillyLinkerCompany_Service1MemberData,
+@Comment("통합 로그인 계정 OAuth2 회원가입 검증 테이블")
+class Db1_RaillyLinkerCompany_TotalAuthJoinTheMembershipWithOauth2Verification(
+    @Column(name = "oauth2_type_code", nullable = false, columnDefinition = "TINYINT UNSIGNED")
+    @Comment("oauth2 종류 (1 : GOOGLE, 2 : NAVER, 3 : KAKAO)")
+    var oauth2TypeCode: Byte,
 
-    @Column(name = "image_full_url", nullable = false, columnDefinition = "VARCHAR(200)")
-    @Comment("프로필 이미지 Full URL")
-    var imageFullUrl: String
+    @Column(name = "oauth2_id", nullable = false, columnDefinition = "VARCHAR(50)")
+    @Comment("OAuth2 로그인으로 얻어온 고유값")
+    var oauth2Id: String,
+
+    @Column(name = "verification_secret", nullable = false, columnDefinition = "VARCHAR(20)")
+    @Comment("검증 비문")
+    var verificationSecret: String,
+
+    @Column(name = "verification_expire_when", nullable = false, columnDefinition = "DATETIME(3)")
+    @Comment("검증 만료 일시")
+    var verificationExpireWhen: LocalDateTime
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,9 +50,6 @@ class Db1_RaillyLinkerCompany_Service1MemberProfileData(
     @ColumnDefault("'/'")
     @Comment("행 삭제일(yyyy_MM_dd_T_HH_mm_ss_SSS_z, 삭제되지 않았다면 /)")
     var rowDeleteDateStr: String = "/"
-
-    @OneToMany(mappedBy = "frontService1MemberProfileData", fetch = FetchType.LAZY)
-    var service1MemberDataList: MutableList<Db1_RaillyLinkerCompany_Service1MemberData> = mutableListOf()
 
 
     // ---------------------------------------------------------------------------------------------

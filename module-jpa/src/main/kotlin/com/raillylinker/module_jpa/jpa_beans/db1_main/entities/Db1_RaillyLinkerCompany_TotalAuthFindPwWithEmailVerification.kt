@@ -9,14 +9,14 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_find_password_with_phone_number_verification_data",
+    name = "total_auth_find_pw_with_email_verification",
     catalog = "railly_linker_company"
 )
-@Comment("Service1 계정 전화번호로 비밀번호 찾기 검증 테이블")
-class Db1_RaillyLinkerCompany_Service1FindPasswordWithPhoneNumberVerificationData(
-    @Column(name = "phone_number", nullable = false, columnDefinition = "VARCHAR(45)")
-    @Comment("전화 번호")
-    var phoneNumber: String,
+@Comment("통합 로그인 계정 이메일로 비밀번호 찾기 검증 테이블")
+class Db1_RaillyLinkerCompany_TotalAuthFindPwWithEmailVerification(
+    @Column(name = "email_address", nullable = false, columnDefinition = "VARCHAR(100)")
+    @Comment("이메일 주소")
+    var emailAddress: String,
 
     @Column(name = "verification_secret", nullable = false, columnDefinition = "VARCHAR(20)")
     @Comment("검증 비문")

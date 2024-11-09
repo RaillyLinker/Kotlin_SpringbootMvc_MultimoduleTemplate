@@ -9,22 +9,27 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_member_role_data",
-    catalog = "railly_linker_company",
-    uniqueConstraints = [
-        UniqueConstraint(columnNames = ["service1_member_uid", "role", "row_delete_date_str"])
-    ]
+    name = "total_auth_add_phone_verification",
+    catalog = "railly_linker_company"
 )
-@Comment("Service1 계정 회원 권한 정보 테이블")
-class Db1_RaillyLinkerCompany_Service1MemberRoleData(
+@Comment("통합 로그인 계정 전화번호 추가하기 검증 테이블")
+class Db1_RaillyLinkerCompany_TotalAuthAddPhoneVerification(
     @ManyToOne
-    @JoinColumn(name = "service1_member_uid", nullable = false)
-    @Comment("멤버 고유번호(railly_linker_company.service1_member_data.uid)")
-    var service1MemberData: Db1_RaillyLinkerCompany_Service1MemberData,
+    @JoinColumn(name = "total_auth_member_uid", nullable = false)
+    @Comment("멤버 고유번호(railly_linker_company.total_auth_member.uid)")
+    var totalAuthMember: Db1_RaillyLinkerCompany_TotalAuthMember,
 
-    @Column(name = "role", nullable = false, columnDefinition = "VARCHAR(100)")
-    @Comment("권한 코드 (ROLE_{권한} 형식으로 저장합니다.) (ex : (관리자 : ROLE_ADMIN, 개발자 : ROLE_DEVELOPER))")
-    var role: String
+    @Column(name = "phone_number", nullable = false, columnDefinition = "VARCHAR(45)")
+    @Comment("전화 번호")
+    var phoneNumber: String,
+
+    @Column(name = "verification_secret", nullable = false, columnDefinition = "VARCHAR(20)")
+    @Comment("검증 비문")
+    var verificationSecret: String,
+
+    @Column(name = "verification_expire_when", nullable = false, columnDefinition = "DATETIME(3)")
+    @Comment("검증 만료 일시")
+    var verificationExpireWhen: LocalDateTime
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

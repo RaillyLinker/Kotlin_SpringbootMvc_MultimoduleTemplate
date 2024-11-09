@@ -9,22 +9,22 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_join_the_membership_with_phone_number_verification_data",
-    catalog = "railly_linker_company"
+    name = "total_auth_member_email",
+    catalog = "railly_linker_company",
+    uniqueConstraints = [
+        UniqueConstraint(columnNames = ["email_address", "row_delete_date_str"])
+    ]
 )
-@Comment("Service1 계정 전화번호 회원가입 검증 테이블")
-class Db1_RaillyLinkerCompany_Service1JoinTheMembershipWithPhoneNumberVerificationData(
-    @Column(name = "phone_number", nullable = false, columnDefinition = "VARCHAR(45)")
-    @Comment("전화 번호")
-    var phoneNumber: String,
+@Comment("통합 로그인 계정 회원 이메일 정보 테이블")
+class Db1_RaillyLinkerCompany_TotalAuthMemberEmail(
+    @ManyToOne
+    @JoinColumn(name = "total_auth_member_uid", nullable = false)
+    @Comment("멤버 고유번호(railly_linker_company.total_auth_member.uid)")
+    var totalAuthMember: Db1_RaillyLinkerCompany_TotalAuthMember,
 
-    @Column(name = "verification_secret", nullable = false, columnDefinition = "VARCHAR(20)")
-    @Comment("검증 비문")
-    var verificationSecret: String,
-
-    @Column(name = "verification_expire_when", nullable = false, columnDefinition = "DATETIME(3)")
-    @Comment("검증 만료 일시")
-    var verificationExpireWhen: LocalDateTime
+    @Column(name = "email_address", nullable = false, columnDefinition = "VARCHAR(100)")
+    @Comment("이메일 주소 (중복 비허용)")
+    var emailAddress: String
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +46,11 @@ class Db1_RaillyLinkerCompany_Service1JoinTheMembershipWithPhoneNumberVerificati
     @ColumnDefault("'/'")
     @Comment("행 삭제일(yyyy_MM_dd_T_HH_mm_ss_SSS_z, 삭제되지 않았다면 /)")
     var rowDeleteDateStr: String = "/"
+
+    // ---------------------------------------------------------------------------------------------
+    // [@OneToMany 변수들]
+    @OneToMany(mappedBy = "frontTotalAuthMemberEmail", fetch = FetchType.LAZY)
+    var totalAuthMemberList: MutableList<Db1_RaillyLinkerCompany_TotalAuthMember> = mutableListOf()
 
 
     // ---------------------------------------------------------------------------------------------

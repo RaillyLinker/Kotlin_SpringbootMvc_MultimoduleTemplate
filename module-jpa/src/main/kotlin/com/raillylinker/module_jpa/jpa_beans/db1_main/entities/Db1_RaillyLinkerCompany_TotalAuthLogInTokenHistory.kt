@@ -9,18 +9,18 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_login_token_history",
+    name = "total_auth_login_token_history",
     catalog = "railly_linker_company",
     uniqueConstraints = [
         UniqueConstraint(columnNames = ["token_type", "access_token", "row_delete_date_str"])
     ]
 )
-@Comment("Service1 계정 인증 토큰 발행 히스토리 테이블")
-class Db1_RaillyLinkerCompany_Service1LogInTokenHistory(
+@Comment("통합 로그인 계정 인증 토큰 발행 히스토리 테이블")
+class Db1_RaillyLinkerCompany_TotalAuthLogInTokenHistory(
     @ManyToOne
-    @JoinColumn(name = "service1_member_uid", nullable = false)
-    @Comment("멤버 고유번호(railly_linker_company.service1_member_data.uid)")
-    var service1MemberData: Db1_RaillyLinkerCompany_Service1MemberData,
+    @JoinColumn(name = "total_auth_member_uid", nullable = false)
+    @Comment("멤버 고유번호(railly_linker_company.total_auth_member.uid)")
+    var totalAuthMember: Db1_RaillyLinkerCompany_TotalAuthMember,
 
     @Column(name = "token_type", nullable = false, columnDefinition = "VARCHAR(50)")
     @Comment("토큰 타입 (ex : Bearer)")

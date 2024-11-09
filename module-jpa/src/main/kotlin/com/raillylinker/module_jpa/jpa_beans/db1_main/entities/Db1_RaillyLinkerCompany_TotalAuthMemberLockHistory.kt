@@ -9,15 +9,15 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_member_lock_history",
+    name = "total_auth_member_lock_history",
     catalog = "railly_linker_company"
 )
-@Comment("Service1 계정 계정 정지 히스토리 테이블 (패널티, 휴면계정 등...)")
-class Db1_RaillyLinkerCompany_Service1MemberLockHistory(
+@Comment("통합 로그인 계정 계정 정지 히스토리 테이블 (패널티, 휴면계정 등...)")
+class Db1_RaillyLinkerCompany_TotalAuthMemberLockHistory(
     @ManyToOne
-    @JoinColumn(name = "service1_member_uid", nullable = false)
-    @Comment("멤버 고유번호(railly_linker_company.service1_member_data.uid)")
-    var service1MemberData: Db1_RaillyLinkerCompany_Service1MemberData,
+    @JoinColumn(name = "total_auth_member_uid", nullable = false)
+    @Comment("멤버 고유번호(railly_linker_company.total_auth_member.uid)")
+    var totalAuthMember: Db1_RaillyLinkerCompany_TotalAuthMember,
 
     @Column(name = "lock_start", nullable = false, columnDefinition = "DATETIME(3)")
     @Comment("계정 정지 시작 시간")

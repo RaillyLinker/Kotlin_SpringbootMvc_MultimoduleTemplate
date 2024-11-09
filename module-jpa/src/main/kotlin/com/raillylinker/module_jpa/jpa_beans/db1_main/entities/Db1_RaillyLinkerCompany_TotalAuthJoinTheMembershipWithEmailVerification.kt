@@ -9,11 +9,11 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_find_password_with_email_verification_data",
+    name = "total_auth_join_the_membership_with_email_verification",
     catalog = "railly_linker_company"
 )
-@Comment("Service1 계정 이메일로 비밀번호 찾기 검증 테이블")
-class Db1_RaillyLinkerCompany_Service1FindPasswordWithEmailVerificationData(
+@Comment("통합 로그인 계정 이메일 회원가입 검증 테이블")
+class Db1_RaillyLinkerCompany_TotalAuthJoinTheMembershipWithEmailVerification(
     @Column(name = "email_address", nullable = false, columnDefinition = "VARCHAR(100)")
     @Comment("이메일 주소")
     var emailAddress: String,

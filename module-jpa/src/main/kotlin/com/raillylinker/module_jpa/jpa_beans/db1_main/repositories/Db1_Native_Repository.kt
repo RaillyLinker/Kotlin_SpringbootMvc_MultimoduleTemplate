@@ -668,34 +668,34 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
         nativeQuery = true,
         value = """
             SELECT 
-            service1_member_lock_history.uid AS uid, 
-            service1_member_lock_history.lock_reason_code AS lockReasonCode, 
-            service1_member_lock_history.lock_reason AS lockReason, 
-            service1_member_lock_history.lock_start AS lockStart, 
-            service1_member_lock_history.lock_before AS lockBefore, 
-            service1_member_lock_history.early_release AS earlyRelease, 
-            service1_member_lock_history.row_create_date AS rowCreateDate, 
-            service1_member_lock_history.row_update_date AS rowUpdateDate 
+            total_auth_member_lock_history.uid AS uid, 
+            total_auth_member_lock_history.lock_reason_code AS lockReasonCode, 
+            total_auth_member_lock_history.lock_reason AS lockReason, 
+            total_auth_member_lock_history.lock_start AS lockStart, 
+            total_auth_member_lock_history.lock_before AS lockBefore, 
+            total_auth_member_lock_history.early_release AS earlyRelease, 
+            total_auth_member_lock_history.row_create_date AS rowCreateDate, 
+            total_auth_member_lock_history.row_update_date AS rowUpdateDate 
             FROM 
-            railly_linker_company.service1_member_lock_history AS service1_member_lock_history 
+            railly_linker_company.total_auth_member_lock_history AS total_auth_member_lock_history 
             WHERE 
-            service1_member_lock_history.row_delete_date_str = '/' AND 
-            service1_member_lock_history.service1_member_uid = :service1MemberUid AND 
+            total_auth_member_lock_history.row_delete_date_str = '/' AND 
+            total_auth_member_lock_history.total_auth_member_uid = :totalAuthMemberUid AND 
             (
-                service1_member_lock_history.early_release IS NULL OR 
-                service1_member_lock_history.early_release > :currentTime 
+                total_auth_member_lock_history.early_release IS NULL OR 
+                total_auth_member_lock_history.early_release > :currentTime 
             ) AND 
             (
-                service1_member_lock_history.lock_before IS NULL OR 
-                service1_member_lock_history.lock_before > :currentTime 
+                total_auth_member_lock_history.lock_before IS NULL OR 
+                total_auth_member_lock_history.lock_before > :currentTime 
             ) AND 
-            service1_member_lock_history.lock_start <= :currentTime 
+            total_auth_member_lock_history.lock_start <= :currentTime 
             ORDER BY 
-            service1_member_lock_history.row_create_date DESC
+            total_auth_member_lock_history.row_create_date DESC
             """
     )
     fun findAllNowActivateMemberLockInfo(
-        @Param(value = "service1MemberUid") service1MemberUid: Long,
+        @Param(value = "totalAuthMemberUid") totalAuthMemberUid: Long,
         @Param("currentTime") currentTime: LocalDateTime
     ): List<FindAllNowActivateMemberLockInfoOutputVo>
 

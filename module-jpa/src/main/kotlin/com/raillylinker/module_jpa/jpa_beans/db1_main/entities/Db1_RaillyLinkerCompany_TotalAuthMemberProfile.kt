@@ -9,26 +9,19 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_member_oauth2_login_data",
-    catalog = "railly_linker_company",
-    uniqueConstraints = [
-        UniqueConstraint(columnNames = ["oauth2_type_code", "oauth2_id", "row_delete_date_str"])
-    ]
+    name = "total_auth_member_profile",
+    catalog = "railly_linker_company"
 )
-@Comment("Service1 계정 회원의 OAuth2 로그인 정보 테이블")
-class Db1_RaillyLinkerCompany_Service1MemberOauth2LoginData(
+@Comment("통합 로그인 계정 회원 프로필 정보 테이블")
+class Db1_RaillyLinkerCompany_TotalAuthMemberProfile(
     @ManyToOne
-    @JoinColumn(name = "service1_member_uid", nullable = false)
-    @Comment("멤버 고유번호(railly_linker_company.service1_member_data.uid)")
-    var service1MemberData: Db1_RaillyLinkerCompany_Service1MemberData,
+    @JoinColumn(name = "total_auth_member_uid", nullable = false)
+    @Comment("멤버 고유번호(railly_linker_company.total_auth_member.uid)")
+    var totalAuthMember: Db1_RaillyLinkerCompany_TotalAuthMember,
 
-    @Column(name = "oauth2_type_code", nullable = false, columnDefinition = "TINYINT UNSIGNED")
-    @Comment("oauth2 종류 (1 : GOOGLE, 2 : NAVER, 3 : KAKAO, 4 : APPLE)")
-    var oauth2TypeCode: Byte,
-
-    @Column(name = "oauth2_id", nullable = false, columnDefinition = "VARCHAR(50)")
-    @Comment("OAuth2 로그인으로 얻어온 고유값")
-    var oauth2Id: String
+    @Column(name = "image_full_url", nullable = false, columnDefinition = "VARCHAR(200)")
+    @Comment("프로필 이미지 Full URL")
+    var imageFullUrl: String
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +43,11 @@ class Db1_RaillyLinkerCompany_Service1MemberOauth2LoginData(
     @ColumnDefault("'/'")
     @Comment("행 삭제일(yyyy_MM_dd_T_HH_mm_ss_SSS_z, 삭제되지 않았다면 /)")
     var rowDeleteDateStr: String = "/"
+
+    // ---------------------------------------------------------------------------------------------
+    // [@OneToMany 변수들]
+    @OneToMany(mappedBy = "frontTotalAuthMemberProfile", fetch = FetchType.LAZY)
+    var totalAuthMemberList: MutableList<Db1_RaillyLinkerCompany_TotalAuthMember> = mutableListOf()
 
 
     // ---------------------------------------------------------------------------------------------

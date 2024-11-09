@@ -1,6 +1,6 @@
 package com.raillylinker.module_security.configurations
 
-import com.raillylinker.module_redis.redis_map_components.redis1_main.Redis1_Map_Service1ForceExpireAuthorizationSet
+import com.raillylinker.module_redis.redis_map_components.redis1_main.Redis1_Map_TotalAuthForceExpireAuthorizationSet
 import com.raillylinker.module_security.util_components.JwtTokenUtil
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -120,7 +120,7 @@ class SecurityConfig {
     @Order(1)
     fun securityFilterChainService1Tk(
         http: HttpSecurity,
-        expireTokenRedis: Redis1_Map_Service1ForceExpireAuthorizationSet,
+        expireTokenRedis: Redis1_Map_TotalAuthForceExpireAuthorizationSet,
         jwtTokenUtil: JwtTokenUtil
     ): SecurityFilterChain {
         // !!!시큐리티 필터 추가시 수정!!!
@@ -162,7 +162,7 @@ class SecurityConfig {
         // API 요청마다 헤더로 들어오는 인증 토큰 유효성을 검증
         securityMatcher.addFilterBefore(
             // !!!시큐리티 필터 추가시 수정!!!
-            AuthTokenFilterService1Tk(
+            AuthTokenFilterTotalAuth(
                 securityUrlList,
                 expireTokenRedis,
                 jwtTokenUtil
@@ -208,9 +208,9 @@ class SecurityConfig {
     }
 
     // 인증 토큰 검증 필터 - API 요청마다 검증 실행
-    class AuthTokenFilterService1Tk(
+    class AuthTokenFilterTotalAuth(
         private val filterPatternList: List<String>,
-        private val expireTokenRedis: Redis1_Map_Service1ForceExpireAuthorizationSet,
+        private val expireTokenRedis: Redis1_Map_TotalAuthForceExpireAuthorizationSet,
         private val jwtTokenUtil: JwtTokenUtil
     ) : OncePerRequestFilter() {
         // <멤버 변수 공간>

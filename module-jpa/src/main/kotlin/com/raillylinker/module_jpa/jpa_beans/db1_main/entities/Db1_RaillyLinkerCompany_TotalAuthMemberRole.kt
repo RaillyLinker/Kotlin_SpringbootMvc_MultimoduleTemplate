@@ -9,22 +9,22 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_join_the_membership_with_email_verification_data",
-    catalog = "railly_linker_company"
+    name = "total_auth_member_role",
+    catalog = "railly_linker_company",
+    uniqueConstraints = [
+        UniqueConstraint(columnNames = ["total_auth_member_uid", "role", "row_delete_date_str"])
+    ]
 )
-@Comment("Service1 계정 이메일 회원가입 검증 테이블")
-class Db1_RaillyLinkerCompany_Service1JoinTheMembershipWithEmailVerificationData(
-    @Column(name = "email_address", nullable = false, columnDefinition = "VARCHAR(100)")
-    @Comment("이메일 주소")
-    var emailAddress: String,
+@Comment("통합 로그인 계정 회원 권한 정보 테이블")
+class Db1_RaillyLinkerCompany_TotalAuthMemberRole(
+    @ManyToOne
+    @JoinColumn(name = "total_auth_member_uid", nullable = false)
+    @Comment("멤버 고유번호(railly_linker_company.total_auth_member.uid)")
+    var totalAuthMember: Db1_RaillyLinkerCompany_TotalAuthMember,
 
-    @Column(name = "verification_secret", nullable = false, columnDefinition = "VARCHAR(20)")
-    @Comment("검증 비문")
-    var verificationSecret: String,
-
-    @Column(name = "verification_expire_when", nullable = false, columnDefinition = "DATETIME(3)")
-    @Comment("검증 만료 일시")
-    var verificationExpireWhen: LocalDateTime
+    @Column(name = "role", nullable = false, columnDefinition = "VARCHAR(100)")
+    @Comment("권한 코드 (ROLE_{권한} 형식으로 저장합니다.) (ex : (관리자 : ROLE_ADMIN, 개발자 : ROLE_DEVELOPER))")
+    var role: String
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

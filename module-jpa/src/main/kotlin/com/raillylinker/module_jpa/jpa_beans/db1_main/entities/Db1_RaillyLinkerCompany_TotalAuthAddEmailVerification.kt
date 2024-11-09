@@ -9,15 +9,15 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_add_email_verification_data",
+    name = "total_auth_add_email_verification",
     catalog = "railly_linker_company"
 )
-@Comment("Service1 계정 이메일 추가하기 검증 테이블")
-class Db1_RaillyLinkerCompany_Service1AddEmailVerificationData(
+@Comment("통합 로그인 계정 이메일 추가하기 검증 테이블")
+class Db1_RaillyLinkerCompany_TotalAuthAddEmailVerification(
     @ManyToOne
-    @JoinColumn(name = "service1_member_uid", nullable = false)
-    @Comment("멤버 고유번호(railly_linker_company.service1_member_data.uid)")
-    var service1MemberData: Db1_RaillyLinkerCompany_Service1MemberData,
+    @JoinColumn(name = "total_auth_member_uid", nullable = false)
+    @Comment("멤버 고유번호(railly_linker_company.total_auth_member.uid)")
+    var totalAuthMember: Db1_RaillyLinkerCompany_TotalAuthMember,
 
     @Column(name = "email_address", nullable = false, columnDefinition = "VARCHAR(100)")
     @Comment("이메일 주소")

@@ -9,18 +9,14 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_join_the_membership_with_oauth2_verification_data",
+    name = "total_auth_find_pw_with_phone_verification",
     catalog = "railly_linker_company"
 )
-@Comment("Service1 계정 OAuth2 회원가입 검증 테이블")
-class Db1_RaillyLinkerCompany_Service1JoinTheMembershipWithOauth2VerificationData(
-    @Column(name = "oauth2_type_code", nullable = false, columnDefinition = "TINYINT UNSIGNED")
-    @Comment("oauth2 종류 (1 : GOOGLE, 2 : NAVER, 3 : KAKAO)")
-    var oauth2TypeCode: Byte,
-
-    @Column(name = "oauth2_id", nullable = false, columnDefinition = "VARCHAR(50)")
-    @Comment("OAuth2 로그인으로 얻어온 고유값")
-    var oauth2Id: String,
+@Comment("통합 로그인 계정 전화번호로 비밀번호 찾기 검증 테이블")
+class Db1_RaillyLinkerCompany_TotalAuthFindPwWithPhoneVerification(
+    @Column(name = "phone_number", nullable = false, columnDefinition = "VARCHAR(45)")
+    @Comment("전화 번호")
+    var phoneNumber: String,
 
     @Column(name = "verification_secret", nullable = false, columnDefinition = "VARCHAR(20)")
     @Comment("검증 비문")

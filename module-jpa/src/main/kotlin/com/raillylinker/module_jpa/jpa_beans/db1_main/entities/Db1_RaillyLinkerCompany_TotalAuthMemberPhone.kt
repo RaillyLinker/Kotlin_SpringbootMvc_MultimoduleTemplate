@@ -9,27 +9,22 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(
-    name = "service1_add_phone_number_verification_data",
-    catalog = "railly_linker_company"
+    name = "total_auth_member_phone",
+    catalog = "railly_linker_company",
+    uniqueConstraints = [
+        UniqueConstraint(columnNames = ["phone_number", "row_delete_date_str"])
+    ]
 )
-@Comment("Service1 계정 전화번호 추가하기 검증 테이블")
-class Db1_RaillyLinkerCompany_Service1AddPhoneNumberVerificationData(
+@Comment("통합 로그인 계정 회원 전화 정보 테이블")
+class Db1_RaillyLinkerCompany_TotalAuthMemberPhone(
     @ManyToOne
-    @JoinColumn(name = "service1_member_uid", nullable = false)
-    @Comment("멤버 고유번호(railly_linker_company.service1_member_data.uid)")
-    var service1MemberData: Db1_RaillyLinkerCompany_Service1MemberData,
+    @JoinColumn(name = "total_auth_member_uid", nullable = false)
+    @Comment("멤버 고유번호(railly_linker_company.total_auth_member.uid)")
+    var totalAuthMember: Db1_RaillyLinkerCompany_TotalAuthMember,
 
     @Column(name = "phone_number", nullable = false, columnDefinition = "VARCHAR(45)")
-    @Comment("전화 번호")
-    var phoneNumber: String,
-
-    @Column(name = "verification_secret", nullable = false, columnDefinition = "VARCHAR(20)")
-    @Comment("검증 비문")
-    var verificationSecret: String,
-
-    @Column(name = "verification_expire_when", nullable = false, columnDefinition = "DATETIME(3)")
-    @Comment("검증 만료 일시")
-    var verificationExpireWhen: LocalDateTime
+    @Comment("전화번호(국가번호 + 전화번호, 중복 비허용)")
+    var phoneNumber: String
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +46,11 @@ class Db1_RaillyLinkerCompany_Service1AddPhoneNumberVerificationData(
     @ColumnDefault("'/'")
     @Comment("행 삭제일(yyyy_MM_dd_T_HH_mm_ss_SSS_z, 삭제되지 않았다면 /)")
     var rowDeleteDateStr: String = "/"
+
+    // ---------------------------------------------------------------------------------------------
+    // [@OneToMany 변수들]
+    @OneToMany(mappedBy = "frontTotalAuthMemberPhone", fetch = FetchType.LAZY)
+    var totalAuthMemberList: MutableList<Db1_RaillyLinkerCompany_TotalAuthMember> = mutableListOf()
 
 
     // ---------------------------------------------------------------------------------------------
