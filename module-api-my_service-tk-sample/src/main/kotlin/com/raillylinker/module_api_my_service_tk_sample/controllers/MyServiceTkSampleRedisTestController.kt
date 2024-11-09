@@ -1,7 +1,7 @@
 package com.raillylinker.module_api_my_service_tk_sample.controllers
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.raillylinker.module_api_my_service_tk_sample.services.C8Service1TkV1RedisTestService
+import com.raillylinker.module_api_my_service_tk_sample.services.MyServiceTkSampleRedisTestService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.headers.Header
@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.*
     명령어.txt 에 적힌 명령어를 입력하여 Redis 를 실행시킬 수 있습니다.
     !!!
  */
-@Tag(name = "/service1/tk/v1/redis-test APIs", description = "C8 : Redis 에 대한 테스트 API 컨트롤러")
+@Tag(name = "/my-service/tk/sample/redis-test APIs", description = "Redis 에 대한 테스트 API 컨트롤러")
 @Controller
-@RequestMapping("/service1/tk/v1/redis-test")
-class C8Service1TkV1RedisTestController(
-    private val service: C8Service1TkV1RedisTestService
+@RequestMapping("/my-service/tk/sample/redis-test")
+class MyServiceTkSampleRedisTestController(
+    private val service: MyServiceTkSampleRedisTestService
 ) {
     // <멤버 변수 공간>
 
@@ -37,7 +37,7 @@ class C8Service1TkV1RedisTestController(
     // ---------------------------------------------------------------------------------------------
     // <매핑 함수 공간>
     @Operation(
-        summary = "N1 : Redis Key-Value 입력 테스트",
+        summary = "Redis Key-Value 입력 테스트",
         description = "Redis 테이블에 Key-Value 를 입력합니다.\n\n"
     )
     @ApiResponses(
@@ -54,15 +54,15 @@ class C8Service1TkV1RedisTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api1InsertRedisKeyValueTest(
+    fun insertRedisKeyValueTest(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
-        @RequestBody inputVo: Api1InsertRedisKeyValueTestInputVo
+        @RequestBody inputVo: InsertRedisKeyValueTestInputVo
     ) {
-        service.api1InsertRedisKeyValueTest(httpServletResponse, inputVo)
+        service.insertRedisKeyValueTest(httpServletResponse, inputVo)
     }
 
-    data class Api1InsertRedisKeyValueTestInputVo(
+    data class InsertRedisKeyValueTestInputVo(
         @Schema(description = "redis 키", required = true, example = "test_key")
         @JsonProperty("key")
         val key: String,
@@ -77,7 +77,7 @@ class C8Service1TkV1RedisTestController(
 
     ////
     @Operation(
-        summary = "N2 : Redis Key-Value 조회 테스트",
+        summary = "Redis Key-Value 조회 테스트",
         description = "Redis Table 에 저장된 Key-Value 를 조회합니다.\n\n"
     )
     @ApiResponses(
@@ -108,17 +108,17 @@ class C8Service1TkV1RedisTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api2SelectRedisValueSample(
+    fun selectRedisValueSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "key", description = "redis 키", example = "test_key")
         @RequestParam("key")
         key: String
-    ): Api2SelectRedisValueSampleOutputVo? {
-        return service.api2SelectRedisValueSample(httpServletResponse, key)
+    ): SelectRedisValueSampleOutputVo? {
+        return service.selectRedisValueSample(httpServletResponse, key)
     }
 
-    data class Api2SelectRedisValueSampleOutputVo(
+    data class SelectRedisValueSampleOutputVo(
         @Schema(description = "Table 이름", required = true, example = "Redis1_Test")
         @JsonProperty("tableName")
         val tableName: String,
@@ -136,7 +136,7 @@ class C8Service1TkV1RedisTestController(
 
     ////
     @Operation(
-        summary = "N3 : Redis Key-Value 모두 조회 테스트",
+        summary = "Redis Key-Value 모두 조회 테스트",
         description = "Redis Table 에 저장된 모든 Key-Value 를 조회합니다.\n\n"
     )
     @ApiResponses(
@@ -153,16 +153,16 @@ class C8Service1TkV1RedisTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api3SelectAllRedisKeyValueSample(
+    fun selectAllRedisKeyValueSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
-    ): Api3SelectAllRedisKeyValueSampleOutputVo? {
-        return service.api3SelectAllRedisKeyValueSample(
+    ): SelectAllRedisKeyValueSampleOutputVo? {
+        return service.selectAllRedisKeyValueSample(
             httpServletResponse
         )
     }
 
-    data class Api3SelectAllRedisKeyValueSampleOutputVo(
+    data class SelectAllRedisKeyValueSampleOutputVo(
         @Schema(description = "Table 이름", required = true, example = "Redis1_Test")
         @JsonProperty("tableName")
         val tableName: String,
@@ -188,7 +188,7 @@ class C8Service1TkV1RedisTestController(
 
     ////
     @Operation(
-        summary = "N4 : Redis Key-Value 삭제 테스트",
+        summary = "Redis Key-Value 삭제 테스트",
         description = "Redis Table 에 저장된 Key 를 삭제합니다.\n\n"
     )
     @ApiResponses(
@@ -219,20 +219,20 @@ class C8Service1TkV1RedisTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api4DeleteRedisKeySample(
+    fun deleteRedisKeySample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "key", description = "redis 키", example = "test_key")
         @RequestParam("key")
         key: String
     ) {
-        return service.api4DeleteRedisKeySample(httpServletResponse, key)
+        return service.deleteRedisKeySample(httpServletResponse, key)
     }
 
 
     ////
     @Operation(
-        summary = "N5 : Redis Key-Value 모두 삭제 테스트",
+        summary = "Redis Key-Value 모두 삭제 테스트",
         description = "Redis Table 에 저장된 모든 Key 를 삭제합니다.\n\n"
     )
     @ApiResponses(
@@ -249,17 +249,17 @@ class C8Service1TkV1RedisTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api5DeleteAllRedisKeySample(
+    fun deleteAllRedisKeySample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
     ) {
-        return service.api5DeleteAllRedisKeySample(httpServletResponse)
+        return service.deleteAllRedisKeySample(httpServletResponse)
     }
 
 
     ////
     @Operation(
-        summary = "N6 : Redis Lock 테스트",
+        summary = "Redis Lock 테스트",
         description = "Redis Lock 을 요청합니다.\n\n"
     )
     @ApiResponses(
@@ -290,14 +290,14 @@ class C8Service1TkV1RedisTestController(
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     @ResponseBody
-    fun api6TryRedisLockSample(
+    fun tryRedisLockSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse
-    ): Api6TryRedisLockSampleOutputVo? {
-        return service.api6TryRedisLockSample(httpServletResponse)
+    ): TryRedisLockSampleOutputVo? {
+        return service.tryRedisLockSample(httpServletResponse)
     }
 
-    data class Api6TryRedisLockSampleOutputVo(
+    data class TryRedisLockSampleOutputVo(
         @Schema(description = "Lock Key", required = true, example = "redisLockKey")
         @JsonProperty("lockKey")
         val lockKey: String
@@ -306,7 +306,7 @@ class C8Service1TkV1RedisTestController(
 
     ////
     @Operation(
-        summary = "N7 : Redis unLock 테스트",
+        summary = "Redis unLock 테스트",
         description = "Redis unLock 을 요청합니다.\n\n"
     )
     @ApiResponses(
@@ -323,13 +323,13 @@ class C8Service1TkV1RedisTestController(
         produces = [MediaType.ALL_VALUE]
     )
     @ResponseBody
-    fun api7UnLockRedisLockSample(
+    fun unLockRedisLockSample(
         @Parameter(hidden = true)
         httpServletResponse: HttpServletResponse,
         @Parameter(name = "lockKey", description = "unLock 할 lockKey", example = "lockKey")
         @RequestParam("lockKey")
         lockKey: String
     ) {
-        service.api7UnLockRedisLockSample(httpServletResponse, lockKey)
+        service.unLockRedisLockSample(httpServletResponse, lockKey)
     }
 }

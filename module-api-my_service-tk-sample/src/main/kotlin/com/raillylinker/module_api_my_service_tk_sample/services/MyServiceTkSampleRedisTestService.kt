@@ -1,6 +1,6 @@
 package com.raillylinker.module_api_my_service_tk_sample.services
 
-import com.raillylinker.module_api_my_service_tk_sample.controllers.C8Service1TkV1RedisTestController
+import com.raillylinker.module_api_my_service_tk_sample.controllers.MyServiceTkSampleRedisTestController
 import jakarta.servlet.http.HttpServletResponse
 
 /*
@@ -12,36 +12,43 @@ import jakarta.servlet.http.HttpServletResponse
     그럼에도 트랜젝션 기능이 필요하다고 한다면,
     비동기 실행을 고려하여 Semaphore 등으로 락을 건 후, 기존 데이터를 백업한 후, 에러가 일어나면 복원하는 방식을 사용하면 됩니다.
  */
-interface C8Service1TkV1RedisTestService {
-    fun api1InsertRedisKeyValueTest(
+interface MyServiceTkSampleRedisTestService {
+    // (Redis Key-Value 입력 테스트)
+    fun insertRedisKeyValueTest(
         httpServletResponse: HttpServletResponse,
-        inputVo: C8Service1TkV1RedisTestController.Api1InsertRedisKeyValueTestInputVo
+        inputVo: MyServiceTkSampleRedisTestController.InsertRedisKeyValueTestInputVo
     )
 
 
     ////
-    fun api2SelectRedisValueSample(
+    // (Redis Key-Value 조회 테스트)
+    fun selectRedisValueSample(
         httpServletResponse: HttpServletResponse,
         key: String
-    ): C8Service1TkV1RedisTestController.Api2SelectRedisValueSampleOutputVo?
+    ): MyServiceTkSampleRedisTestController.SelectRedisValueSampleOutputVo?
 
 
     ////
-    fun api3SelectAllRedisKeyValueSample(httpServletResponse: HttpServletResponse): C8Service1TkV1RedisTestController.Api3SelectAllRedisKeyValueSampleOutputVo?
+    // (Redis Key-Value 모두 조회 테스트)
+    fun selectAllRedisKeyValueSample(httpServletResponse: HttpServletResponse): MyServiceTkSampleRedisTestController.SelectAllRedisKeyValueSampleOutputVo?
 
 
     ////
-    fun api4DeleteRedisKeySample(httpServletResponse: HttpServletResponse, key: String)
+    // (Redis Key-Value 삭제 테스트)
+    fun deleteRedisKeySample(httpServletResponse: HttpServletResponse, key: String)
 
 
     ////
-    fun api5DeleteAllRedisKeySample(httpServletResponse: HttpServletResponse)
+    // (Redis Key-Value 모두 삭제 테스트)
+    fun deleteAllRedisKeySample(httpServletResponse: HttpServletResponse)
 
 
     ////
-    fun api6TryRedisLockSample(httpServletResponse: HttpServletResponse): C8Service1TkV1RedisTestController.Api6TryRedisLockSampleOutputVo?
+    // (Redis Lock 테스트)
+    fun tryRedisLockSample(httpServletResponse: HttpServletResponse): MyServiceTkSampleRedisTestController.TryRedisLockSampleOutputVo?
 
 
     ////
-    fun api7UnLockRedisLockSample(httpServletResponse: HttpServletResponse, lockKey: String)
+    // (Redis unLock 테스트)
+    fun unLockRedisLockSample(httpServletResponse: HttpServletResponse, lockKey: String)
 }

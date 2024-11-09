@@ -1,7 +1,7 @@
 package com.raillylinker.module_api_my_service_tk_sample.services.impls
 
-import com.raillylinker.module_api_my_service_tk_sample.controllers.C8Service1TkV1RedisTestController
-import com.raillylinker.module_api_my_service_tk_sample.services.C8Service1TkV1RedisTestService
+import com.raillylinker.module_api_my_service_tk_sample.controllers.MyServiceTkSampleRedisTestController
+import com.raillylinker.module_api_my_service_tk_sample.services.MyServiceTkSampleRedisTestService
 import com.raillylinker.module_redis.redis_map_components.redis1_main.Redis1_Lock_Test
 import com.raillylinker.module_redis.redis_map_components.redis1_main.Redis1_Map_Test
 import jakarta.servlet.http.HttpServletResponse
@@ -21,22 +21,22 @@ import org.springframework.stereotype.Service
     비동기 실행을 고려하여 Semaphore 등으로 락을 건 후, 기존 데이터를 백업한 후, 에러가 일어나면 복원하는 방식을 사용하면 됩니다.
  */
 @Service
-class C8Service1TkV1RedisTestServiceImpl(
+class MyServiceTkSampleRedisTestServiceImpl(
     // (프로젝트 실행시 사용 설정한 프로필명 (ex : dev8080, prod80, local8080, 설정 안하면 default 반환))
     @Value("\${spring.profiles.active:default}") private var activeProfile: String,
 
     private val redis1Test: Redis1_Map_Test,
     private val redis1LockTest: Redis1_Lock_Test
-) : C8Service1TkV1RedisTestService {
+) : MyServiceTkSampleRedisTestService {
     // <멤버 변수 공간>
     private val classLogger: Logger = LoggerFactory.getLogger(this::class.java)
 
 
     // ---------------------------------------------------------------------------------------------
     // <공개 메소드 공간>
-    override fun api1InsertRedisKeyValueTest(
+    override fun insertRedisKeyValueTest(
         httpServletResponse: HttpServletResponse,
-        inputVo: C8Service1TkV1RedisTestController.Api1InsertRedisKeyValueTestInputVo
+        inputVo: MyServiceTkSampleRedisTestController.InsertRedisKeyValueTestInputVo
     ) {
         redis1Test.saveKeyValue(
             inputVo.key,
@@ -56,10 +56,10 @@ class C8Service1TkV1RedisTestServiceImpl(
 
 
     ////
-    override fun api2SelectRedisValueSample(
+    override fun selectRedisValueSample(
         httpServletResponse: HttpServletResponse,
         key: String
-    ): C8Service1TkV1RedisTestController.Api2SelectRedisValueSampleOutputVo? {
+    ): MyServiceTkSampleRedisTestController.SelectRedisValueSampleOutputVo? {
         // 전체 조회 테스트
         val keyValue = redis1Test.findKeyValue(key)
 
@@ -70,7 +70,7 @@ class C8Service1TkV1RedisTestServiceImpl(
         }
 
         httpServletResponse.status = HttpStatus.OK.value()
-        return C8Service1TkV1RedisTestController.Api2SelectRedisValueSampleOutputVo(
+        return MyServiceTkSampleRedisTestController.SelectRedisValueSampleOutputVo(
             Redis1_Map_Test.MAP_NAME,
             keyValue.key,
             keyValue.value.content,
@@ -80,15 +80,15 @@ class C8Service1TkV1RedisTestServiceImpl(
 
 
     ////
-    override fun api3SelectAllRedisKeyValueSample(httpServletResponse: HttpServletResponse): C8Service1TkV1RedisTestController.Api3SelectAllRedisKeyValueSampleOutputVo? {
+    override fun selectAllRedisKeyValueSample(httpServletResponse: HttpServletResponse): MyServiceTkSampleRedisTestController.SelectAllRedisKeyValueSampleOutputVo? {
         // 전체 조회 테스트
         val keyValueList = redis1Test.findAllKeyValues()
 
         val testEntityListVoList =
-            ArrayList<C8Service1TkV1RedisTestController.Api3SelectAllRedisKeyValueSampleOutputVo.KeyValueVo>()
+            ArrayList<MyServiceTkSampleRedisTestController.SelectAllRedisKeyValueSampleOutputVo.KeyValueVo>()
         for (keyValue in keyValueList) {
             testEntityListVoList.add(
-                C8Service1TkV1RedisTestController.Api3SelectAllRedisKeyValueSampleOutputVo.KeyValueVo(
+                MyServiceTkSampleRedisTestController.SelectAllRedisKeyValueSampleOutputVo.KeyValueVo(
                     keyValue.key,
                     keyValue.value.content,
                     keyValue.expireTimeMs
@@ -97,7 +97,7 @@ class C8Service1TkV1RedisTestServiceImpl(
         }
 
         httpServletResponse.status = HttpStatus.OK.value()
-        return C8Service1TkV1RedisTestController.Api3SelectAllRedisKeyValueSampleOutputVo(
+        return MyServiceTkSampleRedisTestController.SelectAllRedisKeyValueSampleOutputVo(
             Redis1_Map_Test.MAP_NAME,
             testEntityListVoList
         )
@@ -105,7 +105,7 @@ class C8Service1TkV1RedisTestServiceImpl(
 
 
     ////
-    override fun api4DeleteRedisKeySample(httpServletResponse: HttpServletResponse, key: String) {
+    override fun deleteRedisKeySample(httpServletResponse: HttpServletResponse, key: String) {
         val keyValue = redis1Test.findKeyValue(key)
 
         if (keyValue == null) {
@@ -121,7 +121,7 @@ class C8Service1TkV1RedisTestServiceImpl(
 
 
     ////
-    override fun api5DeleteAllRedisKeySample(httpServletResponse: HttpServletResponse) {
+    override fun deleteAllRedisKeySample(httpServletResponse: HttpServletResponse) {
         redis1Test.deleteAllKeyValues()
 
         httpServletResponse.status = HttpStatus.OK.value()
@@ -129,7 +129,7 @@ class C8Service1TkV1RedisTestServiceImpl(
 
 
     ////
-    override fun api6TryRedisLockSample(httpServletResponse: HttpServletResponse): C8Service1TkV1RedisTestController.Api6TryRedisLockSampleOutputVo? {
+    override fun tryRedisLockSample(httpServletResponse: HttpServletResponse): MyServiceTkSampleRedisTestController.TryRedisLockSampleOutputVo? {
         val lockKey = redis1LockTest.tryLock(100000)
         if (lockKey == null) {
             httpServletResponse.status = HttpStatus.NO_CONTENT.value()
@@ -137,13 +137,13 @@ class C8Service1TkV1RedisTestServiceImpl(
             return null
         } else {
             httpServletResponse.status = HttpStatus.OK.value()
-            return C8Service1TkV1RedisTestController.Api6TryRedisLockSampleOutputVo(lockKey)
+            return MyServiceTkSampleRedisTestController.TryRedisLockSampleOutputVo(lockKey)
         }
     }
 
 
     ////
-    override fun api7UnLockRedisLockSample(httpServletResponse: HttpServletResponse, lockKey: String) {
+    override fun unLockRedisLockSample(httpServletResponse: HttpServletResponse, lockKey: String) {
         redis1LockTest.unlock(lockKey)
         httpServletResponse.status = HttpStatus.OK.value()
     }
