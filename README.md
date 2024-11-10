@@ -102,4 +102,23 @@ app 모듈은 서버 프로젝트의 main 함수가 위치한 시작점이라 �
 서버 프로세스 실행시 사용할 포트 번호,<br>
 하위 모든 모듈들에 적용되는 설정,<br>
 api, kafka, socket, scheduler 와 같이 서버 실행시 실행되는 하위 모듈 조립<br>
-하위 모듈들의 application.yml 을 조합하는 역할을 담당합니다.
+하위 모듈들의 application.yml 을 조합하는 역할을 담당합니다.<br>
+
+### api 모듈
+
+api 모듈은 클라이언트의 요청을 받고 응답을 보내주는 Controller 의 역할을 합니다.<br>
+controllers 에는 입출력 api 를 명시하는 역할을 하는 컨트롤러 클래스를 작성하며,<br>
+services 에는 controller 의 비즈니스 로직을 구현하는 Service 클래스를 작성합니다.<br>
+api 모듈은 일반적으로 한 프로젝트 내에 여러개로 이루어질 수 있으며,<br>
+MSA 설계 규칙에 따라 도메인 단위로 api 모듈을 분리하는데, 모듈의 명명법은 해당 모듈 내의 컨트롤러가 담당하는 URL 에 따릅니다.<br>
+예를들어 로그인, 회원가입, 회원 정보 수정 등의 계정 정보 기능을 담당하는 모듈을 만들때,<br>
+/my-service/tk/auth 라는 주소를 사용한다고 하면, 모듈을 module-api-my_service-tk-auth 라고 합니다.<br>
+보이듯, module-api 는 api 모듈의 기본 이름이고, 뒤에는 주소상 - 로 이어져있다면 _ 를 사용하고, / 로 분리된다면 - 를 사용합니다.<br>
+
+모듈 내의 controller 클래스 명명법 역시 해당 클래스가 담당하는 주소체계를 따르며,<br>
+예를들어 module-api-my_service-tk-sample 모듈에서 데이터베이스 테스트 샘플 api 를 모아둔 컨트롤러의 경우는,<br>
+/my-service/tk/sample/database-test<br>
+주소라고 정했다고 한다면, MyServiceTkSampleDatabaseTestController 라고 이름 지으면 됩니다.<br>
+
+service 클래스 명명의 경우는 controller 클래스에서 정한 이름에서 뒤에 Controller 대신 Service 를 붙이기만 하면 됩니다.
+
