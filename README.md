@@ -1,14 +1,105 @@
-# Getting Started
+# Kotlin Springboot MVC MultiModule Template Project
 
-### Reference Documentation
-For further reference, please consider the following sections:
+## 프로젝트 설명
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/3.3.5/gradle-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/3.3.5/gradle-plugin/packaging-oci-image.html)
+- 본 프로젝트는 멀티 모듈 구조의 Springboot 개발 템플릿 프로젝트입니다.<br>
+  멀티 모듈의 구조는 Layered 아키텍쳐를 커스텀한 것이며,<br>
+  Micro Service 의 분리 기준은 되도록 DDD(Domain Driven Design) 를 따르도록 할 것입니다.
 
-### Additional Links
-These additional references should also help you:
+## 프로젝트 설명 상세
 
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
+### 모듈 분리 기준
 
+본 프로젝트에서 모듈은 기본적으로 Layered 아키텍쳐 방식으로 구성하였습니다.<br>
+
+각 모듈별 종속성의 흐름은 하나의 방향성을 가지며, 방향의 역전은 있을 수 없습니다.<br>
+
+예를 들어, <br>
+
+A 모듈이 B, C 모듈을 참조하고 있고, B 모듈이 D, E 모듈을 참조한다면,<br>
+A 모듈은 B, C 모듈과 D, E 모듈을 모두 참조가 가능하고,<br>
+(되도록 D, E 모듈은 A 모듈에선 사용하지 않는 것을 권장)<br>
+B, C 모듈은 동일 계층인 B, C 와 D, E 모듈을 모두 참조 가능하지만, A 모듈은 참조할 수 없습니다.<br>
+
+또한, 모듈의 분리 기준은,<br>
+크게는 기능 단위로 나누어주고, 작게는 api 서비스 단위로 나누어 줍니다.<br>
+
+예를 들어,<br>
+app 모듈은 프로젝트 시작을 담당하는 main 함수 및 서버 프로세스의 포트와 같은 설정 담당,<br>
+api 모듈은 Springboot MVC 에서의 Controller, Service 담당,<br>
+jpa 모듈은 jpa Database 기능 담당.<br>
+위와 같이 기능단위로 나누며,<br>
+api 모듈과 같이 사용자에게서 온 요청을 받아와서 처리하는 모듈은 MSA 에 맞도록 서비스를 분화하여,
+회원 가입, 로그인과 같은 요청을 처리하는 auth 서비스 단위, 게시판 기능을 담당하는 board 서비스 단위...<br>
+이런식으로 하위 서비스 도메인 단위로 모듈을 분리합니다.<br>
+
+즉, 모듈의 종속성을 한방향으로 하여 구조의 복잡도를 낮추고,<br>
+모듈을 기능 및 서비스 도메인 단위로 나누어 관심사의 분리를 이루어내어 코드의 복잡성을 낮췄습니다.
+
+실무적인 모듈 분리의 순서를 설명드리자면,<br>
+
+1. 어떠한 기능을 필요에 따라 api 모듈 Service 에서 개발
+2. 해당 기능의 코드가 api 기능과는 별개의 영역을 다룬다면, 별도 모듈로 이관 가능한지 확인
+3. 별도 모듈로 떼어내는 것이 맞고, 뚜렷한 토픽이 없다면 이 코드를 common 모듈의 함수로 분리
+4. 별도 모듈로 분리가 가능하고, 뚜렷한 토픽이 있다면 해당 토픽의 모듈에 이식하고, 만약 기존 모듈이 없다면 새로운 모듈 생성
+
+위와 같습니다.<br>
+
+모듈 분리의 권장 규칙은,<br>
+
+1. 동일 계층 모듈을 참조할 수도 있지만 되도록 하위 모듈만 사용하도록 하기
+2. 할 수 있다면 다른 모듈을 참조하지 않는 독립 모듈을 지향하기
+3. 각 모듈별 토픽을 엄격히 지키기 (ex : api 모듈은 controller 와 service 만 작성)
+
+위와 같은 구조로 인하여 얻을 수 있는 장점은,<br>
+모듈화의 장점인 이식성의 향상과 결합성의 약화를 이루어내고,<br>
+구조의 일관된 규칙을 통해 프로젝트 파악의 난이도를 낮추고,<br>
+모듈별 단위 테스트를 따로 두어 모듈별 신뢰도를 높이고 분리하여, 오래된 코드에 들어가는 에너지 소모를 막을 수 있으며,<br>
+단순한 모듈 구조로 인해 비숙련자도 쉽게 적응이 가능하도록 설계하였습니다.
+
+### MSA
+
+위와 같은 멀티 모듈 구조를 이용하여 MSA 를 구축할 수도 있습니다.<br>
+동일 프로젝트 내에서 별도의 app 모듈을 생성하여 서로 다른 포트 번호를 개방하는 방식으로 실행시켜 MSA 를 테스트 할 수 있으며,<br>
+api 모듈의 서비스 단위 분리 구조에서 필요 모듈들을 분리하여 빠르게 다른 서버에 이식이 가능합니다.<br>
+
+## 프로젝트 실행 방법
+
+본 프로젝트를 실행시키기 위해서 필요한 조건이 존재합니다.<br>
+MySQL or MariaDB, Redis, MongoDB, Kafka<br>
+위의 네가지 서비스가 로컬상에 동작해야하며,<br>
+RDBMS 는 JPA 모듈에서 설정한 Entity 의 스키마, 테이블 구조를 따라야 합니다.<br>
+
+위와 같은 서비스가 설치되어 있지 않다고 한다면, external_files 안의 docker 모음으로 설치가 가능하며,<br>
+
+각 서비스들에 대한 설정은 각 구현 모듈 설정을 변경시켜 실행시킬 수 있습니다.<br>
+
+프로젝트를 정상적으로 실행시켜 Open 된 포트에 웹 브라우저로 접속한다면, 서버의 Welcome 페이지를 확인하실 수 있고,<br>
+
+서버에서 제공해주는 Swagger 문서를 통하여 본 프로젝트에서 구현된 여러 기능들을 테스트 하실 수 있습니다.<br>
+(배포 설정인 prod80 프로필로 접속시 보안을 위하여 Swagger 페이지 접속 버튼이 사라지며, Swagger 주소 접근 역시 불가능해 집니다.)
+
+## 모듈 단위 설명
+
+### 루트
+
+싱글 모듈 구조에 해당하는 루트 경로의 src 코드는 제거하여 존재하지 않는 상태입니다.<br>
+루트 경로에 남아있는 파일/폴더를 설명드리자면,<br>
+
+- by_product_files<br>
+  프로젝트 부산물 파일들을 저장하는 경로.<br>
+  로그 파일 등이 위치하며, gitignore 에 등록됩니다.
+- .gitignore<br>
+  git 에서 무시할 목록을 적는 파일
+- build.gradle<br>
+  하위 모듈들에서 사용하는 Gradle Plugins 와 버전들을 설정하고,<br>
+  프로젝트에서 사용하는 프로그래밍 언어 버전 설정,<br>
+  하위 모듈들에서 사용하는 공통의 종속성 라이브러리 설정을 담당합니다.<br>
+
+### app 모듈
+
+app 모듈은 서버 프로젝트의 main 함수가 위치한 시작점이라 할 수 있습니다.<br>
+서버 프로세스 실행시 사용할 포트 번호,<br>
+하위 모든 모듈들에 적용되는 설정,<br>
+api, kafka, socket, scheduler 와 같이 서버 실행시 실행되는 하위 모듈 조립<br>
+하위 모듈들의 application.yml 을 조합하는 역할을 담당합니다.
