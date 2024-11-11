@@ -1,7 +1,7 @@
-package com.raillylinker.module_api_project.controllers
+package com.raillylinker.module_api_root.controllers
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.raillylinker.module_api_project.services.RootService
+import com.raillylinker.module_api_root.services.RootService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.Schema

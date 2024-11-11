@@ -1,4 +1,4 @@
-package com.raillylinker.module_api_project
+package com.raillylinker.module_api_root
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

@@ -1,6 +1,6 @@
-package com.raillylinker.module_api_project.services
+package com.raillylinker.module_api_root.services
 
-import com.raillylinker.module_api_project.controllers.RootController
+import com.raillylinker.module_api_root.controllers.RootController
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.web.servlet.ModelAndView
 
