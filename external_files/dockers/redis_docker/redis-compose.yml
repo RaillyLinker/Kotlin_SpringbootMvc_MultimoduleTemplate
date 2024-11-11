@@ -1,0 +1,11 @@
+services:
+  redis:
+    container_name: redis
+    image: redis
+    command: redis-server /etc/redis.conf
+    volumes:
+      - C:/Users/raill/Downloads/tmp/redis/redis/data:/data
+      - ./conf/redis.conf:/etc/redis.conf
+    restart: always
+    ports:
+      - "7001:7001"
