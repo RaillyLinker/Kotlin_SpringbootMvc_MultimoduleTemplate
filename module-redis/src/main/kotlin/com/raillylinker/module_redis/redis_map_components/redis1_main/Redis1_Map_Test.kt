@@ -19,7 +19,7 @@ class Redis1_Map_Test(
     }
 
     // !!!본 RedisMAP 의 Value 클래스 설정!!!
-    class ValueVo(
+    data class ValueVo(
         // 기본 변수 타입 String 사용 예시
         var content: String,
         // Object 변수 타입 사용 예시

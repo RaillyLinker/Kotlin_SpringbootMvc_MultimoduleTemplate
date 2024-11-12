@@ -20,7 +20,7 @@ class Redis1_Map_RuntimeConfigIpList(
     }
 
     // !!!본 RedisMAP 의 Value 클래스 설정!!!
-    class ValueVo(
+    data class ValueVo(
         var ipInfoList: List<IpDescVo>
     ) {
         data class IpDescVo(
