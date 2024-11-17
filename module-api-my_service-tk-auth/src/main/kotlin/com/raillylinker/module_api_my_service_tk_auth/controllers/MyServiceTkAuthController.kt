@@ -3263,7 +3263,7 @@ class MyServiceTkAuthController(
     }
 
     data class GetMyFrontProfileOutputVo(
-        @Schema(description = "내 대표 Profile 이미지 정보", required = true)
+        @Schema(description = "내 대표 Profile 이미지 정보", required = false)
         @JsonProperty("myFrontProfileInfo")
         val myFrontProfileInfo: ProfileInfo?
     ) {
@@ -3528,7 +3528,7 @@ class MyServiceTkAuthController(
     }
 
     data class GetMyFrontEmailOutputVo(
-        @Schema(description = "내 대표 이메일 정보", required = true)
+        @Schema(description = "내 대표 이메일 정보", required = false)
         @JsonProperty("myFrontEmailInfo")
         val myFrontEmailInfo: EmailInfo?
     ) {
@@ -3637,7 +3637,7 @@ class MyServiceTkAuthController(
     }
 
     data class GetMyFrontPhoneNumberOutputVo(
-        @Schema(description = "내 대표 전화번호 정보", required = true)
+        @Schema(description = "내 대표 전화번호 정보", required = false)
         @JsonProperty("myFrontPhoneNumberInfo")
         val myFrontPhoneNumberInfo: PhoneNumberInfo?
     ) {
