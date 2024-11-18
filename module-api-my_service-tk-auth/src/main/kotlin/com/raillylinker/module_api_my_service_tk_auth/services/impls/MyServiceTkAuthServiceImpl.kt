@@ -4061,65 +4061,65 @@ class MyServiceTkAuthServiceImpl(
                 LocalDateTime.now().atZone(ZoneId.systemDefault())
                     .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
             db1RaillyLinkerCompanyTotalAuthLogInTokenHistoryRepository.save(totalAuthLogInTokenHistory)
+        }
 
 
-            for (totalAuthMemberLockHistory in memberData.totalAuthMemberLockHistoryList) {
-                totalAuthMemberLockHistory.rowDeleteDateStr =
-                    LocalDateTime.now().atZone(ZoneId.systemDefault())
-                        .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
-                db1RaillyLinkerCompanyTotalAuthMemberLockHistoryRepository.save(totalAuthMemberLockHistory)
-            }
-
-            for (totalAuthMemberOauth2Login in memberData.totalAuthMemberOauth2LoginList) {
-                totalAuthMemberOauth2Login.rowDeleteDateStr =
-                    LocalDateTime.now().atZone(ZoneId.systemDefault())
-                        .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
-                db1RaillyLinkerCompanyTotalAuthMemberOauth2LoginRepository.save(totalAuthMemberOauth2Login)
-            }
-
-            // 이미 발행된 토큰 만료처리
-            val tokenEntityList =
-                db1RaillyLinkerCompanyTotalAuthLogInTokenHistoryRepository.findAllByTotalAuthMemberAndAccessTokenExpireWhenAfterAndRowDeleteDateStr(
-                    memberData,
-                    LocalDateTime.now(),
-                    "/"
-                )
-            for (tokenEntity in tokenEntityList) {
-                tokenEntity.logoutDate = LocalDateTime.now()
-                db1RaillyLinkerCompanyTotalAuthLogInTokenHistoryRepository.save(tokenEntity)
-
-                val tokenType = tokenEntity.tokenType
-                val accessToken = tokenEntity.accessToken
-
-                val accessTokenExpireRemainSeconds = when (tokenType) {
-                    "Bearer" -> {
-                        jwtTokenUtil.getRemainSeconds(accessToken)
-                    }
-
-                    else -> {
-                        null
-                    }
-                }
-
-                try {
-                    redis1MapTotalAuthForceExpireAuthorizationSet.saveKeyValue(
-                        "${tokenType}_${accessToken}",
-                        Redis1_Map_TotalAuthForceExpireAuthorizationSet.ValueVo(),
-                        accessTokenExpireRemainSeconds!! * 1000
-                    )
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-
-            // 회원탈퇴 처리
-            memberData.rowDeleteDateStr =
+        for (totalAuthMemberLockHistory in memberData.totalAuthMemberLockHistoryList) {
+            totalAuthMemberLockHistory.rowDeleteDateStr =
                 LocalDateTime.now().atZone(ZoneId.systemDefault())
                     .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
-            db1RaillyLinkerCompanyTotalAuthMemberRepository.save(memberData)
-
-            httpServletResponse.status = HttpStatus.OK.value()
+            db1RaillyLinkerCompanyTotalAuthMemberLockHistoryRepository.save(totalAuthMemberLockHistory)
         }
+
+        for (totalAuthMemberOauth2Login in memberData.totalAuthMemberOauth2LoginList) {
+            totalAuthMemberOauth2Login.rowDeleteDateStr =
+                LocalDateTime.now().atZone(ZoneId.systemDefault())
+                    .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
+            db1RaillyLinkerCompanyTotalAuthMemberOauth2LoginRepository.save(totalAuthMemberOauth2Login)
+        }
+
+        // 이미 발행된 토큰 만료처리
+        val tokenEntityList =
+            db1RaillyLinkerCompanyTotalAuthLogInTokenHistoryRepository.findAllByTotalAuthMemberAndAccessTokenExpireWhenAfterAndRowDeleteDateStr(
+                memberData,
+                LocalDateTime.now(),
+                "/"
+            )
+        for (tokenEntity in tokenEntityList) {
+            tokenEntity.logoutDate = LocalDateTime.now()
+            db1RaillyLinkerCompanyTotalAuthLogInTokenHistoryRepository.save(tokenEntity)
+
+            val tokenType = tokenEntity.tokenType
+            val accessToken = tokenEntity.accessToken
+
+            val accessTokenExpireRemainSeconds = when (tokenType) {
+                "Bearer" -> {
+                    jwtTokenUtil.getRemainSeconds(accessToken)
+                }
+
+                else -> {
+                    null
+                }
+            }
+
+            try {
+                redis1MapTotalAuthForceExpireAuthorizationSet.saveKeyValue(
+                    "${tokenType}_${accessToken}",
+                    Redis1_Map_TotalAuthForceExpireAuthorizationSet.ValueVo(),
+                    accessTokenExpireRemainSeconds!! * 1000
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        // 회원탈퇴 처리
+        memberData.rowDeleteDateStr =
+            LocalDateTime.now().atZone(ZoneId.systemDefault())
+                .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
+        db1RaillyLinkerCompanyTotalAuthMemberRepository.save(memberData)
+
+        httpServletResponse.status = HttpStatus.OK.value()
     }
 
 
