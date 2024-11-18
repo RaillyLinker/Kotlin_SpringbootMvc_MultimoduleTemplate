@@ -4056,13 +4056,6 @@ class MyServiceTkAuthServiceImpl(
             )
         }
 
-        for (totalAuthLogInTokenHistory in memberData.totalAuthLogInTokenHistoryList) {
-            totalAuthLogInTokenHistory.rowDeleteDateStr =
-                LocalDateTime.now().atZone(ZoneId.systemDefault())
-                    .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
-            db1RaillyLinkerCompanyTotalAuthLogInTokenHistoryRepository.save(totalAuthLogInTokenHistory)
-        }
-
 
         for (totalAuthMemberLockHistory in memberData.totalAuthMemberLockHistoryList) {
             totalAuthMemberLockHistory.rowDeleteDateStr =
@@ -4111,6 +4104,13 @@ class MyServiceTkAuthServiceImpl(
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }
+
+        for (totalAuthLogInTokenHistory in memberData.totalAuthLogInTokenHistoryList) {
+            totalAuthLogInTokenHistory.rowDeleteDateStr =
+                LocalDateTime.now().atZone(ZoneId.systemDefault())
+                    .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
+            db1RaillyLinkerCompanyTotalAuthLogInTokenHistoryRepository.save(totalAuthLogInTokenHistory)
         }
 
         // 회원탈퇴 처리
