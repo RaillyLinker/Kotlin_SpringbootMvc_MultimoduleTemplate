@@ -998,6 +998,127 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    override fun selectFkTableRowsWithQueryDsl(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectFkTableRowsWithQueryDslOutputVo? {
+        val resultEntityList = db1TemplateRepositoryDsl.findParentWithChildren()
+
+        val entityVoList =
+            ArrayList<MyServiceTkSampleDatabaseTestController.SelectFkTableRowsWithQueryDslOutputVo.ParentEntityVo>()
+
+        for (resultEntity in resultEntityList) {
+            val childEntityVoList =
+                ArrayList<MyServiceTkSampleDatabaseTestController.SelectFkTableRowsWithQueryDslOutputVo.ParentEntityVo.ChildEntityVo>()
+
+            for (childEntity in resultEntity.fkTestManyToOneChildList) {
+                childEntityVoList.add(
+                    MyServiceTkSampleDatabaseTestController.SelectFkTableRowsWithQueryDslOutputVo.ParentEntityVo.ChildEntityVo(
+                        childEntity.uid!!,
+                        childEntity.childName,
+                        childEntity.rowCreateDate!!.atZone(ZoneId.systemDefault())
+                            .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z")),
+                        childEntity.rowUpdateDate!!.atZone(ZoneId.systemDefault())
+                            .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
+                    )
+                )
+            }
+
+            entityVoList.add(
+                MyServiceTkSampleDatabaseTestController.SelectFkTableRowsWithQueryDslOutputVo.ParentEntityVo(
+                    resultEntity.uid!!,
+                    resultEntity.parentName,
+                    resultEntity.rowCreateDate!!.atZone(ZoneId.systemDefault())
+                        .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z")),
+                    resultEntity.rowUpdateDate!!.atZone(ZoneId.systemDefault())
+                        .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z")),
+                    childEntityVoList
+                )
+            )
+        }
+
+        httpServletResponse.status = HttpStatus.OK.value()
+        return MyServiceTkSampleDatabaseTestController.SelectFkTableRowsWithQueryDslOutputVo(
+            entityVoList
+        )
+    }
+
+
+    ////
+    override fun selectFkTableRowsByParentNameFilterWithQueryDsl(
+        httpServletResponse: HttpServletResponse,
+        parentName: String
+    ): MyServiceTkSampleDatabaseTestController.SelectFkTableRowsByParentNameFilterWithQueryDslOutputVo? {
+        val resultEntityList = db1TemplateRepositoryDsl.findParentWithChildrenByName(parentName)
+
+        val entityVoList =
+            ArrayList<MyServiceTkSampleDatabaseTestController.SelectFkTableRowsByParentNameFilterWithQueryDslOutputVo.ParentEntityVo>()
+
+        for (resultEntity in resultEntityList) {
+            val childEntityVoList =
+                ArrayList<MyServiceTkSampleDatabaseTestController.SelectFkTableRowsByParentNameFilterWithQueryDslOutputVo.ParentEntityVo.ChildEntityVo>()
+
+            for (childEntity in resultEntity.fkTestManyToOneChildList) {
+                childEntityVoList.add(
+                    MyServiceTkSampleDatabaseTestController.SelectFkTableRowsByParentNameFilterWithQueryDslOutputVo.ParentEntityVo.ChildEntityVo(
+                        childEntity.uid!!,
+                        childEntity.childName,
+                        childEntity.rowCreateDate!!.atZone(ZoneId.systemDefault())
+                            .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z")),
+                        childEntity.rowUpdateDate!!.atZone(ZoneId.systemDefault())
+                            .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
+                    )
+                )
+            }
+
+            entityVoList.add(
+                MyServiceTkSampleDatabaseTestController.SelectFkTableRowsByParentNameFilterWithQueryDslOutputVo.ParentEntityVo(
+                    resultEntity.uid!!,
+                    resultEntity.parentName,
+                    resultEntity.rowCreateDate!!.atZone(ZoneId.systemDefault())
+                        .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z")),
+                    resultEntity.rowUpdateDate!!.atZone(ZoneId.systemDefault())
+                        .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z")),
+                    childEntityVoList
+                )
+            )
+        }
+
+        httpServletResponse.status = HttpStatus.OK.value()
+        return MyServiceTkSampleDatabaseTestController.SelectFkTableRowsByParentNameFilterWithQueryDslOutputVo(
+            entityVoList
+        )
+    }
+
+
+    ////
+    override fun selectFkTableChildListWithQueryDsl(
+        httpServletResponse: HttpServletResponse,
+        parentUid: Long
+    ): MyServiceTkSampleDatabaseTestController.SelectFkTableChildListWithQueryDslOutputVo? {
+        val resultEntityList = db1TemplateRepositoryDsl.findChildByParentId(parentUid)
+
+        val entityVoList =
+            ArrayList<MyServiceTkSampleDatabaseTestController.SelectFkTableChildListWithQueryDslOutputVo.ChildEntityVo>()
+
+        for (resultEntity in resultEntityList) {
+            entityVoList.add(
+                MyServiceTkSampleDatabaseTestController.SelectFkTableChildListWithQueryDslOutputVo.ChildEntityVo(
+                    resultEntity.uid!!,
+                    resultEntity.childName,
+                    resultEntity.rowCreateDate!!.atZone(ZoneId.systemDefault())
+                        .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z")),
+                    resultEntity.rowUpdateDate!!.atZone(ZoneId.systemDefault())
+                        .format(DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
+                )
+            )
+        }
+
+        httpServletResponse.status = HttpStatus.OK.value()
+        return MyServiceTkSampleDatabaseTestController.SelectFkTableChildListWithQueryDslOutputVo(
+            entityVoList
+        )
+    }
+
+
+    ////
     @CustomTransactional([Db1MainConfig.TRANSACTION_NAME])
     override fun deleteFkChildRowSample(httpServletResponse: HttpServletResponse, index: Long) {
         val entityOpt = db1TemplateFkTestManyToOneChildRepository.findById(index)

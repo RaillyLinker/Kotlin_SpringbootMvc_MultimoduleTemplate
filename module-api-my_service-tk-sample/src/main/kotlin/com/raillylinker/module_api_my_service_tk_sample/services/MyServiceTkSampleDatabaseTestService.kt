@@ -209,6 +209,27 @@ interface MyServiceTkSampleDatabaseTestService {
 
 
     ////
+    // (외래키 관련 테이블 Rows 조회 (QueryDsl))
+    fun selectFkTableRowsWithQueryDsl(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectFkTableRowsWithQueryDslOutputVo?
+
+
+    ////
+    // (외래키 관련 테이블 Rows 조회 및 부모 테이블 이름으로 필터링 (QueryDsl))
+    fun selectFkTableRowsByParentNameFilterWithQueryDsl(
+        httpServletResponse: HttpServletResponse,
+        parentName: String
+    ): MyServiceTkSampleDatabaseTestController.SelectFkTableRowsByParentNameFilterWithQueryDslOutputVo?
+
+
+    ////
+    // (외래키 관련 테이블 부모 테이블 고유번호로 자식 테이블 리스트 검색 (QueryDsl))
+    fun selectFkTableChildListWithQueryDsl(
+        httpServletResponse: HttpServletResponse,
+        parentUid: Long
+    ): MyServiceTkSampleDatabaseTestController.SelectFkTableChildListWithQueryDslOutputVo?
+
+
+    ////
     // (외래키 자식 테이블 Row 삭제 테스트)
     fun deleteFkChildRowSample(httpServletResponse: HttpServletResponse, index: Long)
 

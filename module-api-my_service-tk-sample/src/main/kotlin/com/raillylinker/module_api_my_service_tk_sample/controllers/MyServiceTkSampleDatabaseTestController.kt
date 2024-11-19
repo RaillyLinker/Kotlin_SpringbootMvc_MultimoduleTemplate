@@ -1847,6 +1847,238 @@ class MyServiceTkSampleDatabaseTestController(
 
     ////
     @Operation(
+        summary = "외래키 관련 테이블 Rows 조회 (QueryDsl)",
+        description = "QueryDsl 을 사용하여 외래키 관련 테이블의 모든 Rows 를 반환합니다.\n\n"
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "정상 동작"
+            )
+        ]
+    )
+    @GetMapping(
+        path = ["/fk-table-dsl"],
+        consumes = [MediaType.ALL_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    @ResponseBody
+    fun selectFkTableRowsWithQueryDsl(
+        @Parameter(hidden = true)
+        httpServletResponse: HttpServletResponse
+    ): SelectFkTableRowsWithQueryDslOutputVo? {
+        return service.selectFkTableRowsWithQueryDsl(httpServletResponse)
+    }
+
+    data class SelectFkTableRowsWithQueryDslOutputVo(
+        @Schema(description = "부모 아이템 리스트", required = true)
+        @JsonProperty("parentEntityVoList")
+        val parentEntityVoList: List<ParentEntityVo>
+    ) {
+        @Schema(description = "부모 아이템")
+        data class ParentEntityVo(
+            @Schema(description = "글 고유번호", required = true, example = "1234")
+            @JsonProperty("uid")
+            val uid: Long,
+            @Schema(description = "부모 테이블 이름", required = true, example = "1")
+            @JsonProperty("parentName")
+            val parentName: String,
+            @Schema(
+                description = "글 작성일(yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)",
+                required = true,
+                example = "2024_05_02_T_15_14_49_552_KST"
+            )
+            @JsonProperty("createDate")
+            val createDate: String,
+            @Schema(
+                description = "글 수정일(yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)",
+                required = true,
+                example = "2024_05_02_T_15_14_49_552_KST"
+            )
+            @JsonProperty("updateDate")
+            val updateDate: String,
+            @Schema(description = "부모 테이블에 속하는 자식 테이블들", required = true)
+            @JsonProperty("childEntityList")
+            val childEntityList: List<ChildEntityVo>
+        ) {
+            @Schema(description = "자식 아이템")
+            data class ChildEntityVo(
+                @Schema(description = "글 고유번호", required = true, example = "1234")
+                @JsonProperty("uid")
+                val uid: Long,
+                @Schema(description = "자식 테이블 이름", required = true, example = "1")
+                @JsonProperty("childName")
+                val childName: String,
+                @Schema(
+                    description = "글 작성일(yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)",
+                    required = true,
+                    example = "2024_05_02_T_15_14_49_552_KST"
+                )
+                @JsonProperty("createDate")
+                val createDate: String,
+                @Schema(
+                    description = "글 수정일(yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)",
+                    required = true,
+                    example = "2024_05_02_T_15_14_49_552_KST"
+                )
+                @JsonProperty("updateDate")
+                val updateDate: String
+            )
+        }
+    }
+
+
+    ////
+    @Operation(
+        summary = "외래키 관련 테이블 Rows 조회 및 부모 테이블 이름으로 필터링 (QueryDsl)",
+        description = "QueryDsl 을 사용하여 외래키 관련 테이블의 모든 Rows 를 반환합니다.\n\n" +
+                "추가로, 부모 테이블에 할당된 이름으로 검색 결과를 필터링합니다.\n\n"
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "정상 동작"
+            )
+        ]
+    )
+    @GetMapping(
+        path = ["/fk-table-parent-name-filter-dsl"],
+        consumes = [MediaType.ALL_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    @ResponseBody
+    fun selectFkTableRowsByParentNameFilterWithQueryDsl(
+        @Parameter(hidden = true)
+        httpServletResponse: HttpServletResponse,
+        @Parameter(name = "parentName", description = "필터링 할 parentName 변수", example = "홍길동")
+        @RequestParam("parentName")
+        parentName: String
+    ): SelectFkTableRowsByParentNameFilterWithQueryDslOutputVo? {
+        return service.selectFkTableRowsByParentNameFilterWithQueryDsl(httpServletResponse, parentName)
+    }
+
+    data class SelectFkTableRowsByParentNameFilterWithQueryDslOutputVo(
+        @Schema(description = "부모 아이템 리스트", required = true)
+        @JsonProperty("parentEntityVoList")
+        val parentEntityVoList: List<ParentEntityVo>
+    ) {
+        @Schema(description = "부모 아이템")
+        data class ParentEntityVo(
+            @Schema(description = "글 고유번호", required = true, example = "1234")
+            @JsonProperty("uid")
+            val uid: Long,
+            @Schema(description = "부모 테이블 이름", required = true, example = "1")
+            @JsonProperty("parentName")
+            val parentName: String,
+            @Schema(
+                description = "글 작성일(yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)",
+                required = true,
+                example = "2024_05_02_T_15_14_49_552_KST"
+            )
+            @JsonProperty("createDate")
+            val createDate: String,
+            @Schema(
+                description = "글 수정일(yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)",
+                required = true,
+                example = "2024_05_02_T_15_14_49_552_KST"
+            )
+            @JsonProperty("updateDate")
+            val updateDate: String,
+            @Schema(description = "부모 테이블에 속하는 자식 테이블들", required = true)
+            @JsonProperty("childEntityList")
+            val childEntityList: List<ChildEntityVo>
+        ) {
+            @Schema(description = "자식 아이템")
+            data class ChildEntityVo(
+                @Schema(description = "글 고유번호", required = true, example = "1234")
+                @JsonProperty("uid")
+                val uid: Long,
+                @Schema(description = "자식 테이블 이름", required = true, example = "1")
+                @JsonProperty("childName")
+                val childName: String,
+                @Schema(
+                    description = "글 작성일(yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)",
+                    required = true,
+                    example = "2024_05_02_T_15_14_49_552_KST"
+                )
+                @JsonProperty("createDate")
+                val createDate: String,
+                @Schema(
+                    description = "글 수정일(yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)",
+                    required = true,
+                    example = "2024_05_02_T_15_14_49_552_KST"
+                )
+                @JsonProperty("updateDate")
+                val updateDate: String
+            )
+        }
+    }
+
+
+    ////
+    @Operation(
+        summary = "외래키 관련 테이블 부모 테이블 고유번호로 자식 테이블 리스트 검색 (QueryDsl)",
+        description = "부모 테이블 고유번호로 자식 테이블 리스트를 검색하여 반환합니다.\n\n"
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "정상 동작"
+            )
+        ]
+    )
+    @GetMapping(
+        path = ["/fk-table-child-list-dsl"],
+        consumes = [MediaType.ALL_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    @ResponseBody
+    fun selectFkTableChildListWithQueryDsl(
+        @Parameter(hidden = true)
+        httpServletResponse: HttpServletResponse,
+        @Parameter(name = "parentUid", description = "parent 테이블 고유번호", example = "1")
+        @RequestParam("parentUid")
+        parentUid: Long
+    ): SelectFkTableChildListWithQueryDslOutputVo? {
+        return service.selectFkTableChildListWithQueryDsl(httpServletResponse, parentUid)
+    }
+
+    data class SelectFkTableChildListWithQueryDslOutputVo(
+        @Schema(description = "부모 테이블에 속하는 자식 테이블들", required = true)
+        @JsonProperty("childEntityList")
+        val childEntityList: List<ChildEntityVo>
+    ) {
+        @Schema(description = "자식 아이템")
+        data class ChildEntityVo(
+            @Schema(description = "글 고유번호", required = true, example = "1234")
+            @JsonProperty("uid")
+            val uid: Long,
+            @Schema(description = "자식 테이블 이름", required = true, example = "1")
+            @JsonProperty("childName")
+            val childName: String,
+            @Schema(
+                description = "글 작성일(yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)",
+                required = true,
+                example = "2024_05_02_T_15_14_49_552_KST"
+            )
+            @JsonProperty("createDate")
+            val createDate: String,
+            @Schema(
+                description = "글 수정일(yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)",
+                required = true,
+                example = "2024_05_02_T_15_14_49_552_KST"
+            )
+            @JsonProperty("updateDate")
+            val updateDate: String
+        )
+    }
+
+
+    ////
+    @Operation(
         summary = "외래키 자식 테이블 Row 삭제 테스트",
         description = "외래키 자식 테이블의 Row 하나를 삭제합니다.\n\n"
     )

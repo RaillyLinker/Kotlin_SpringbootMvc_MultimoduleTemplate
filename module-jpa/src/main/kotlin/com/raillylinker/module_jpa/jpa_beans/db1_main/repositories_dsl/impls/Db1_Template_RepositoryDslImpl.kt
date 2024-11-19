@@ -28,7 +28,7 @@ class Db1_Template_RepositoryDslImpl(entityManager: EntityManager) : Db1_Templat
             .selectFrom(db1_Template_FkTestParent)
             .leftJoin(db1_Template_FkTestParent.fkTestManyToOneChildList, db1_Template_FkTestManyToOneChild)
             .fetchJoin()
-            .where(db1_Template_FkTestParent.parentName.eq(parentName))
+            .where(db1_Template_FkTestParent.parentName.like("%${parentName.replace(" ", "")}%"))
             .fetch()
     }
 
