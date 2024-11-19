@@ -8,6 +8,7 @@ dependencies {
     implementation(project(":module-redis"))
 
     implementation(project(":module-scheduler"))
+    implementation(project(":module-batch"))
     implementation(project(":module-socket"))
     implementation(project(":module-kafka"))
     implementation(project(":module-security"))

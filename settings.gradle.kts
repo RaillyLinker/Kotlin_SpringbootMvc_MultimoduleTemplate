@@ -15,6 +15,7 @@ include("module-mongodb")
 include("module-jpa")
 include("module-common")
 include("module-security")
+include("module-batch")
 
 include("module-api-root")
 include("module-api-my_service-tk-auth")
