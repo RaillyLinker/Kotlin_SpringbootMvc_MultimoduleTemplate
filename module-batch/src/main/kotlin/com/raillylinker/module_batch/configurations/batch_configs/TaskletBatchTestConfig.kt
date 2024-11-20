@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.transaction.PlatformTransactionManager
 
+// [SpringBatch Tasklet 테스트]
 @Configuration
 @EnableBatchProcessing(
     // Batch 메타 데이터를 저장할 데이터베이스 정보
@@ -61,7 +62,7 @@ class TaskletBatchTestConfig(
     // (단순히 로깅하는 Tasklet)
     fun justLoggingTasklet(): Tasklet {
         return Tasklet { contribution: StepContribution?, chunkContext: ChunkContext? ->
-            classLogger.info("*********** Tasklet Batch Test ***********")
+            classLogger.info("TaskletBatchTest : Tasklet Batch Test Complete!")
             RepeatStatus.FINISHED
         }
     }

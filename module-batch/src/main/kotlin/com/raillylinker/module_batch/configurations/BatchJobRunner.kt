@@ -1,5 +1,6 @@
 package com.raillylinker.module_batch.configurations
 
+import com.raillylinker.module_batch.configurations.batch_configs.ChunkBatchTestConfig
 import com.raillylinker.module_batch.configurations.batch_configs.TaskletBatchTestConfig
 import org.springframework.batch.core.launch.JobLauncher
 import org.springframework.batch.core.Job
@@ -21,13 +22,25 @@ class BatchJobRunner(
     private val jobLauncher: JobLauncher,
     // TaskletBatchTest Job
     @Qualifier(TaskletBatchTestConfig.BATCH_JOB_NAME)
-    private val taskletBatchTestJob: Job
+    private val taskletBatchTestJob: Job,
+    // ChunkBatchTest Job
+    @Qualifier(ChunkBatchTestConfig.BATCH_JOB_NAME)
+    private val chunkBatchTestJob: Job
 ) : CommandLineRunner {
     override fun run(vararg args: String) {
         try {
             // (TaskletBatchTest Job 실행)
             jobLauncher.run(
                 taskletBatchTestJob,
+                JobParametersBuilder()
+                    // 매 실행 시 고유한 파라미터를 추가하여 중복 실행 방지
+                    .addLong("time", System.currentTimeMillis())
+                    .toJobParameters()
+            )
+
+            // (chunkBatchTest Job 실행)
+            jobLauncher.run(
+                chunkBatchTestJob,
                 JobParametersBuilder()
                     // 매 실행 시 고유한 파라미터를 추가하여 중복 실행 방지
                     .addLong("time", System.currentTimeMillis())
