@@ -11,6 +11,7 @@ import org.springframework.batch.core.job.builder.JobBuilder
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.core.step.builder.StepBuilder
+import org.springframework.batch.core.step.tasklet.Tasklet
 import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
@@ -45,21 +46,23 @@ class TaskletBatchTestConfig(
     // (Batch Job)
     @Bean(BATCH_JOB_NAME)
     fun batchJob(): Job {
-        return JobBuilder("myJob1", jobRepository)
+        return JobBuilder("${BATCH_JOB_NAME}_batchJob", jobRepository)
             .start(taskletTestStep())
             .build()
     }
 
     // (Tasklet 테스트 Step)
     fun taskletTestStep(): Step {
-        return StepBuilder("myStep1", jobRepository)
-            .tasklet(
-                { contribution: StepContribution, chunkContext: ChunkContext ->
-                    classLogger.info("*********** Tasklet Batch Test ***********")
-                    RepeatStatus.FINISHED
-                },
-                transactionManager
-            )
+        return StepBuilder("${BATCH_JOB_NAME}_taskletTestStep", jobRepository)
+            .tasklet(justLoggingTasklet(), transactionManager)
             .build()
+    }
+
+    // (단순히 로깅하는 Tasklet)
+    fun justLoggingTasklet(): Tasklet {
+        return Tasklet { contribution: StepContribution?, chunkContext: ChunkContext? ->
+            classLogger.info("*********** Tasklet Batch Test ***********")
+            RepeatStatus.FINISHED
+        }
     }
 }
