@@ -1,4 +1,4 @@
-package com.raillylinker.module_batch.configurations
+package com.raillylinker.module_batch.sys_components
 
 import com.raillylinker.module_batch.configurations.batch_configs.ChunkBatchTestConfig
 import com.raillylinker.module_batch.configurations.batch_configs.TaskletBatchTestConfig
