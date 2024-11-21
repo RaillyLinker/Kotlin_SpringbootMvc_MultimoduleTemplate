@@ -2,7 +2,6 @@ package com.raillylinker.module_batch.sys_components
 
 import com.raillylinker.module_batch.batch_components.ChunkBatchTest
 import com.raillylinker.module_batch.batch_components.TaskletBatchTest
-import com.raillylinker.module_batch.configurations.BatchConfig
 import org.springframework.batch.core.launch.JobLauncher
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.JobParametersBuilder
