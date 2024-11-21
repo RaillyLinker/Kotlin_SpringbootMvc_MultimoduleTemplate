@@ -1,7 +1,8 @@
 package com.raillylinker.module_batch.sys_components
 
-import com.raillylinker.module_batch.configurations.batch_configs.ChunkBatchTestConfig
-import com.raillylinker.module_batch.configurations.batch_configs.TaskletBatchTestConfig
+import com.raillylinker.module_batch.batch_components.ChunkBatchTest
+import com.raillylinker.module_batch.batch_components.TaskletBatchTest
+import com.raillylinker.module_batch.configurations.BatchConfig
 import org.springframework.batch.core.launch.JobLauncher
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.JobParametersBuilder
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
 
-// Batch Job 을 어플리케이션 실행 시점에 실행하도록 해주는 코드
+// (Batch Job 을 어플리케이션 실행 시점에 실행하도록 해주는 코드 = 테스트용)
 /*
     SpringBatch 에는 meta data 를 저장할 데이터베이스 테이블이 필요한데,
     이러한 테이블들은,
@@ -21,10 +22,10 @@ import org.springframework.stereotype.Component
 class BatchJobRunner(
     private val jobLauncher: JobLauncher,
     // TaskletBatchTest Job
-    @Qualifier(TaskletBatchTestConfig.BATCH_JOB_NAME)
+    @Qualifier(TaskletBatchTest.BATCH_JOB_NAME)
     private val taskletBatchTestJob: Job,
     // ChunkBatchTest Job
-    @Qualifier(ChunkBatchTestConfig.BATCH_JOB_NAME)
+    @Qualifier(ChunkBatchTest.BATCH_JOB_NAME)
     private val chunkBatchTestJob: Job
 ) : CommandLineRunner {
     override fun run(vararg args: String) {

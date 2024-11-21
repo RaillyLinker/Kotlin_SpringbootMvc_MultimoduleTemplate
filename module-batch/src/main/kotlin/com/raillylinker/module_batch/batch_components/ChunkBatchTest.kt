@@ -1,4 +1,4 @@
-package com.raillylinker.module_batch.configurations.batch_configs
+package com.raillylinker.module_batch.batch_components
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -7,7 +7,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing
 import org.springframework.batch.core.job.builder.JobBuilder
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.step.builder.StepBuilder
@@ -16,23 +15,15 @@ import org.springframework.batch.item.ItemReader
 import org.springframework.batch.item.ItemWriter
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
+import org.springframework.stereotype.Component
 import org.springframework.transaction.PlatformTransactionManager
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.*
 
-// [SpringBatch Chunk 테스트]
-@Configuration
-@EnableBatchProcessing(
-    // Batch 메타 데이터를 저장할 데이터베이스 정보
-    dataSourceRef = "${Db1MainConfig.DATABASE_DIRECTORY_NAME}_DataSource",
-    transactionManagerRef = Db1MainConfig.TRANSACTION_NAME,
-    // Batch 메타 데이터 데이터베이스 테이블 접두사({스키마 명}.{배치 테이블 접두사})
-    tablePrefix = "batch_metadata.BATCH_"
-)
-class ChunkBatchTestConfig(
+@Component
+class ChunkBatchTest(
     private val jobRepository: JobRepository,
     @Qualifier(Db1MainConfig.TRANSACTION_NAME)
     private val transactionManager: PlatformTransactionManager
