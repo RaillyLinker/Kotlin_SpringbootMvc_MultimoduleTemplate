@@ -1,0 +1,31 @@
+# (실행 환경 prod 설정)
+# : 배포 환경 엄중한 환경 설정
+
+spring:
+  config:
+    activate: # 프로필명 설정
+      on-profile: quartz-prod
+
+  quartz:
+    job-store-type: jdbc
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceId: AUTO
+            instanceName: ClusteredScheduler
+          dataSource:
+            quartzDataSource:
+              provider: hikaricp
+              URL: jdbc:mysql://127.0.0.1:3306/quartz_metadata?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+              driver: com.mysql.cj.jdbc.Driver
+              user: root
+              password: todo1234!
+          jobStore:
+            isClustered: true
+            clusterCheckinInterval: 20000
+            dataSource: quartzDataSource
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            misfireThreshold: 60000
