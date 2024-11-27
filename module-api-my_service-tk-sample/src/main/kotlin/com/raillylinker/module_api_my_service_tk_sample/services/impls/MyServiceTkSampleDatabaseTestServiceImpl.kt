@@ -172,7 +172,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
         httpServletResponse: HttpServletResponse,
         num: Int
     ): MyServiceTkSampleDatabaseTestController.SelectRowsOrderByRandomNumSampleOutputVo? {
-        val foundEntityList = db1NativeRepository.forC7N5(num)
+        val foundEntityList = db1NativeRepository.findAllFromTemplateTestDataByNotDeletedWithRandomNumDistance(num)
 
         val testEntityVoList =
             ArrayList<MyServiceTkSampleDatabaseTestController.SelectRowsOrderByRandomNumSampleOutputVo.TestEntityVo>()
@@ -206,7 +206,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
         httpServletResponse: HttpServletResponse,
         dateString: String
     ): MyServiceTkSampleDatabaseTestController.SelectRowsOrderByRowCreateDateSampleOutputVo? {
-        val foundEntityList = db1NativeRepository.forC7N6(
+        val foundEntityList = db1NativeRepository.findAllFromTemplateTestDataByNotDeletedWithRowCreateDateDistance(
             ZonedDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
                 .toLocalDateTime()
         )
@@ -284,7 +284,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
         num: Int
     ): MyServiceTkSampleDatabaseTestController.SelectRowsNativeQueryPageSampleOutputVo? {
         val pageable: Pageable = PageRequest.of(page - 1, pageElementsCount)
-        val voList = db1NativeRepository.forC7N8(
+        val voList = db1NativeRepository.findPageAllFromTemplateTestDataByNotDeletedWithRandomNumDistance(
             num,
             pageable
         )
@@ -372,7 +372,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
             return
         }
 
-        db1NativeRepository.forC7N10(
+        db1NativeRepository.updateToTemplateTestDataSetContentAndTestDateTimeByUid(
             testTableUid,
             inputVo.content,
             ZonedDateTime.parse(inputVo.dateString, DateTimeFormatter.ofPattern("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z"))
@@ -391,7 +391,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
         searchKeyword: String
     ): MyServiceTkSampleDatabaseTestController.SelectRowWhereSearchingKeywordSampleOutputVo? {
         val pageable: Pageable = PageRequest.of(page - 1, pageElementsCount)
-        val voList = db1NativeRepository.forC7N11(
+        val voList = db1NativeRepository.findPageAllFromTemplateTestDataBySearchKeyword(
             searchKeyword,
             pageable
         )
@@ -481,13 +481,13 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
         pageElementsCount: Int
     ): MyServiceTkSampleDatabaseTestController.SelectRowsNoDuplicatePagingSampleOutputVo? {
         // 중복 없는 페이징 쿼리를 사용합니다.
-        val voList = db1NativeRepository.forC7N14(
+        val voList = db1NativeRepository.findAllFromTemplateTestDataForNoDuplicatedPaging(
             lastItemUid,
             pageElementsCount
         )
 
         // 전체 개수 카운팅은 따로 해주어야 합니다.
-        val count = db1NativeRepository.forC7N14I1()
+        val count = db1NativeRepository.countFromTemplateTestDataByNotDeleted()
 
         val testEntityVoList =
             ArrayList<MyServiceTkSampleDatabaseTestController.SelectRowsNoDuplicatePagingSampleOutputVo.TestEntityVo>()
@@ -526,7 +526,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
     ////
     override fun selectRowsCountByNativeQuerySample(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectRowsCountByNativeQuerySampleOutputVo? {
-        val count = db1NativeRepository.forC7N16()
+        val count = db1NativeRepository.countFromTemplateTestDataByNotDeleted()
 
         httpServletResponse.status = HttpStatus.OK.value()
         return MyServiceTkSampleDatabaseTestController.SelectRowsCountByNativeQuerySampleOutputVo(count)
@@ -538,7 +538,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
         httpServletResponse: HttpServletResponse,
         testTableUid: Long
     ): MyServiceTkSampleDatabaseTestController.SelectRowByNativeQuerySampleOutputVo? {
-        val entity = db1NativeRepository.forC7N17(testTableUid)
+        val entity = db1NativeRepository.findFromTemplateTestDataByNotDeletedAndUid(testTableUid)
 
         if (entity == null) {
             httpServletResponse.status = HttpStatus.OK.value()
@@ -810,7 +810,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
     ////
     override fun selectFkTestTableRowsByNativeQuerySample(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectFkTestTableRowsByNativeQuerySampleDot1OutputVo? {
-        val resultEntityList = db1NativeRepository.forC7N24Dot1()
+        val resultEntityList = db1NativeRepository.findAllFromTemplateFkTestManyToOneChildInnerJoinParentByNotDeleted()
 
         val entityVoList =
             ArrayList<MyServiceTkSampleDatabaseTestController.SelectFkTestTableRowsByNativeQuerySampleDot1OutputVo.ChildEntityVo>()
@@ -851,7 +851,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
             )
         }
 
-        val resultEntity = db1NativeRepository.forC7N25(inputVal)
+        val resultEntity = db1NativeRepository.multiCaseBooleanReturnTest(inputVal)
 
         httpServletResponse.status = HttpStatus.OK.value()
         return MyServiceTkSampleDatabaseTestController.GetNativeQueryReturnValueTestOutputVo(
@@ -922,7 +922,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
         // NativeQuery : Injection Safe
         val nativeQueryResultEntityList =
-            db1NativeRepository.forC7N26(
+            db1NativeRepository.findAllFromTemplateTestDataByContent(
                 searchKeyword
             )
 
@@ -961,7 +961,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
     ////
     override fun selectFkTableRowsWithLatestChildSample(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectFkTableRowsWithLatestChildSampleOutputVo? {
-        val resultEntityList = db1NativeRepository.forC7N27()
+        val resultEntityList = db1NativeRepository.findAllFromTemplateFkTestParentWithNearestChildOnly()
 
         val entityVoList =
             ArrayList<MyServiceTkSampleDatabaseTestController.SelectFkTableRowsWithLatestChildSampleOutputVo.ParentEntityVo>()

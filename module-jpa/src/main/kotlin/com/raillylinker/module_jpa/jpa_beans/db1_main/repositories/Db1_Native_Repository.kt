@@ -44,11 +44,11 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             distance
             """
     )
-    fun forC7N5(
+    fun findAllFromTemplateTestDataByNotDeletedWithRandomNumDistance(
         @Param(value = "num") num: Int
-    ): List<ForC7N5OutputVo>
+    ): List<FindAllFromTemplateTestDataByNotDeletedWithRandomNumDistanceOutputVo>
 
-    interface ForC7N5OutputVo {
+    interface FindAllFromTemplateTestDataByNotDeletedWithRandomNumDistanceOutputVo {
         var uid: Long
         var rowCreateDate: LocalDateTime
         var rowUpdateDate: LocalDateTime
@@ -79,11 +79,11 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             timeDiffMicroSec
             """
     )
-    fun forC7N6(
+    fun findAllFromTemplateTestDataByNotDeletedWithRowCreateDateDistance(
         @Param(value = "date") date: LocalDateTime
-    ): List<ForC7N6OutputVo>
+    ): List<FindAllFromTemplateTestDataByNotDeletedWithRowCreateDateDistanceOutputVo>
 
-    interface ForC7N6OutputVo {
+    interface FindAllFromTemplateTestDataByNotDeletedWithRowCreateDateDistanceOutputVo {
         var uid: Long
         var content: String
         var randomNum: Int
@@ -122,12 +122,12 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             test_data.row_delete_date_str = '/'
             """
     )
-    fun forC7N8(
+    fun findPageAllFromTemplateTestDataByNotDeletedWithRandomNumDistance(
         @Param(value = "num") num: Int,
         pageable: Pageable
-    ): Page<ForC7N8OutputVo>
+    ): Page<FindPageAllFromTemplateTestDataByNotDeletedWithRandomNumDistanceOutputVo>
 
-    interface ForC7N8OutputVo {
+    interface FindPageAllFromTemplateTestDataByNotDeletedWithRandomNumDistanceOutputVo {
         var uid: Long
         var rowCreateDate: LocalDateTime
         var rowUpdateDate: LocalDateTime
@@ -152,7 +152,7 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             uid = :uid
             """
     )
-    fun forC7N10(
+    fun updateToTemplateTestDataSetContentAndTestDateTimeByUid(
         @Param(value = "uid") uid: Long,
         @Param(value = "content") content: String,
         @Param(value = "testDatetime") testDatetime: LocalDateTime
@@ -189,12 +189,12 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             test_data.row_delete_date_str = '/'
             """
     )
-    fun forC7N11(
+    fun findPageAllFromTemplateTestDataBySearchKeyword(
         @Param(value = "searchKeyword") searchKeyword: String,
         pageable: Pageable
-    ): Page<ForC7N11OutputVo>
+    ): Page<FindPageAllFromTemplateTestDataBySearchKeywordOutputVo>
 
-    interface ForC7N11OutputVo {
+    interface FindPageAllFromTemplateTestDataBySearchKeywordOutputVo {
         var uid: Long
         var rowCreateDate: LocalDateTime
         var rowUpdateDate: LocalDateTime
@@ -296,12 +296,12 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             LIMIT :pageElementsCount
             """
     )
-    fun forC7N14(
+    fun findAllFromTemplateTestDataForNoDuplicatedPaging(
         @Param(value = "lastItemUid") lastItemUid: Long?,
         @Param(value = "pageElementsCount") pageElementsCount: Int
-    ): List<ForC7N14OutputVo>
+    ): List<FindAllFromTemplateTestDataForNoDuplicatedPagingOutputVo>
 
-    interface ForC7N14OutputVo {
+    interface FindAllFromTemplateTestDataForNoDuplicatedPagingOutputVo {
         var uid: Long
         var rowCreateDate: LocalDateTime
         var rowUpdateDate: LocalDateTime
@@ -330,22 +330,7 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             test_data.row_delete_date_str = '/'
             """
     )
-    fun forC7N14I1(): Long
-
-
-    ////
-    @Query(
-        nativeQuery = true,
-        value = """
-            SELECT 
-            COUNT(*) 
-            FROM 
-            template.test_data AS test_data 
-            WHERE 
-            test_data.row_delete_date_str = '/'
-            """
-    )
-    fun forC7N16(): Long
+    fun countFromTemplateTestDataByNotDeleted(): Long
 
 
     ////
@@ -366,11 +351,11 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             test_data.uid = :testTableUid
             """
     )
-    fun forC7N17(
+    fun findFromTemplateTestDataByNotDeletedAndUid(
         @Param(value = "testTableUid") testTableUid: Long
-    ): ForC7N17OutputVo?
+    ): FindFromTemplateTestDataByNotDeletedAndUidOutputVo?
 
-    interface ForC7N17OutputVo {
+    interface FindFromTemplateTestDataByNotDeletedAndUidOutputVo {
         var uid: Long
         var content: String
         var randomNum: Int
@@ -402,9 +387,9 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             fk_test_many_to_one_child.row_delete_date_str = '/' 
             """
     )
-    fun forC7N24Dot1(): List<ForC7N24Dot1OutputVo>
+    fun findAllFromTemplateFkTestManyToOneChildInnerJoinParentByNotDeleted(): List<FindAllFromTemplateFkTestManyToOneChildInnerJoinParentByNotDeletedOutputVo>
 
-    interface ForC7N24Dot1OutputVo {
+    interface FindAllFromTemplateFkTestManyToOneChildInnerJoinParentByNotDeletedOutputVo {
         var childUid: Long
         var childName: String
         var childCreateDate: LocalDateTime
@@ -447,11 +432,11 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             ) AS tableColumnBoolValue
             """
     )
-    fun forC7N25(
+    fun multiCaseBooleanReturnTest(
         @Param(value = "inputVal") inputVal: Boolean
-    ): ForC7N25OutputVo
+    ): MultiCaseBooleanReturnTestOutputVo
 
-    interface ForC7N25OutputVo {
+    interface MultiCaseBooleanReturnTestOutputVo {
         var normalBoolValue: Long
         var funcBoolValue: Long
         var ifBoolValue: Long
@@ -479,11 +464,11 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             test_data.row_create_date DESC
             """
     )
-    fun forC7N26(
+    fun findAllFromTemplateTestDataByContent(
         @Param(value = "content") content: String
-    ): List<ForC7N26OutputVo>
+    ): List<FindAllFromTemplateTestDataByContentOutputVo>
 
-    interface ForC7N26OutputVo {
+    interface FindAllFromTemplateTestDataByContentOutputVo {
         var uid: Long
         var rowCreateDate: LocalDateTime
         var rowUpdateDate: LocalDateTime
@@ -566,9 +551,9 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             fk_test_parent.row_delete_date_str = '/'
             """
     )
-    fun forC7N27(): List<ForC7N27OutputVo>
+    fun findAllFromTemplateFkTestParentWithNearestChildOnly(): List<FindAllFromTemplateFkTestParentWithNearestChildOnlyOutputVo>
 
-    interface ForC7N27OutputVo {
+    interface FindAllFromTemplateFkTestParentWithNearestChildOnlyOutputVo {
         var parentUid: Long
         var parentName: String
         var parentCreateDate: LocalDateTime
@@ -608,13 +593,13 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             distanceKiloMeter
             """
     )
-    fun forC9N5(
+    fun findAllFromTemplateTestMapInnerHaversineCoordDistanceArea(
         @Param(value = "latitude") latitude: Double,
         @Param(value = "longitude") longitude: Double,
         @Param(value = "radiusKiloMeter") radiusKiloMeter: Double
-    ): List<ForC9N5OutputVo>
+    ): List<FindAllFromTemplateTestMapInnerHaversineCoordDistanceAreaOutputVo>
 
-    interface ForC9N5OutputVo {
+    interface FindAllFromTemplateTestMapInnerHaversineCoordDistanceAreaOutputVo {
         var uid: Long
         var latitude: Double
         var longitude: Double
@@ -648,14 +633,14 @@ interface Db1_Native_Repository : JpaRepository<Db1_Template_TestData, Long> {
             )
             """
     )
-    fun forC9N6(
+    fun findAllFromTemplateTestMapInnerCoordSquareArea(
         @Param(value = "northLatitude") northLatitude: Double,
         @Param(value = "eastLongitude") eastLongitude: Double,
         @Param(value = "southLatitude") southLatitude: Double,
         @Param(value = "westLongitude") westLongitude: Double
-    ): List<ForC9N6OutputVo>
+    ): List<FindAllFromTemplateTestMapInnerCoordSquareAreaOutputVo>
 
-    interface ForC9N6OutputVo {
+    interface FindAllFromTemplateTestMapInnerCoordSquareAreaOutputVo {
         var uid: Long
         var latitude: Double
         var longitude: Double
