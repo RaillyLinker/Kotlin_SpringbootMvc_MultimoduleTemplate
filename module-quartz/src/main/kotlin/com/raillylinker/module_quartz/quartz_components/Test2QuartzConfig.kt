@@ -1,13 +1,11 @@
-package com.raillylinker.module_quartz.sys_components
+package com.raillylinker.module_quartz.quartz_components
 
-import org.quartz.*
-import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 
 @Component
-class Test1QuartzConfig {
+class Test2QuartzConfig {
     companion object {
-        const val QUARTZ_NAME = "Test1Quartz"
+        const val QUARTZ_NAME = "Test2Quartz"
     }
 
 //    @Bean("${QUARTZ_NAME}_Trigger")
@@ -22,7 +20,7 @@ class Test1QuartzConfig {
 //            .startNow()
 //            // 반복 스케쥴 설정
 //            // 3초 마다
-//            .withSchedule(CronScheduleBuilder.cronSchedule("*/3 * * * * ?"))
+//            .withSchedule(CronScheduleBuilder.cronSchedule("*/4 * * * * ?"))
 //            // 매일 0시
 ////            .withSchedule(CronScheduleBuilder.cronSchedule("0 * * * * ?"))
 //            .build()
