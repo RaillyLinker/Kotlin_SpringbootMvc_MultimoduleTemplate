@@ -1255,6 +1255,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun getMemberInfo(
         httpServletResponse: HttpServletResponse,
         authorization: String
@@ -1360,6 +1361,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun checkIdDuplicate(
         httpServletResponse: HttpServletResponse,
         id: String
@@ -1607,6 +1609,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun checkEmailVerificationForJoin(
         httpServletResponse: HttpServletResponse,
         verificationUid: Long,
@@ -1867,6 +1870,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun checkPhoneVerificationForJoin(
         httpServletResponse: HttpServletResponse,
         verificationUid: Long,
@@ -2645,6 +2649,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun checkEmailVerificationForFindPassword(
         httpServletResponse: HttpServletResponse,
         verificationUid: Long,
@@ -2872,6 +2877,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun checkPhoneVerificationForFindPassword(
         httpServletResponse: HttpServletResponse,
         verificationUid: Long,
@@ -3047,6 +3053,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun getMyEmailList(
         httpServletResponse: HttpServletResponse,
         authorization: String
@@ -3083,6 +3090,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun getMyPhoneNumberList(
         httpServletResponse: HttpServletResponse,
         authorization: String
@@ -3119,6 +3127,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun getMyOauth2List(
         httpServletResponse: HttpServletResponse,
         authorization: String
@@ -3219,6 +3228,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun checkEmailVerificationForAddNewEmail(
         httpServletResponse: HttpServletResponse,
         verificationUid: Long,
@@ -3513,6 +3523,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun checkPhoneVerificationForAddNewPhoneNumber(
         httpServletResponse: HttpServletResponse,
         verificationUid: Long,
@@ -4124,6 +4135,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun getMyProfileList(
         httpServletResponse: HttpServletResponse,
         authorization: String
@@ -4162,6 +4174,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun getMyFrontProfile(
         httpServletResponse: HttpServletResponse,
         authorization: String
@@ -4429,6 +4442,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun getMyFrontEmail(
         httpServletResponse: HttpServletResponse,
         authorization: String
@@ -4526,6 +4540,7 @@ class MyServiceTkAuthServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun getMyFrontPhoneNumber(
         httpServletResponse: HttpServletResponse,
         authorization: String
