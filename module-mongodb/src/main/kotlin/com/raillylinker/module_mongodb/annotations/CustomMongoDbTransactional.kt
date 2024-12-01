@@ -5,5 +5,6 @@ package com.raillylinker.module_mongodb.annotations
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class CustomMongoDbTransactional(
-    val transactionManagerBeanNameList: Array<String>
+    val transactionManagerBeanNameList: Array<String>,
+    val readOnly: Boolean = false
 )

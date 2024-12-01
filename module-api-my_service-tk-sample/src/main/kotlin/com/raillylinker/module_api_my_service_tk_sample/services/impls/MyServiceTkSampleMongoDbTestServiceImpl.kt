@@ -55,7 +55,9 @@ class MyServiceTkSampleMongoDbTestServiceImpl(
         )
     }
 
+
     ////
+    @CustomMongoDbTransactional([Mdb1MainConfig.TRANSACTION_NAME]) // ReplicaSet 환경이 아니면 에러가 납니다.
     override fun deleteAllDocumentTest(httpServletResponse: HttpServletResponse) {
         mdb1TestRepository.deleteAll()
 
@@ -63,7 +65,9 @@ class MyServiceTkSampleMongoDbTestServiceImpl(
         httpServletResponse.status = HttpStatus.OK.value()
     }
 
+
     ////
+    @CustomMongoDbTransactional([Mdb1MainConfig.TRANSACTION_NAME]) // ReplicaSet 환경이 아니면 에러가 납니다.
     override fun deleteDocumentTest(httpServletResponse: HttpServletResponse, id: String) {
         val testDocument = mdb1TestRepository.findById(id)
 
@@ -79,7 +83,9 @@ class MyServiceTkSampleMongoDbTestServiceImpl(
         httpServletResponse.status = HttpStatus.OK.value()
     }
 
+
     ////
+    @CustomMongoDbTransactional([Mdb1MainConfig.TRANSACTION_NAME], readOnly = true) // ReplicaSet 환경이 아니면 에러가 납니다.
     override fun selectAllDocumentsTest(httpServletResponse: HttpServletResponse): MyServiceTkSampleMongoDbTestController.SelectAllDocumentsTestOutputVo? {
         val testCollectionList = mdb1TestRepository.findAll()
 
@@ -109,6 +115,7 @@ class MyServiceTkSampleMongoDbTestServiceImpl(
     }
 
 
+    ////
     @CustomMongoDbTransactional([Mdb1MainConfig.TRANSACTION_NAME]) // ReplicaSet 환경이 아니면 에러가 납니다.
     override fun transactionRollbackTest(
         httpServletResponse: HttpServletResponse
@@ -129,6 +136,7 @@ class MyServiceTkSampleMongoDbTestServiceImpl(
     }
 
 
+    ////
     override fun noTransactionRollbackTest(
         httpServletResponse: HttpServletResponse
     ) {
