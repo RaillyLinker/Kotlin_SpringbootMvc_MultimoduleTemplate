@@ -1,5 +1,7 @@
 package com.raillylinker.module_security.configurations
 
+import com.raillylinker.module_jpa.annotations.CustomTransactional
+import com.raillylinker.module_jpa.configurations.jpa_configs.Db1MainConfig
 import com.raillylinker.module_redis.redis_map_components.redis1_main.Redis1_Map_TotalAuthForceExpireAuthorizationSet
 import com.raillylinker.module_security.util_components.JwtTokenUtil
 import jakarta.servlet.FilterChain
@@ -384,6 +386,7 @@ class SecurityConfig {
     // [Session-Cookie 인증 체계 적용 필터 체인]
 //    @Bean
 //    @Order(2)
+//    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
 //    fun securityFilterChainSessionCookie(
 //        http: HttpSecurity,
 //        userDetailService: UserDetailsServiceMainSc,

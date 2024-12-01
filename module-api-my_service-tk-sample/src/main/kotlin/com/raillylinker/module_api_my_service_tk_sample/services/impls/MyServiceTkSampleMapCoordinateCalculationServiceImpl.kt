@@ -188,6 +188,7 @@ class MyServiceTkSampleMapCoordinateCalculationServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectCoordinateDataRowsInRadiusKiloMeterSample(
         httpServletResponse: HttpServletResponse,
         anchorLatitude: Double,
@@ -222,6 +223,7 @@ class MyServiceTkSampleMapCoordinateCalculationServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectCoordinateDataRowsInCoordinateBoxSample(
         httpServletResponse: HttpServletResponse,
         northLatitude: Double, // 북위도 (ex : 37.771848)

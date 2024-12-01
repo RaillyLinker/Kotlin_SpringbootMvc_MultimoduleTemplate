@@ -116,6 +116,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectRowsSample(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectRowsSampleOutputVo? {
         val resultEntityList =
             db1TemplateTestsRepository.findAllByRowDeleteDateStrOrderByRowCreateDate("/")
@@ -168,6 +169,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectRowsOrderByRandomNumSample(
         httpServletResponse: HttpServletResponse,
         num: Int
@@ -202,6 +204,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectRowsOrderByRowCreateDateSample(
         httpServletResponse: HttpServletResponse,
         dateString: String
@@ -239,6 +242,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectRowsPageSample(
         httpServletResponse: HttpServletResponse,
         page: Int,
@@ -277,6 +281,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectRowsNativeQueryPageSample(
         httpServletResponse: HttpServletResponse,
         page: Int,
@@ -384,6 +389,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectRowWhereSearchingKeywordSample(
         httpServletResponse: HttpServletResponse,
         page: Int,
@@ -475,6 +481,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectRowsNoDuplicatePagingSample(
         httpServletResponse: HttpServletResponse,
         lastItemUid: Long?,
@@ -516,6 +523,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectRowsCountSample(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectRowsCountSampleOutputVo? {
         val count = db1TemplateTestsRepository.countByRowDeleteDateStr("/")
 
@@ -525,6 +533,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectRowsCountByNativeQuerySample(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectRowsCountByNativeQuerySampleOutputVo? {
         val count = db1NativeRepository.countFromTemplateTestDataByNotDeleted()
 
@@ -534,6 +543,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectRowByNativeQuerySample(
         httpServletResponse: HttpServletResponse,
         testTableUid: Long
@@ -587,6 +597,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectUniqueTestTableRowsSample(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectUniqueTestTableRowsSampleOutputVo? {
         val resultEntityList =
             db1TemplateLogicalDeleteUniqueDataRepository.findAllByRowDeleteDateStrOrderByRowCreateDate("/")
@@ -759,6 +770,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectFkTestTableRowsSample(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectFkTestTableRowsSampleOutputVo? {
         val resultEntityList =
             db1TemplateFkTestParentRepository.findAllByRowDeleteDateStrOrderByRowCreateDate("/")
@@ -809,6 +821,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectFkTestTableRowsByNativeQuerySample(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectFkTestTableRowsByNativeQuerySampleDot1OutputVo? {
         val resultEntityList = db1NativeRepository.findAllFromTemplateFkTestManyToOneChildInnerJoinParentByNotDeleted()
 
@@ -837,6 +850,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun getNativeQueryReturnValueTest(
         httpServletResponse: HttpServletResponse,
         inputVal: Boolean
@@ -868,6 +882,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun sqlInjectionTest(
         httpServletResponse: HttpServletResponse,
         searchKeyword: String
@@ -960,6 +975,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectFkTableRowsWithLatestChildSample(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectFkTableRowsWithLatestChildSampleOutputVo? {
         val resultEntityList = db1NativeRepository.findAllFromTemplateFkTestParentWithNearestChildOnly()
 
@@ -998,6 +1014,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectFkTableRowsWithQueryDsl(httpServletResponse: HttpServletResponse): MyServiceTkSampleDatabaseTestController.SelectFkTableRowsWithQueryDslOutputVo? {
         val resultEntityList = db1TemplateRepositoryDsl.findParentWithChildren()
 
@@ -1042,6 +1059,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectFkTableRowsByParentNameFilterWithQueryDsl(
         httpServletResponse: HttpServletResponse,
         parentName: String
@@ -1089,6 +1107,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
     override fun selectFkTableChildListWithQueryDsl(
         httpServletResponse: HttpServletResponse,
         parentUid: Long

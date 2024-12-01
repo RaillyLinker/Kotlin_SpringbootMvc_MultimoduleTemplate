@@ -5,5 +5,6 @@ package com.raillylinker.module_jpa.annotations
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class CustomTransactional(
-    val transactionManagerBeanNameList: Array<String>
+    val transactionManagerBeanNameList: Array<String>,
+    val readOnly: Boolean = false
 )

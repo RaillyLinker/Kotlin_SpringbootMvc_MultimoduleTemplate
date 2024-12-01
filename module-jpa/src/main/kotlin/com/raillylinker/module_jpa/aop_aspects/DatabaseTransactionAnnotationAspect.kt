@@ -37,19 +37,28 @@ class DatabaseTransactionAnnotationAspect(
             ArrayList<Pair<PlatformTransactionManager, TransactionStatus>>()
 
         try {
-            // annotation 에 설정된 transaction 순차 실행 및 저장
-            for (transactionManagerBeanName in ((joinPoint.signature as MethodSignature).method).getAnnotation(
+            val annotation = ((joinPoint.signature as MethodSignature).method).getAnnotation(
                 CustomTransactional::class.java
-            ).transactionManagerBeanNameList) {
+            )
+
+            // annotation 에 설정된 transaction 순차 실행 및 저장
+            for (transactionManagerBeanName in annotation.transactionManagerBeanNameList) {
                 // annotation 에 저장된 transactionManager Bean 이름으로 Bean 객체 가져오기
                 val platformTransactionManager =
                     applicationContext.getBean(transactionManagerBeanName) as PlatformTransactionManager
+
+                // CustomTransactional 에서 읽기 전용 속성 확인
+                val isReadOnly = annotation.readOnly
+
+                // readOnly 설정을 transactionDefinition 에 적용
+                val transactionDefinition = DefaultTransactionDefinition()
+                transactionDefinition.isReadOnly = isReadOnly
 
                 // transaction 시작 및 정보 저장
                 transactionManagerAndTransactionStatusList.add(
                     Pair(
                         platformTransactionManager,
-                        platformTransactionManager.getTransaction(DefaultTransactionDefinition())
+                        platformTransactionManager.getTransaction(transactionDefinition)
                     )
                 )
             }
