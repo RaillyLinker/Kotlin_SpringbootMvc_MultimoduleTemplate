@@ -195,7 +195,7 @@ class MyServiceTkSampleMapCoordinateCalculationServiceImpl(
         radiusKiloMeter: Double
     ): MyServiceTkSampleMapCoordinateCalculationController.SelectCoordinateDataRowsInRadiusKiloMeterSampleOutputVo? {
         val entityList =
-            db1NativeRepository.forC9N5(
+            db1NativeRepository.findAllFromTemplateTestMapInnerHaversineCoordDistanceArea(
                 anchorLatitude,
                 anchorLongitude,
                 radiusKiloMeter
@@ -230,7 +230,7 @@ class MyServiceTkSampleMapCoordinateCalculationServiceImpl(
         westLongitude: Double // 남경도 (ex : 126.587602)
     ): MyServiceTkSampleMapCoordinateCalculationController.SelectCoordinateDataRowsInCoordinateBoxSampleOutputVo? {
         val entityList =
-            db1NativeRepository.forC9N6(
+            db1NativeRepository.findAllFromTemplateTestMapInnerCoordSquareArea(
                 northLatitude,
                 eastLongitude,
                 southLatitude,
