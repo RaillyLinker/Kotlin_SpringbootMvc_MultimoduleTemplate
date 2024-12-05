@@ -850,7 +850,7 @@ class MyServiceTkSampleDatabaseTestServiceImpl(
 
 
     ////
-    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME], readOnly = true)
+    @CustomTransactional([Db1MainConfig.TRANSACTION_NAME])
     override fun getNativeQueryReturnValueTest(
         httpServletResponse: HttpServletResponse,
         inputVal: Boolean
