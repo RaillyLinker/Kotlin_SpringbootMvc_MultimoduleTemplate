@@ -1,0 +1,31 @@
+# (실행 환경 local 설정)
+# : 로컬 환경 개발자를 위한 환경 설정 = 서버 개발자가 마음껏 사용 가능 (그냥 IDE 를 실행하면 적용)
+
+spring:
+  config:
+    activate: # 프로필명 설정
+      on-profile: local
+
+  servlet:
+    multipart:
+      # !!!multipart 데이터량 설정!!!
+      maxFileSize: 50MB
+      maxRequestSize: 50MB
+
+springdoc:
+  swagger-ui:
+    enabled: true # Swagger 문서 공개 여부
+
+# Redis DataSource 설정
+datasource-redis:
+  # Redis 추가
+  # 작명법은, 앞에 redis{index}-{제목} 형식으로 하기(다른 datasource 설정과의 통일성을 위해)
+
+  # (주 사용 Redis)
+  redis1-main:
+    #    node-list: 127.0.0.1:7001, 127.0.0.1:7002, 127.0.0.1:7003, 127.0.0.1:7101, 127.0.0.1:7102, 127.0.0.1:7103
+    node-list: 127.0.0.1:7001
+
+custom-config: # 프로젝트 내에서 사용하는 커스텀 설정
+  #cors 허용 리스트 설정 (설정하지 않으면 모든 요청 허용)
+  cors-allow-list: http://localhost:8081, http://127.0.0.1:8081, http://localhost:3000, http://127.0.0.1:3000

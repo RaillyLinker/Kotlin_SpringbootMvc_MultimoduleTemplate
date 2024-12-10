@@ -5,6 +5,9 @@ rootProject.name = "kotlin_springboot_mvc_multimodule_template"
 
 // (모듈 모음)
 // !!!모듈 추가/수정시 아래에 반영!!!
+include("module-template")
+
+
 include("module-app")
 include("module-redis")
 include("module-scheduler")
