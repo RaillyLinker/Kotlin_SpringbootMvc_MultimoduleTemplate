@@ -1,6 +1,6 @@
-package com.raillylinker.controllers
+package com.raillylinker.module_template.controllers
 
-import com.raillylinker.services.RootService
+import com.raillylinker.module_template.services.RootService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse

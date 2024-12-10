@@ -1,4 +1,4 @@
-package com.raillylinker.abstract_classes
+package com.raillylinker.module_template.abstract_classes
 
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.core.script.RedisScript

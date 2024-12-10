@@ -1,7 +1,7 @@
-package com.raillylinker.redis_map_components.redis1_main
+package com.raillylinker.module_template.redis_map_components.redis1_main
 
-import com.raillylinker.abstract_classes.BasicRedisMap
-import com.raillylinker.configurations.redis_configs.Redis1MainConfig
+import com.raillylinker.module_template.abstract_classes.BasicRedisMap
+import com.raillylinker.module_template.configurations.redis_configs.Redis1MainConfig
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component

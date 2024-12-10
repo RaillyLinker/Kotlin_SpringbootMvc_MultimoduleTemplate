@@ -1,4 +1,4 @@
-package com.raillylinker.configurations.redis_configs
+package com.raillylinker.module_template.configurations.redis_configs
 
 import io.lettuce.core.SocketOptions
 import io.lettuce.core.cluster.ClusterClientOptions

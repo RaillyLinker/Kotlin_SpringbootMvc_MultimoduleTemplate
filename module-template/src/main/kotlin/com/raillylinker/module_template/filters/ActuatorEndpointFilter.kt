@@ -1,6 +1,6 @@
-package com.raillylinker.filters
+package com.raillylinker.module_template.filters
 
-import com.raillylinker.redis_map_components.redis1_main.Redis1_Map_RuntimeConfigIpList
+import com.raillylinker.module_template.redis_map_components.redis1_main.Redis1_Map_RuntimeConfigIpList
 import jakarta.servlet.Filter
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletRequest

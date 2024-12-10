@@ -1,6 +1,6 @@
-package com.raillylinker
+package com.raillylinker.module_template
 
-import com.raillylinker.redis_map_components.redis1_main.Redis1_Map_RuntimeConfigIpList
+import com.raillylinker.module_template.redis_map_components.redis1_main.Redis1_Map_RuntimeConfigIpList
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

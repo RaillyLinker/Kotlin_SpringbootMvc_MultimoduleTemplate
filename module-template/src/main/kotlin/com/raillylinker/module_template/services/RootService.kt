@@ -1,4 +1,4 @@
-package com.raillylinker.services
+package com.raillylinker.module_template.services
 
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.web.servlet.ModelAndView

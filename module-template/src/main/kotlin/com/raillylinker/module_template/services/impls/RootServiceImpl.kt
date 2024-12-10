@@ -1,7 +1,7 @@
-package com.raillylinker.services.impls
+package com.raillylinker.module_template.services.impls
 
-import com.raillylinker.services.RootService
-import com.raillylinker.redis_map_components.redis1_main.Redis1_Map_RuntimeConfigIpList
+import com.raillylinker.module_template.services.RootService
+import com.raillylinker.module_template.redis_map_components.redis1_main.Redis1_Map_RuntimeConfigIpList
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
